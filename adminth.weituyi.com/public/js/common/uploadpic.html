@@ -1,0 +1,23 @@
+
+<!-- 加载中模板部分 开始-->
+<script type="text/template"  id="baidu_template_pic_show">
+    <%for(var i = 0; i<data_list.length;i++){
+    var item = data_list[i];
+    // var can_modify = false;
+    %>
+    <div class="col-md-4 col-sm-6 col-lg-3 resource">
+        <div class="card ">
+            <img data-toggle="lightbox" src="<%=item.resource_url%>" alt="">
+            <div class="pre with-padding clearfix">
+                <h4 class="text-ellipsis"><%=item.resource_name%></h4>
+                {{--<p class="text-gray">上传日期：<%=item.created_at%></p>--}}
+                <i class="icon icon-times pull-right delResource"  data-id="<%=item.id%>"></i>
+                <label class="checkbox-inline"  style="display:none;">
+                    <input type="checkbox" value="<%=item.id%>" name="resource_id[]" checked="checked">
+                </label>
+            </div>
+        </div>
+    </div>
+    <%}%>
+</script>
+<!-- 加载中模板部分 结束-->

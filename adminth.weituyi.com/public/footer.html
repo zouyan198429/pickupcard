@@ -1,0 +1,82 @@
+
+<!-- 前端模板部分 -->
+<!-- 列表模板部分 开始  <! -- 模板中可以用HTML注释 -- >  或  <%* 这是模板自带注释格式 *%> -->
+<script type="text/template"  id="baidu_template_data_list">
+    <%for(var i = 0; i<data_list.length;i++){
+    var item = data_list[i];
+    %>
+    <div class="w-wrap4 order_status obligation clearfix">
+        <div class="order_info clearfix">
+            <span><%=item.created_at%></span>
+            <span>订单号:<%=item.order_no_format%></span>
+            <span class="shop"><%=item.addr.addr%>  <%=item.addr.real_name%>(<%=item.addr.mobile_format%>)</span>
+            <!--<span>餐具数量:<%=item.tableware%>份</span>-->
+            <span>希望速度:<%=item.second_num%>分钟(<%=item.send_end_time%>)</span>
+            <span>商品金额:<%=item.total_price%>元(共<%=item.total_amount%>份)</span>
+            <span>跑腿费:<%=item.pay_run_amount%>元(<%=item.pay_run_price_text%>)</span>
+            <span>退费:<%=item.refund_price%>元(<%=item.has_refund_text%>)</span>
+            <span>退费时间:<%=item.refund_time%></span>
+            <i></i>
+        </div>
+        <div class="w-wrap5 clearfix">
+            <div class="operate">
+                <%if(item.status == 2){%>
+                <a class="cancel" href="javascript:void(0);" onclick="otheraction.cancel(this,'<%=item.order_no%>','<%=item.pay_type%>')" >取消订单</a>
+                <%}%>
+            </div>
+            <div class="status">
+                <span><%=item.status_text%></span>
+            </div>
+            <%for(var j = 0; j<item.shopList.length;j++){
+            var shopitem = item.shopList[j];
+            var orders_goods = shopitem.orders_goods;
+            %>
+            <table style="margin-top: 5px;margin-bottom: 20px;">
+                <tr>
+                    <td>
+                        <span class="shop">店铺：<%=shopitem.shop.shop_name%></span>
+                        <span>地址：<%=shopitem.city.city_name%><%=shopitem.area.city_name%><%=shopitem.shop.addr%></span>
+                        <span>金额：<%=shopitem.total_price%>元(共<%=shopitem.total_amount%>份)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!--循序输出-->
+                        <%for(var k = 0; k<orders_goods.length;k++){
+                        var gooditem = orders_goods[k];
+                        %>
+                        <div class="single_item clearfix">
+                                    <span class="pro_info">
+                                        <a href="<%=gooditem.resource_url%>">
+                                        <img width="58" height="58" src="<%=gooditem.resource_url%>" />
+                                        </a>
+                                        <span>
+                                        <%=gooditem.goods_name%>
+                                        <%if(gooditem.pricePropValName  && gooditem.pricePropValName !=''){%>
+                                        [<%=gooditem.pricePropName%>:<%=gooditem.pricePropValName%> ]
+                                        <%}%>
+                                        </span>
+                                        <%if(gooditem.prop){%>
+                                            <%for(var h = 0; h<gooditem.prop.length;h++){
+                                                var propitem = gooditem.prop[h];
+                                                %>
+                                                <i><%=propitem.prop_name%>：<%=propitem.pv_names%></i>
+                                             <%}%>
+                                        <%}%>
+                                    </span>
+                            <div class="money">
+                                <span>¥<%=gooditem.price%></span>
+                            </div>
+                            <div class="count">* <%=gooditem.amount%>=¥<%=gooditem.total_price%></div>
+                        </div>
+                        <%}%>
+                    </td>
+                </tr>
+            </table>
+            <%}%>
+        </div>
+    </div>
+    <%}%>
+</script>
+<!-- 列表模板部分 结束-->
+<!-- 前端模板结束 -->

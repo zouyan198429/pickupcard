@@ -1,0 +1,68 @@
+.nav-item {
+	width: 30%;
+}
+
+.tab-content {
+	height: 100%;
+	border: 1px solid #dddddd;
+}
+
+.w484 {
+	width: 484px;
+}
+
+.h59 {
+	height: 59px;
+}
+
+.w115 {
+	width: 115px;
+}
+
+.mlt2010 {
+	margin-left: 20%;
+	margin-top: 10%;
+}
+
+.mlt2005 {
+	margin-left: 20%;
+	margin-top: 1%;
+	width: 67%;
+}
+
+#express_sn {
+	font-size: 20px;
+}
+
+.mlt22 {
+	color: red;
+	margin-left: 22%;
+	margin-bottom: 20%;
+}
+
+.tab-content {
+	/*                 color : white; */
+	/*                  background-color: #428bca;  */
+	/*                 padding : 5px 15px; */
+	/*                 border-top-width:0px; */
+	/*                 border-left-width: 0px; */
+	/*              margin-top:2px; */
+	border: solid 1px #5bc0de;
+}
+
+.nav-item {
+	background: #eeeeee;
+}
+
+.nav-pills>li>a {
+	border-radius: 0px !important;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus
+	{
+	background-color: #5bc0de;
+}
+
+.record, .takeExpress {
+	display: none;
+}

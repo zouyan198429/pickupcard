@@ -1,0 +1,199 @@
+福利创建接口
+	1.开发地址：http://dev.welfare.17shihui.com/welfare/createWelfare
+	2.测试地址：http://test.welfare.17shihui.com/welfare/createWelfare
+	3.提交方式：POST
+	4.参数说明：
+	    province_id  省市编号
+	    city_id      城市编号
+	    merchant_id  商户编号
+	    topic_id     专题编号
+	    draw_type    活动类型 1 即时开 2 定时开
+	    welfare_name 福利名称
+	    welfare_desc 福利说明
+	    winning_rate 中奖概率 整数 1-100000
+	    welfare_tags 福利标签
+	    start_time   开始时间 日期格式 2015-09-12 10:23
+	    end_time     结束时间 日期格式 2015-10-12 10:23
+	    published_time 发布时间 日期格式 2015-10-12 10:23
+	    specified_draw_time 开奖时间 日期格式 2015-10-12 10:23
+	    attack_time  防秒杀时间 整数 可填写10~180之间的整数。如：30，80等
+        push_other_id 消息推送编号
+        welfare_source 福利来源 1 oms 2 ams 4 排期
+        fi_id        报备单号
+	    white_list   活动策略 0 黑名单 1 白名单
+	    is_daren     参与类型 0 普通 1 达人
+	    is_show      客户端状态 0 隐藏 1 显示
+	    is_top       置顶福利  0 未置顶 1 置顶
+	    involve_task 福利参与任务 0 不参与任务 1 参与任务
+	    grade        活动等级 11 A+ 12 A 13 B+ 14 B 15 C
+	    goods[0]['goods_id'] 商品编号
+	    goods[0]['total']   总库存 
+	    goods[0]['remain']   剩余库存
+	    goods[0]['receive_mode'] 领取方式 1 到商户自提/店内消费 2 邮寄任何小区 4 邮寄本小区 5 第三方平台 6 上门服务
+	    goods[0]['receive_url']  第三方网站url
+	    goods[0]['pickup_start'] 领取开始时间
+	    goods[0]['pickup_end']   领取结束时间
+        goods[0]['receive_rule'] 领取说明
+        goods[0]['repeat_reward'] 0 不可重复中奖 1 可重复中奖
+        chainstore[0] 连锁商户编号1
+        chainstore[1] 连锁商户编号2
+        area['area_type'] 投放类型 1 全城 2 板块 4 指定小区
+        area['area_id'][0] 城市id/板块id/小区id
+        area['cat_id'] 社区分类 1,12,14
+     5 返回结果 
+     	  成功: {"apistatus":1,"result":{"welfare_id":12345},"errorMsg":""}
+     	  失败: {"apistatus":0,"result":[],"errorMsg":"系统内部错误"}
+
+福利编辑接口
+	1.开发地址：http://dev.welfare.17shihui.com/welfare/createWelfare
+	2.测试地址：http://test.welfare.17shihui.com/welfare/createWelfare
+	3.提交方式：POST
+	4.参数说明：
+	    welfare_id   福利编号
+	    province_id  省市编号
+	    city_id      城市编号
+	    merchant_id  商户编号
+	    topic_id     专题编号
+	    draw_type    活动类型 1 即时开 2 定时开
+	    welfare_name 福利名称
+	    welfare_desc 福利说明
+	    winning_rate 中奖概率 整数 1-100000
+	    welfare_tags 福利标签
+	    start_time   开始时间 日期格式 2015-09-12 10:23
+	    end_time     结束时间 日期格式 2015-10-12 10:23
+	    published_time 发布时间 日期格式 2015-10-12 10:23
+	    specified_draw_time 开奖时间 日期格式 2015-10-12 10:23
+	    attack_time  防秒杀时间 整数 可填写10~180之间的整数。如：30，80等
+        push_other_id 消息推送编号
+        welfare_source 福利来源 1 oms 2 ams 4 排期
+        fi_id        报备单号
+	    white_list   活动策略 0 黑名单 1 白名单
+	    is_daren     参与类型 0 普通 1 达人
+	    is_show      客户端状态 0 隐藏 1 显示
+	    is_top       置顶福利  0 未置顶 1 置顶
+	    involve_task 福利参与任务 0 不参与任务 1 参与任务
+	    grade        活动等级 11 A+ 12 A 13 B+ 14 B 15 C
+	    goods[0]['goods_id'] 商品编号
+	    goods[0]['total']   总库存 
+	    goods[0]['remain']   剩余库存
+	    goods[0]['receive_mode'] 领取方式 1 到商户自提/店内消费 2 邮寄任何小区 4 邮寄本小区 5 第三方平台 6 上门服务
+	    goods[0]['receive_url']  第三方网站url
+	    goods[0]['pickup_start'] 领取开始时间
+	    goods[0]['pickup_end']   领取结束时间
+        goods[0]['receive_rule'] 领取说明
+        goods[0]['repeat_reward'] 0 不可重复中奖 1 可重复中奖
+        chainstore[0] 连锁商户编号1
+        chainstore[1] 连锁商户编号2
+        area['area_type'] 投放类型 1 全城 2 板块 4 指定小区
+        area['area_id'][0] 城市id/板块id/小区id
+        area['cat_id'] 社区分类 1,12,14
+     5 返回结果 
+     	  成功: {"apistatus":1,"result":{"welfare_id":12345},"errorMsg":""}
+     	  失败: {"apistatus":0,"result":[],"errorMsg":"系统内部错误"}
+
+福利审核接口
+	1.开发地址：http://dev.welfare.17shihui.com/welfare/checked
+	2.测试地址：http://test.welfare.17shihui.com/welfare/checked
+	3.提交方式：POST
+	4.参数说明：
+	     welfare_id 福利编号
+	     checked    审核状态  1 通过 2 驳回 3 下线
+    5 返回结果 
+    	成功：{"apistatus":1,"result":"","errorMsg":""}
+    	失败: {"apistatus":0,"result":[],"errorMsg":"系统内部错误"}
+
+
+创建老虎机
+	1.开发地址：http://dev.welfare.17shihui.com/welfare/slots/addSlotsInfo
+	2.测试地址：http://test.welfare.17shihui.com/welfare/slots/addSlotsInfo
+	3.提交方式：POST
+	4.参数说明：
+		province_id       省市编号
+		city_id           城市编号
+		activity_type     老虎机类型 1 内置老虎机 2 活动老虎机
+		slots_info_name	  老虎机名称
+		slots_info_rules  老虎机活动规则
+		slots_info_url    老虎机地址
+		offine_time       自动下线时间
+		white_list        白名单策略 1 开启白名单策略  0 不开启
+		winning_rate      中奖概率 整数 1-100000
+		warning_phones    报警联系人电话
+		warning_goods_type_limit  商品种类报警限制
+		empty_goods_type_limit    商品种类低于此值显示空白页
+		warning_goods_count_limit 商品总数报警
+		empty_goods_count_limit   商品总数低于此值 空白页
+
+	5 返回结果 
+    	成功：{"apistatus":1,"result":"","errorMsg":""}
+    	失败: {"apistatus":0,"result":[],"errorMsg":"系统内部错误"}	
+
+
+老虎机添加商品
+	1.开发地址：http://dev.welfare.17shihui.com/welfare/slots/addSlotsGoods
+	2.测试地址：http://test.welfare.17shihui.com/welfare/slots/addSlotsGoods
+	3.提交方式：POST
+	4.参数说明：
+		slots_info_id     老虎机编号
+		merchant_id       商户编号
+		goods_id          商品编号
+		total       	  总库存
+		remain            剩余库存
+		receive_mode      领取方式 1 到商户自提/店内消费 2 邮寄任何小区 4 邮寄本小区 5 第三方平台 6 上门服务
+		pickup_start      领取开始时间
+	    pickup_end        领取结束时间
+        receive_rule      领取说明
+        repeat_reward     0 不可重复中奖 1 可重复中奖
+        start_time        开始时间
+        end_time          结束时间
+        sort_id			  排序
+        receive_url       第三方网站url
+        chainstore[0]     连锁商户编号1
+        chainstore[1]     连锁商户编号2
+	5 返回结果 
+    	成功：{"apistatus":1,"result":"","errorMsg":""}
+    	失败: {"apistatus":0,"result":[],"errorMsg":"系统内部错误"}
+
+老虎机编辑商品
+	1.开发地址：http://dev.welfare.17shihui.com/welfare/slots/editSlotsGoods
+	2.测试地址：http://test.welfare.17shihui.com/welfare/slots/editSlotsGoods
+	3.提交方式：POST
+	4.参数说明：
+	    slots_id          活动编号
+		slots_info_id     老虎机编号
+		merchant_id       商户编号
+		goods_id          商品编号
+		total       	  总库存
+		remain            剩余库存
+		receive_mode      领取方式 1 到商户自提/店内消费 2 邮寄任何小区 4 邮寄本小区 5 第三方平台 6 上门服务
+		pickup_start      领取开始时间
+	    pickup_end        领取结束时间
+        receive_rule      领取说明
+        repeat_reward     0 不可重复中奖 1 可重复中奖
+        start_time        开始时间
+        end_time          结束时间
+        sort_id			  排序
+        receive_url       第三方网站url
+        chainstore[0]     连锁商户编号1
+        chainstore[1]     连锁商户编号2
+	5 返回结果 
+    	成功：{"apistatus":1,"result":"","errorMsg":""}
+    	失败: {"apistatus":0,"result":[],"errorMsg":"系统内部错误"}
+
+商品审核/驳回/下线接口
+	1.开发地址：http://dev.welfare.17shihui.com/welfare/slots/slotsGoodsCheck
+	2.测试地址：http://test.welfare.17shihui.com/welfare/slots/slotsGoodsCheck
+	3.提交方式：POST
+	4.参数说明：
+		slots_id     活动编号
+		checked      1 通过 2 驳回 3 下线
+	5 返回结果 
+    	成功：{"apistatus":1,"result":"","errorMsg":""}
+    	失败: {"apistatus":0,"result":[],"errorMsg":"系统内部错误"}
+
+
+
+
+
+
+
+

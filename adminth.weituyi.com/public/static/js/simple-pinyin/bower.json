@@ -1,0 +1,24 @@
+{
+  "name": "simple-pinyin",
+  "version": "3.0.2",
+  "authors": [
+    "XQ Kuang <x@kxq.io>"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.min.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "ignore": [
+    ".*",
+    "node_modules",
+    "src",
+    "coverage",
+    "tsconfig.json",
+    "tslint.json",
+    "webpack.config.js",
+    "yarn.lock"
+  ]
+}

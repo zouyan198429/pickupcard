@@ -1,0 +1,125 @@
+body{
+	background-color: #fff;
+}
+.navbar-container{
+	padding:0;
+}
+.sidebar .sidebar-shortcuts-mini{
+	padding-top:0;
+}
+.nav-add-header{
+	margin: 5px 0 0 10px;	
+}
+.nav-add-header>li{
+	margin-right: 10px
+}
+.nav-add-header>li>a{
+	padding:8px 15px;
+}
+.nav-add-header a{
+	color: #e6fffc;	
+}
+.nav-pills>li>a:link,.nav-pills>li>a:visited,.nav-pills>li>a:active{
+	background-color: none;
+	color: #e6fffc
+}
+.nav-pills>li>a:hover{
+	background-color: none;
+	color: #fff
+}
+.nav-pills>li.active>a:focus, .nav-pills>li>a:hover{
+	color:#fff;
+	background-color: #337ab7
+}
+.addFontColor{
+	color:#438EB9;
+}
+.padding-top{
+	padding-top:6px;
+}
+.ipt-col-sp{
+	width: 40px;
+}
+.ipt-min-count{
+	width: 70px;
+}
+.no-padding-right{
+	font-size: 12px
+}
+.input-group .form-control{
+	font-size: 12px
+}
+.input-group-addon{
+	border-left:none;
+	border-right:none;
+	padding: 0 3px;
+}
+.select-paddingLeft{
+	padding-left: 5px
+}
+.inline{
+	display: inline-block;
+	text-align: left
+}
+
+.nav-pills>li.system{
+	color: #fff;
+	padding:8px 15px; 
+	width: 170px;
+	font-size: 14px
+}
+.ui-tabs .ui-tabs-panel{
+	border: none;
+}
+
+.error{
+	color:red;
+}
+/* 大屏幕 */
+@media (min-width: 1200px) { ... }
+
+/* 平板电脑和小屏电脑之间的分辨率 */
+@media (min-width: 730px) and (max-width: 1000px) { 
+	
+}
+@media (min-width: 780px) { 
+	.nav-add-header li{
+		display: block
+	}
+}
+@media (max-width: 720px) { 	
+	.nav-add-header li:nth-last-of-type(1){
+		display: none
+	}
+}
+@media (max-width: 625px) { 
+	.nav-add-header li:nth-last-of-type(2){
+		display: none
+	}
+}
+@media (max-width: 530px) { 
+	.nav-add-header li:nth-last-of-type(3){
+		display: none
+	}
+}
+@media (max-width: 435px) { 
+	.nav-add-header li:nth-last-of-type(4){
+		display: none
+	}
+}
+@media (max-width: 340px) { 
+	.nav-add-header li:nth-last-of-type(5){
+		/* display: none */
+	}
+}
+
+/* 平板电脑和小屏电脑之间的分辨率 */
+/*@media (min-width: 768px) and (max-width: 979px) { 
+
+}*/
+ 
+/* 横向放置的手机和竖向放置的平板之间的分辨率 */
+/*@media (max-width: 767px) { ... }*/
+ 
+/* 横向放置的手机及分辨率更小的设备 */
+/*@media (max-width: 480px) { ... }*/

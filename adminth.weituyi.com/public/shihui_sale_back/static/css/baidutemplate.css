@@ -1,0 +1,71 @@
+#wrap{
+	zoom:1;
+	position:relative;
+	padding:98px 0 0 0;
+	margin:5px 0 0 200px;
+	width:447px;
+	height:418px;
+	background:url("http://firekylin.my.baidu.com/doc/example/images/bg.gif") no-repeat;
+}
+#sort{
+	position:absolute;
+	top:80px;
+	left:160px;
+	width:12px;
+	height:12px;
+	overflow:hidden;
+	cursor:pointer;
+}
+#sort.up{
+	background:url("http://firekylin.my.baidu.com/doc/example/images/up.gif") no-repeat;
+}
+#sort.down{
+	background:url("http://firekylin.my.baidu.com/doc/example/images/down.gif") no-repeat;
+}
+#container{
+	margin:0px 0 0 16px;
+	width:411px;
+	height:233px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	font-size:12px;
+}
+div.edit, div.normal{
+	overflow:hidden;
+	zoom:1;
+	margin:1px 5px 0 5px;
+	width:401px;
+	height:27px;
+	line-height:28px;
+	border-bottom:1px dashed #fff;
+}
+div.normal{
+	border-bottom:1px dashed #ccc;
+}
+div.normal:hover{
+	background:#eee;
+}
+div.normal img{
+	cursor:pointer;
+}
+div.edit{
+	background:#feffda;
+}
+div.cell1, div.cell2, div.cell3{
+	float:left;
+	text-align:center;
+}
+div.cell1{
+	padding-left:20px;
+	width:191px;
+	text-align:left;
+}
+div.cell2{
+	width:70px;
+}
+div.cell3{
+	width:120px;
+}
+#createDiv{
+	margin:20px 0 0 17px;
+}
