@@ -1,0 +1,20 @@
+
+.pages{ text-align:center; color:#888; float: right;}
+.pages a{display:inline-block; text-decoration:none; border:solid 1px #e3e3e3; padding:0px 12px; line-height:28px; margin:0px 2px;}
+.pages a:hover{border:solid 1px #FFB97F;}
+.pages a.active{border:solid 1px #ff7300; color:#ff7300;}
+.pages a.active:hover{border:solid 1px #ff7300; color:#ff7300; text-decoration:underline;}
+.pages .num{border:solid 1px #ccc; height:21px; width:30px; line-height:21px; text-align:center;}
+.pages .go{border:solid 1px #ddd; height:23px; padding:0px 8px;-webkit-border-radius:2px; -moz-border-radius:2px; -o-border-radius:2px; border-radius:2px; color:#c5c5c5; background:#fff; margin-left:5px;}
+.pages .go:hover{color:#333;}
+.pages .marL20{ margin-left:20px;}
+.pages span{display:inline-block; margin:0px 5px;}
+
+.images_vcl .btn-default{position: relative; overflow: hidden; margin-right: 10px;}
+.images_vcl .btn-default input[type="file"]{position: absolute; left:0; top:0; cursor:pointer; line-height: 999px; opacity: 0}
+.images_vcl input:focus{outline: none}
+.images_vcl .form-control:focus{border-color:#ccc; -webkit-box-shadow:none; box-shadow: none;}
+.pagespan{ float: left;}
+.pagespan2{float: left;}
+.pagespan .pagenum, .pagespan2 .pagenum{ width: 68px; float: left;}
+.pagespan .btn-page, .pagespan2 .btn-page{ z-index: 2; color: #fff; cursor: default; background-color: #428bca; border-color: #428bca;}

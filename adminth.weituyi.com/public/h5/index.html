@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Titleaaa</title>
+</head>
+<body>
+<img src="https://wx.cunwo.net/h5/demo/img/xs.jpg"/>
+<br/><br/>
+<img src="https://wx.cunwo.net/h5/demo/img/1111.jpg"/>
+
+</body>
+</html>
+
+<script src="https://wx.cunwo.net/js/jquery-3.3.1.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+
+<script>
+    var shareLinkUlr = location.href.split("#")[0]; // 获取当前的url 去掉 # 之后的部分
+    shareLinkUlr = shareLinkUlr.replace(/\&/g, '%26'); // 将 & 替换成 %26
+    var shareImgUrl = 'https://wx.cunwo.net/h5/demo/img/xs.jpg'; // 分享的图片地址
+    var content = "云产烟品牌周年庆新疆分中心本香活动";
+    // 获取 config 的内容
+    function getjssdkconfig(apis,debug,json,link){
+        var xhr = new XMLHttpRequest();
+        var url = 'https://wx.cunwo.net/api/wx/jssdkconfig'; // 这个就是之前配置的路由
+        var data = "apis="+apis+"&debug="+debug+"&json="+json+"&url="+link; // 拼接 get 参数
+        console.log(url+"?"+data);
+        xhr.open('GET',url+"?"+data);
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState===4 && (xhr.status >=200 && xhr.status <=300)){
+                // 获取 config 之后，进行一些操作
+                // 需要进行 JSON.parse 获取对象
+                configJsSDKAndDoSomething(JSON.parse(xhr.responseText));
+            }
+        };
+        xhr.send();
+    }
+    // 获取config 之后进行的操作
+    // 因为是使用 ajax 进行config内容，这个方法是在上面运行的
+    function configJsSDKAndDoSomething(config){
+        wx.config(config);
+        wx.ready(function() {
+            // 其他的一些操作
+            //分享到朋友圈
+            wx.onMenuShareTimeline({
+                title: '天山环秀，香自云中', // 分享标题
+                link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl:shareImgUrl, // 分享图标
+                success: function () {
+                    alert('分享成功');
+                }
+            });
+            // wx.updateTimelineShareData({
+            //     title: '天山环秀，香自云中', // 分享标题
+            //     link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            //     imgUrl: shareImgUrl, // 分享图标
+            //     success: function () {
+            //         // 设置成功
+            //     }
+            // });
+            //分享给朋友
+            wx.onMenuShareAppMessage({
+                title: '天山环秀，香自云中', // 分享标题
+                desc: content, // 分享描述
+                link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: shareImgUrl, // 分享图标
+                type: 'link', // 分享类型,music、video或link，不填默认为link
+                success: function () {
+
+                },
+                cancel: function () {
+
+                }
+            });
+            // wx.updateAppMessageShareData({
+            //     title: '天山环秀，香自云中', // 分享标题
+            //     desc: content, // 分享描述
+            //     link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            //     imgUrl: shareImgUrl, // 分享图标
+            //     success: function () {
+            //         // 设置成功
+            //     }
+            // });
+            wx.error(function(res){
+                // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+                alert("errorMSG:"+res);
+            });
+        });
+        // wx.error(function(error){
+        //     console.log(error);
+        // });
+    }
+    // 页面加载完之后进行操作
+    $(document).ready(function(){
+        console.log(shareLinkUlr);
+        // 注意这里的参数
+        // apis 使用的参数是 字符串的拼接 这个是和 php 的方法中的处理相对应的
+        getjssdkconfig("onMenuShareTimeline,onMenuShareAppMessage",false,false,shareLinkUlr);
+        // getjssdkconfig("updateTimelineShareData,updateAppMessageShareData",false,false,shareLinkUlr);
+    });
+</script>
