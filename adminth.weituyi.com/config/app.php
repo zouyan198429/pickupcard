@@ -15,6 +15,9 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'log'=> 'daily',
+    'log_max_files' => 15,
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

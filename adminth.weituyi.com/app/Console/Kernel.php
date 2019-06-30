@@ -27,9 +27,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->call(function () {
-            CityAPIBusiness::autoCancelOrdes();// 跑城市订单过期未接单自动关闭脚本--每一分钟跑一次
-        })->everyMinute();// 每分钟执行一次 锁会在 5 分钟后失效->withoutOverlapping(5)[会失败] ;  ->appendOutputTo($filePath)
+//        $schedule->call(function () {
+//            CityAPIBusiness::autoCancelOrdes();// 跑城市订单过期未接单自动关闭脚本--每一分钟跑一次
+//        })->everyMinute();// 每分钟执行一次 锁会在 5 分钟后失效->withoutOverlapping(5)[会失败] ;  ->appendOutputTo($filePath)
     }
 
     /**

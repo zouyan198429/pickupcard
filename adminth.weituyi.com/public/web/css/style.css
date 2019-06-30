@@ -1,0 +1,123 @@
+
+body {
+	padding: 0; 
+	margin:0;
+	height: 100%;
+}
+.wrap {
+	width: 480px;
+	margin:0 auto;
+	height: auto;
+}
+
+.c {
+	clear: both;
+}
+/* index */
+
+
+.indpic {
+	
+}
+.indpic img {
+	width: 100%;
+}
+.indmain {
+	background: #fff;
+	padding: 20px 0;
+}
+.indmain input {
+	width:80%;
+	margin:10px 10%;
+}
+.copyright {
+	position: fixed;
+	left: 0;
+	bottom: 20px;
+	font-size: 12px;
+	margin-top: 30px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+
+/* product */
+.title {
+	background: #fff;
+	width: 100%;
+	padding: 15px 0;
+	text-align: center;
+	color: #666;
+	font-size: 20px;
+}
+
+.propic {
+	background: #fff;
+	padding-bottom: 80px;
+}
+
+.propic img {
+	width: 100%; 
+}
+
+
+
+.probtnbox {
+	position: fixed;
+	bottom: -1px;
+	left: 0;
+	background: #fff;
+	z-index: 1000;
+	width: 100%;
+	padding: 10px 0;
+	text-align: center;
+	box-shadow: 0 0 4px #bbb;
+}
+.probtnbox input {
+	width: 75%;
+}
+
+
+
+
+/* tihuo */
+ 
+.th-main{
+	background: #fff;
+	padding: 20px 0;
+	height: 100%;
+}
+.th-main input {
+	width:80%;
+	margin:10px 10%;
+}
+
+.layui-form-label {
+	text-align: left;
+	padding-left:10%;
+}
+.layui-input-block {
+	clear: left;
+	text-align: left;
+	margin:0;
+	margin-left: 10%;
+	width: 80%; 
+}
+.layui-inline {  
+	overflow: hidden;
+}
+.layui-inline select {
+	height: 36px;
+	line-height: 36px;
+	border:1px solid #dedede;
+	background: #fff; 
+}
+
+@media screen and (max-device-width: 400px) {
+
+
+.wrap {
+	width: 100%;
+}
+
+	}

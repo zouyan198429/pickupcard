@@ -177,7 +177,7 @@ class CityController extends WorksController
      */
     public function ajax_alist(Request $request){
         $this->InitParams($request);
-        return  CTAPICityBusiness::getList($request, $this, 2 + 4, [], ['feescale']);
+        return  CTAPICityBusiness::getList($request, $this, 2 + 4, []);//, [ 'feescale']
     }
 
     /**

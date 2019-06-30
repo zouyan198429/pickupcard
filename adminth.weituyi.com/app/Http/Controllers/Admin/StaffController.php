@@ -179,7 +179,7 @@ class StaffController extends WorksController
         $request->merge(['admin_type' => 1]);
         return  CTAPIStaffBusiness::getList($request, $this, 2 + 4, [], ['province', 'provinceHistory'
             , 'city', 'cityHistory', 'area', 'areaHistory'
-            , 'cityinfo' , 'cityPartner', 'seller' , 'shop']);
+            , 'cityinfo' ]);// , 'cityPartner', 'seller' , 'shop'
     }
 
     /**

@@ -203,3 +203,49 @@ Route::get('admin/city/select', 'Admin\CityController@select');// 选择-弹窗
 Route::get('admin/city/export', 'Admin\CityController@export');// 导出
 Route::get('admin/city/import_template', 'Admin\CityController@import_template');// 导入模版
 
+// 商品
+Route::get('admin/products', 'Admin\ProductController@index');// 列表
+Route::get('admin/products/add/{id}', 'Admin\ProductController@add');// 添加
+// Route::get('admin/products/select', 'Admin\ProductController@select');// 选择-弹窗
+Route::get('admin/products/export', 'Admin\ProductController@export');// 导出
+Route::get('admin/products/import_template', 'Admin\ProductController@import_template');// 导入模版
+
+// 提货活动
+Route::get('admin/activity', 'Admin\ActivityController@index');// 列表
+Route::get('admin/activity/add/{id}', 'Admin\ActivityController@add');// 添加
+// Route::get('admin/activity/select', 'Admin\ActivityController@select');// 选择-弹窗
+Route::get('admin/activity/export', 'Admin\ActivityController@export');// 导出
+Route::get('admin/activity/import_template', 'Admin\ActivityController@import_template');// 导入模版
+
+// 兑换码
+Route::get('admin/codes', 'Admin\CodesController@index');// 列表
+Route::get('admin/codes/add/{id}', 'Admin\CodesController@add');// 添加
+// Route::get('admin/codes/select', 'Admin\CodesController@select');// 选择-弹窗
+Route::get('admin/codes/export', 'Admin\CodesController@export');// 导出
+Route::get('admin/codes/import_template', 'Admin\CodesController@import_template');// 导入模版
+
+
+// 收货地址
+Route::get('admin/addrs', 'Admin\AddrsController@index');// 列表
+Route::get('admin/addrs/add/{id}', 'Admin\AddrsController@add');// 添加
+// Route::get('admin/addrs/select', 'Admin\AddrsController@select');// 选择-弹窗
+Route::get('admin/addrs/export', 'Admin\AddrsController@export');// 导出
+Route::get('admin/addrs/import_template', 'Admin\AddrsController@import_template');// 导入模版
+
+
+// 微网站
+
+// 首页
+Route::get('web/search/{code_id}/{code}', 'Web\IndexController@login');// 查询页 登录
+
+// 产品相关的
+Route::get('web/product/{product_id}', 'Web\ProductController@index');// 产品1
+//Route::get('web/product2', 'Web\ProductController@product2');// 产品2
+//Route::get('web/product3', 'Web\ProductController@product3');// 产品3
+//Route::get('web/product4', 'Web\ProductController@product4');// 产品4
+
+// 收货地址
+Route::get('web/addrs/add', 'Web\AddrsController@add');// 添加
+
+
+

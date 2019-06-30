@@ -43,7 +43,7 @@ function isNotJson($str){
 function isAjax()
 {
     $returnErrType = request()->header('returnErrType', 0);// 错误回返类型 1 json ; 0 非json
-    \Illuminate\Support\Facades\Log::info('微信日志-hearder参数returnErrType:',[$returnErrType]);
+    // \Illuminate\Support\Facades\Log::info('微信日志-hearder参数returnErrType:',[$returnErrType]);
     if(!is_numeric($returnErrType)) $returnErrType = 0;
     if ( (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) == "xmlhttprequest") || $returnErrType == 1 ) {
         return true;

@@ -85,7 +85,7 @@ class CTAPIStaffBusiness extends BasicPublicCTAPIBusiness
             array_push($queryParams['where'], ['admin_type', $admin_type]);
         }
 
-        $relations = ['city', 'cityPartner', 'seller', 'shop'];
+        $relations = ['city'];// , 'cityPartner', 'seller', 'shop'
         $userInfo = static::getInfoQuery($request, $controller, '', 0, 1, $queryParams, $relations, 1);
         if(empty($userInfo) || count($userInfo) <= 0 || empty($userInfo)){
             throws('用户名或密码有误！');
@@ -93,9 +93,9 @@ class CTAPIStaffBusiness extends BasicPublicCTAPIBusiness
         if($admin_username != $userInfo['admin_username']) throws('用户名或密码有误！');
         if($userInfo['account_status'] == 1 ) throws('用户已冻结！');
         $staffCity = $userInfo['city'] ?? [];// 城市分站
-        $staffCityPartner = $userInfo['city_partner'] ?? [];// 城市代理
-        $staffSeller = $userInfo['seller'] ?? [];// 商家
-        $staffShop = $userInfo['shop'] ?? [];// 店铺
+//        $staffCityPartner = $userInfo['city_partner'] ?? [];// 城市代理
+//        $staffSeller = $userInfo['seller'] ?? [];// 商家
+//        $staffShop = $userInfo['shop'] ?? [];// 店铺
         // 拥有者类型1平台2城市分站4城市代理8商家16店铺32快跑人员64用户
         switch ($userInfo['admin_type'])
         {
@@ -104,16 +104,16 @@ class CTAPIStaffBusiness extends BasicPublicCTAPIBusiness
             case 2:// 城市分站
                 break;
             case 4:// 城市代理
-                if(empty($staffCityPartner))  throws('城市代理信息不存在！');
-                if($staffCityPartner['status'] != 1)  throws('不是审核通过状态！');
+//                if(empty($staffCityPartner))  throws('城市代理信息不存在！');
+//                if($staffCityPartner['status'] != 1)  throws('不是审核通过状态！');
                 break;
             case 8:// 商家
-                if(empty($staffSeller))  throws('商家信息不存在！');
-                if($staffSeller['status'] != 1)  throws('不是审核通过状态！');
+//                if(empty($staffSeller))  throws('商家信息不存在！');
+//                if($staffSeller['status'] != 1)  throws('不是审核通过状态！');
                 break;
             case 16:// 店铺
-                if(empty($staffShop))  throws('店铺信息不存在！');
-                if($staffShop['status'] != 1)  throws('不是审核通过状态！');
+//                if(empty($staffShop))  throws('店铺信息不存在！');
+//                if($staffShop['status'] != 1)  throws('不是审核通过状态！');
                 break;
             case 32:// 快跑人员
                 break;

@@ -180,9 +180,9 @@ class CTAPICityBusiness extends BasicPublicCTAPIBusiness
             }
             $data_list[$k]['cityPath'] = implode(' -> ', $temCitys);
             // 收费标准
-            if(isset($v['feescale']) || is_null($v['feescale']) ){
-                $data_list[$k]['feescale_id'] = $v['feescale']['id'] ?? 0;
-            }
+//            if(isset($v['feescale']) || is_null($v['feescale']) ){
+//                $data_list[$k]['feescale_id'] = $v['feescale']['id'] ?? 0;
+//            }
 //            // 公司名称
 //            $data_list[$k]['company_name'] = $v['company_info']['company_name'] ?? '';
 //            if(isset($data_list[$k]['company_info'])) unset($data_list[$k]['company_info']);

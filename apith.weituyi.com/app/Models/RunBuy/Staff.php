@@ -146,34 +146,34 @@ class Staff extends BasePublicModel
     /**
      * 获取员工对应的城市合伙人--一维
      */
-    public function cityPartner()
-    {
-        return $this->belongsTo('App\Models\RunBuy\CityPartner', 'city_partner_id', 'id');
-    }
+//    public function cityPartner()
+//    {
+//        return $this->belongsTo('App\Models\RunBuy\CityPartner', 'city_partner_id', 'id');
+//    }
 
     /**
      * 获取员工对应的商家--一维
      */
-    public function seller()
-    {
-        return $this->belongsTo('App\Models\RunBuy\Seller', 'seller_id', 'id');
-    }
+//    public function seller()
+//    {
+//        return $this->belongsTo('App\Models\RunBuy\Seller', 'seller_id', 'id');
+//    }
 
     /**
      * 获取员工对应的店铺--一维
      */
-    public function shop()
-    {
-        return $this->belongsTo('App\Models\RunBuy\Shop', 'shop_id', 'id');
-    }
+//    public function shop()
+//    {
+//        return $this->belongsTo('App\Models\RunBuy\Shop', 'shop_id', 'id');
+//    }
 
     /**
      * 获取关联到的钱包---一维
      */
-    public function wallet()
-    {
-        return $this->hasOne('App\Models\RunBuy\Wallet', 'staff_id', 'id');
-    }
+//    public function wallet()
+//    {
+//        return $this->hasOne('App\Models\RunBuy\Wallet', 'staff_id', 'id');
+//    }
 
     /**
      * 获取员工对应的身份证正面--一维
@@ -194,18 +194,18 @@ class Staff extends BasePublicModel
     /**
      * 获取员工的地址-二维
      */
-    public function address()
-    {
-        return $this->hasMany('App\Models\RunBuy\CommonAddr', 'ower_id', 'id');
-    }
+//    public function address()
+//    {
+//        return $this->hasMany('App\Models\RunBuy\CommonAddr', 'ower_id', 'id');
+//    }
 
     /**
      * 获取员工的钱包操作记录-二维
      */
-    public function walletRecord()
-    {
-        return $this->hasMany('App\Models\RunBuy\WalletRecord', 'staff_id', 'id');
-    }
+//    public function walletRecord()
+//    {
+//        return $this->hasMany('App\Models\RunBuy\WalletRecord', 'staff_id', 'id');
+//    }
 
 
 }

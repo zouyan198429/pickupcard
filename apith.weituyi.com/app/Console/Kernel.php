@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Business\CompanyExamStaffBusiness;
 use App\Business\CompanyWorkDoingBusiness;
+use App\Business\DB\RunBuy\ActivityDBBusiness;
 use App\Business\DB\RunBuy\CityDBBusiness;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -38,12 +39,15 @@ class Kernel extends ConsoleKernel
 //        $schedule->call(function () {
 //            CompanyExamStaffBusiness::autoExamStaff();// 在线考试自动交卷
 //        })->everyMinute();
+//        $schedule->call(function () {
+//            CityDBBusiness::autoCityOnLine();// 跑城市店铺营业中脚本
+//        })->everyMinute();// ->everyFiveMinutes();//	每五分钟运行一次任务 ->everyMinute();
+//        $schedule->call(function () {
+//            CityDBBusiness::autoCityShopSalesVolume();// 跑城市店铺月销量最近30天脚本
+//        })->everyThirtyMinutes();
         $schedule->call(function () {
-            CityDBBusiness::autoCityOnLine();// 跑城市店铺营业中脚本
+            ActivityDBBusiness::autoChangeStatus();// 跑提货活动开始及过期脚本
         })->everyMinute();// ->everyFiveMinutes();//	每五分钟运行一次任务 ->everyMinute();
-        $schedule->call(function () {
-            CityDBBusiness::autoCityShopSalesVolume();// 跑城市店铺月销量最近30天脚本
-        })->everyThirtyMinutes();
     }
 
     /**

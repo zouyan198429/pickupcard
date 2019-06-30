@@ -57,7 +57,77 @@ Route::post('admin/city/import', 'Admin\CityController@import');// 导入excel
 Route::post('admin/city/ajax_get_ids', 'Admin\CityController@ajax_get_ids');// 获得查询所有记录的id字符串，多个逗号分隔
 Route::any('admin/city/ajax_selected', 'Admin\CityController@ajax_selected');//ajax选择中记录/更新记录
 
+//商品
+Route::post('admin/products/ajax_alist', 'Admin\ProductController@ajax_alist');//ajax获得列表数据
+Route::post('admin/products/ajax_del', 'Admin\ProductController@ajax_del');// 删除
+Route::post('admin/products/ajax_save', 'Admin\ProductController@ajax_save');// 新加/修改
+Route::post('admin/products/ajax_get_child', 'Admin\ProductController@ajax_get_child');// 根据部门id,小组id获得子类员工数组[kv一维数组]
+Route::post('admin/products/ajax_get_areachild', 'Admin\ProductController@ajax_get_areachild');// 根据区县id,街道id获得子类员工数组[kv一维数组]
+Route::post('admin/products/ajax_import_staff','Admin\ProductController@ajax_import'); // 导入员工
 
+
+Route::post('admin/products/import', 'Admin\ProductController@import');// 导入excel
+Route::post('admin/products/ajax_get_ids', 'Admin\ProductController@ajax_get_ids');// 获得查询所有记录的id字符串，多个逗号分隔
+
+
+//提货活动
+Route::post('admin/activity/ajax_alist', 'Admin\ActivityController@ajax_alist');//ajax获得列表数据
+Route::post('admin/activity/ajax_del', 'Admin\ActivityController@ajax_del');// 删除
+Route::any('admin/activity/ajax_save', 'Admin\ActivityController@ajax_save');// 新加/修改
+Route::post('admin/activity/ajax_get_child', 'Admin\ActivityController@ajax_get_child');// 根据部门id,小组id获得子类员工数组[kv一维数组]
+Route::post('admin/activity/ajax_get_areachild', 'Admin\ActivityController@ajax_get_areachild');// 根据区县id,街道id获得子类员工数组[kv一维数组]
+Route::post('admin/activity/ajax_import_staff','Admin\ActivityController@ajax_import'); // 导入员工
+
+
+Route::post('admin/activity/import', 'Admin\ActivityController@import');// 导入excel
+Route::post('admin/activity/ajax_get_ids', 'Admin\ActivityController@ajax_get_ids');// 获得查询所有记录的id字符串，多个逗号分隔
+
+//兑换码
+Route::post('admin/codes/ajax_alist', 'Admin\CodesController@ajax_alist');//ajax获得列表数据
+Route::post('admin/codes/ajax_del', 'Admin\CodesController@ajax_del');// 删除
+Route::post('admin/codes/ajax_save', 'Admin\CodesController@ajax_save');// 新加/修改
+Route::post('admin/codes/ajax_get_child', 'Admin\CodesController@ajax_get_child');// 根据部门id,小组id获得子类员工数组[kv一维数组]
+Route::post('admin/codes/ajax_get_areachild', 'Admin\CodesController@ajax_get_areachild');// 根据区县id,街道id获得子类员工数组[kv一维数组]
+Route::post('admin/codes/ajax_import_staff','Admin\CodesController@ajax_import'); // 导入员工
+
+
+Route::post('admin/codes/import', 'Admin\CodesController@import');// 导入excel
+Route::post('admin/codes/ajax_get_ids', 'Admin\CodesController@ajax_get_ids');// 获得查询所有记录的id字符串，多个逗号分隔
+
+//收货地址
+Route::any('admin/addrs/ajax_alist', 'Admin\AddrsController@ajax_alist');//ajax获得列表数据
+Route::post('admin/addrs/ajax_del', 'Admin\AddrsController@ajax_del');// 删除
+Route::post('admin/addrs/ajax_save', 'Admin\AddrsController@ajax_save');// 新加/修改
+Route::post('admin/addrs/ajax_get_child', 'Admin\AddrsController@ajax_get_child');// 根据部门id,小组id获得子类员工数组[kv一维数组]
+Route::post('admin/addrs/ajax_get_areachild', 'Admin\AddrsController@ajax_get_areachild');// 根据区县id,街道id获得子类员工数组[kv一维数组]
+Route::post('admin/addrs/ajax_import_staff','Admin\AddrsController@ajax_import'); // 导入员工
+
+
+Route::post('admin/addrs/import', 'Admin\AddrsController@import');// 导入excel
+Route::post('admin/addrs/ajax_get_ids', 'Admin\AddrsController@ajax_get_ids');// 获得查询所有记录的id字符串，多个逗号分隔
+
+
+// 微网站
+Route::any('web/ajax_login', 'Web\IndexController@ajax_login');// 登陆
+
+//城市
+//Route::any('web/city/ajax_alist', 'Web\CityController@ajax_alist');//ajax获得列表数据
+//Route::post('web/city/ajax_del', 'Web\CityController@ajax_del');// 删除
+//Route::post('web/city/ajax_save', 'Web\CityController@ajax_save');// 新加/修改
+Route::post('web/city/ajax_get_child', 'Web\CityController@ajax_get_child');// 根据部门id,小组id获得子类员工数组[kv一维数组]
+Route::post('web/city/ajax_get_areachild', 'Web\CityController@ajax_get_areachild');// 根据区县id,街道id获得子类员工数组[kv一维数组]
+//Route::post('web/city/ajax_import_staff','Web\CityController@ajax_import'); // 导入员工
+
+//Route::post('web/city/import', 'Web\CityController@import');// 导入excel
+Route::post('web/city/ajax_get_ids', 'Web\CityController@ajax_get_ids');// 获得查询所有记录的id字符串，多个逗号分隔
+//Route::any('web/city/ajax_selected', 'Web\CityController@ajax_selected');//ajax选择中记录/更新记录
+
+//收货地址
+Route::any('web/addrs/ajax_save', 'Web\AddrsController@ajax_save');// 新加/修改
+
+// 城市
+
+Route::any('web/city/ajax_get_child', 'Web\CityController@ajax_get_child');// 根据部门id,小组id获得子类员工数组[kv一维数组]
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

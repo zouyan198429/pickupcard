@@ -46,7 +46,7 @@
                     <input type="text" class="inp wnormal"  name="code" value="{{ $info['code'] or '' }}" placeholder="请输入城市代码" />
                 </td>
             </tr>
-            <tr>
+            <tr style="display: none;">
                 <th>是否城市分站<span class="must">*</span></th>
                 <td>
                     @foreach ($isCitySite as $k=>$txt)
@@ -54,7 +54,7 @@
                     @endforeach
                 </td>
             </tr>
-            <tr>
+            <tr style="display: none;">
                 <th>类型<span class="must">*</span></th>
                 <td>
                     @foreach ($cityType as $k=>$txt)
@@ -62,7 +62,7 @@
                     @endforeach
                 </td>
             </tr>
-            <tr>
+            <tr  style="display: none;">
                 <th>经纬度<span class="must"></span></th>
                 <td>
                     <span class="latlngtxt">{{ $info['latitude'] or '纬度' }}，{{ $info['longitude'] or '经度' }}</span>

@@ -22,7 +22,7 @@
 
             <form method="post"  id="addForm" >
             <div class="layui-form" lay-filter="">
-              <div class="layui-form-item">
+              <div class="layui-form-item" style="display: none;">
                 <label class="layui-form-label">我的角色</label>
                 <div class="layui-input-inline">
                   <select name="admin_type" lay-verify="">

@@ -347,6 +347,87 @@ class Tool
         return $password;
     }
 
+    /**
+     * 根据字符集生成随机字符串
+     *
+     * @param int $type 字符串类型 可以加起来  1小写字母 ;2大写字母;4数字;8自定义字符串
+     * @param int $length 字符串长度
+     * @param boolean $repeated 是否可重复 true：可重复 ; false：不可重复
+     * @param string $charsRemove 需要排除/移除的字符
+     * @param string $charsSelf 字定义字符串[type=8时：加入字符]
+     *
+     * @return string
+     */
+    public static function getRandChars($type = 0, $length = 6, $repeated = true, $charsRemove = '', $charsSelf = ''){
+        $charsLower = 'abcdefghijklmnopqrstuvwxyz';
+        $charsUpper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charNumber = '0123456789';
+        $chars = '';
+        if( ($type & 1) == 1) $chars .= $charsLower;
+        if( ($type & 2) == 2) $chars .= $charsUpper;
+        if( ($type & 4) == 4) $chars .= $charNumber;
+        if( ($type & 8) == 8) $chars .= $charsSelf;
+
+        // 排除/移除字符
+        if(strlen($charsRemove) > 0){
+            $rmLeng = strlen($charsRemove);
+            for($k = 0; $k < $rmLeng; $k++ ){
+                $chars = str_replace($charsRemove[$k],'',$chars);
+            }
+        }
+
+        $reStr = '';
+        for ($i = 0; $i < $length; $i++) {
+            $temChar = $chars[mt_rand(0, strlen($chars) - 1)];
+            $reStr .= $temChar;
+            if( !$repeated ) $chars = str_replace($temChar,'',$chars);
+        }
+        return $reStr;
+    }
+
+    /**
+     * 根据字符集生成随机字符串
+     *
+     * @param array $charConfig 字符配置
+    $charConfig = [
+    [
+    'type' => 1,// 字符串类型 可以加起来  1小写字母 ;2大写字母;4数字;8自定义字符串
+    'length' => 6,// 字符串长度
+    'repeated' => true,// 是否可重复 true：可重复 ; false：不可重复
+    'charsRemove' => '',// 需要排除/移除的字符
+    'charsSelf' => '',// 字定义字符串[type=8时：加入字符]
+    ],
+    ];
+     * @param boolean $isRand 是否打乱顺序 true：打乱顺序 ; false：按上面配置顺序来
+     *
+     * @return string
+     */
+    public static function createRandChars($charConfig = [], $isRand = true){
+        $chars = '';
+        foreach( $charConfig as $v ){
+            $temType = $v['type'] ?? 0;
+            $temLength = $v['length'] ?? 0;
+            $temRepeated = $v['repeated'] ?? true ;
+            $temCharsRemove = $v['charsRemove'] ?? '';
+            $temCharsSelf = $v['charsSelf'] ?? '';
+            $chars .= static::getRandChars($temType, $temLength, $temRepeated, $temCharsRemove, $temCharsSelf);
+        }
+        $length = strlen($chars);
+        if( !$isRand || $length <= 1) return $chars;// 不用打乱顺序，直接返回
+        // 是否再次打乱顺序
+        $reStr = '';
+        for ($i = 0; $i < $length; $i++) {
+            $temRandNum = mt_rand(0, strlen($chars) - 1);
+            $temChar = $chars[$temRandNum];
+            $reStr .= $temChar;
+            // $chars = str_replace($temChar,'',$chars);// 如果有重复的，则会替换多个的可能
+            // unset($chars[$temRandNum]);// 不能操作字符
+            $chars = substr_replace($chars,'',$temRandNum, 1);
+        }
+        return $reStr;
+    }
+
+
     //----------------- 单个redis锁-------------------
     /**
      * 获得锁对象

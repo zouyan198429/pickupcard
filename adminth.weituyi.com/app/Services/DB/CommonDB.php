@@ -598,10 +598,14 @@ class CommonDB
                 // ['company_id', $company_id]
             ]
         ];
-        if (strpos($id, ',') === false) { // 单条
-            array_push($queryParams['where'],['id', $id]);
+        if(is_array($id)) {
+            $queryParams['whereIn']['id'] = $id;
         }else{
-            $queryParams['whereIn']['id'] = explode(',',$id);
+            if (strpos($id, ',') === false) { // 单条
+                array_push($queryParams['where'],['id', $id]);
+            }else{
+                $queryParams['whereIn']['id'] = explode(',',$id);
+            }
         }
         return static::del($modelObj, $queryParams);
     }

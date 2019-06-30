@@ -65,48 +65,48 @@ class City extends BasePublicModel
     /**
      * 获取城市分站的店铺-二维
      */
-    public function cityShops()
-    {
-        return $this->hasMany('App\Models\RunBuy\Shop', 'city_site_id', 'id');
-    }
+//    public function cityShops()
+//    {
+//        return $this->hasMany('App\Models\RunBuy\Shop', 'city_site_id', 'id');
+//    }
 
     /**
      * 获取城市分站的人员-二维
      */
-    public function cityStaffs()
-    {
-        return $this->hasMany('App\Models\RunBuy\Staff', 'city_site_id', 'id');
-    }
+//    public function cityStaffs()
+//    {
+//        return $this->hasMany('App\Models\RunBuy\Staff', 'city_site_id', 'id');
+//    }
 
     /**
      * 获取城市分站的店铺商品-二维
      */
-    public function cityShopGoods()
-    {
-        return $this->hasMany('App\Models\RunBuy\ShopGoods', 'city_site_id', 'id');
-    }
+//    public function cityShopGoods()
+//    {
+//        return $this->hasMany('App\Models\RunBuy\ShopGoods', 'city_site_id', 'id');
+//    }
 
     /**
      * 获取城市分站的属性-二维
      */
-    public function props()
-    {
-        return $this->hasMany('App\Models\RunBuy\Prop', 'city_site_id', 'id');
-    }
+//    public function props()
+//    {
+//        return $this->hasMany('App\Models\RunBuy\Prop', 'city_site_id', 'id');
+//    }
 
     /**
      * 获取关联到的收费标准---一维
      */
-    public function feescale()
-    {
-        return $this->hasOne('App\Models\RunBuy\FeeScale', 'city_site_id', 'id');
-    }
+//    public function feescale()
+//    {
+//        return $this->hasOne('App\Models\RunBuy\FeeScale', 'city_site_id', 'id');
+//    }
 
     /**
      * 获取关联到的收费标准---一维
      */
-    public function feescaletime()
-    {
-        return $this->hasOne('App\Models\RunBuy\FeeScaleTime', 'city_site_id', 'id');
-    }
+//    public function feescaletime()
+//    {
+//        return $this->hasOne('App\Models\RunBuy\FeeScaleTime', 'city_site_id', 'id');
+//    }
 }

@@ -23,18 +23,18 @@
     <form onsubmit="return false;" class="form-horizontal" role="form" method="post" id="search_frm" action="#">
       <div class="msearch fr"  style="width:700px;">
 
-        <select class="wmini" name="is_city_site" style="width: 70px;">
-          <option value="">请选择是否分站</option>
-          @foreach ($isCitySite as $k=>$txt)
-            <option value="{{ $k }}"  @if(isset($defaultIsCitySite) && $defaultIsCitySite == $k) selected @endif >{{ $txt }}</option>
-          @endforeach
-        </select>
-        <select class="wmini" name="city_type" style="width: 70px;">
-          <option value="">请选择类型</option>
-          @foreach ($cityType as $k=>$txt)
-            <option value="{{ $k }}"  @if(isset($defaultCityType) && $defaultCityType == $k) selected @endif >{{ $txt }}</option>
-          @endforeach
-        </select>
+        {{--<select class="wmini" name="is_city_site" style="width: 70px;">--}}
+          {{--<option value="">请选择是否分站</option>--}}
+          {{--@foreach ($isCitySite as $k=>$txt)--}}
+            {{--<option value="{{ $k }}"  @if(isset($defaultIsCitySite) && $defaultIsCitySite == $k) selected @endif >{{ $txt }}</option>--}}
+          {{--@endforeach--}}
+        {{--</select>--}}
+        {{--<select class="wmini" name="city_type" style="width: 70px;">--}}
+          {{--<option value="">请选择类型</option>--}}
+          {{--@foreach ($cityType as $k=>$txt)--}}
+            {{--<option value="{{ $k }}"  @if(isset($defaultCityType) && $defaultCityType == $k) selected @endif >{{ $txt }}</option>--}}
+          {{--@endforeach--}}
+        {{--</select>--}}
 
         <select class="wmini" name="province_id"  style="width: 80px;">
           <option value="">请选择省</option>
@@ -96,8 +96,8 @@
       <th>拼音首字母</th>
       <th>排序[降序]</th>
       {{--<th>电话</th>--}}
-      <th>是否城市分站</th>
-      <th>热门城市</th>
+      {{--<th>是否城市分站</th>--}}
+      {{--<th>热门城市</th>--}}
       <th>操作</th>
     </tr>
     </thead>

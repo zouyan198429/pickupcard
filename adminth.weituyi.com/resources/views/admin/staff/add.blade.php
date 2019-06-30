@@ -88,7 +88,7 @@
                     <input type="text" class="inp wnormal"  style="width:600px;" name="addr" value="{{ $info['addr'] or '' }}" placeholder="请输入详细地址"  />
                 </td>
             </tr>
-            <tr>
+            <tr style="display: none;">
                 <th>经纬度<span class="must"></span></th>
                 <td>
                     <span class="latlngtxt">{{ $info['latitude'] or '纬度' }}，{{ $info['longitude'] or '经度' }}</span>

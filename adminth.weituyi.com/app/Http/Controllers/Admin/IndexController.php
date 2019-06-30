@@ -6,6 +6,7 @@ use App\Business\Controller\API\RunBuy\CTAPIStaffBusiness;
 use App\Http\Controllers\WorksController;
 use App\Services\Request\CommonRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class IndexController extends WorksController
 {
@@ -55,6 +56,8 @@ class IndexController extends WorksController
     public function login(Request $request)
     {
         $reDataArr = $this->reDataArr;
+
+        Log::info('日志测试---login页',[]);
         return view('admin.login', $reDataArr);
     }
 

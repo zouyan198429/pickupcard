@@ -18,8 +18,8 @@
 
     <div class="layadmin-user-login-main">
       <div class="layadmin-user-login-box layadmin-user-login-header">
-        <h2>大后台</h2>
-        <p>极递网跑腿系统</p>
+        <h2>管理后台</h2>
+        <p>蒙驴驴乳后台系统</p>
       </div>
       <form class="am-form" action="#"  method="post"  id="addForm">
       <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
