@@ -16,7 +16,7 @@
 
   <div class="wrap">
     <div class="indpic">
-      <img src="{{asset('web/images/p1.jpg')}}" alt="">
+      <img src="{{ asset('web/images/p' . $product_id . '.jpg') }}" alt="">
     </div>
     <form class="am-form" action="#"  method="post"  id="addForm">
     <div class="indmain">

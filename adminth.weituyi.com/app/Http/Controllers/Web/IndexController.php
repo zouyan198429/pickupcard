@@ -21,9 +21,12 @@ class IndexController extends BaseWebController
     {
         $reDataArr = $this->reDataArr;
         // $code_id = CommonRequest::getInt($request, 'code_id');
+        // 获得兑换码信息
+        $codeInfo = CTAPIActivityCodeBusiness::getInfoData($request, $this, $code_id, ['product_id'], '', 1);
 
         $reDataArr['code_id'] =  $code_id;
         $reDataArr['code'] =  $code;
+        $reDataArr['product_id'] = $codeInfo['product_id'] ?? 0;
 
         // Log::info('日志测试---search页',[]);
         return view('web.search', $reDataArr);
