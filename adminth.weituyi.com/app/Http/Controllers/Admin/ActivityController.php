@@ -69,7 +69,7 @@ class ActivityController extends WorksController
 
         if ($id > 0) { // 获得详情数据
             $operate = "修改";
-            $info = CTAPIActivityBusiness::getInfoData($request, $this, $id, [], '');
+            $info = CTAPIActivityBusiness::getInfoData($request, $this, $id, [], ['siteResources']);
         }
         // $reDataArr = array_merge($reDataArr, $resultDatas);
 
@@ -97,11 +97,24 @@ class ActivityController extends WorksController
         // CommonRequest::judgeEmptyParams($request, 'id', $id);
         $product_id = CommonRequest::getInt($request, 'product_id');
         $activity_name = CommonRequest::get($request, 'activity_name');
+        $activity_tips = CommonRequest::get($request, 'activity_tips');
         $begin_time = CommonRequest::get($request, 'begin_time');
         $end_time = CommonRequest::get($request, 'end_time');
         $begin_num = CommonRequest::getInt($request, 'begin_num');
         $total_num = CommonRequest::getInt($request, 'total_num');
 //        $sort_num = CommonRequest::getInt($request, 'sort_num');
+
+        // 图片资源
+        $resource_id = CommonRequest::get($request, 'resource_id');
+        if(is_string($resource_id) || is_numeric($resource_id)){
+            $resource_id = explode(',' ,$resource_id);
+        }
+
+        $resource_ids = implode(',', $resource_id);
+        if(!empty($resource_ids)) $resource_ids = ',' . $resource_ids . ',';
+
+
+
         // 判断时间
         // 判断开始结束日期[ 可为空,有值的话-；4 开始日期 不能大于 >  当前日；32 结束日期 不能大于 >  当前日;256 开始日期 不能大于 >  结束日期]
         Tool::judgeBeginEndDate($begin_time, $end_time, 1 + 2 + 256);
@@ -112,11 +125,14 @@ class ActivityController extends WorksController
         $saveData = [
             'product_id' => $product_id,
             'activity_name' => $activity_name,
+            'activity_tips' => $activity_tips,
             'begin_time' => $begin_time,
             'end_time' => $end_time,
             'begin_num' => $begin_num,
             'total_num' => $total_num,
 //            'sort_num' => $sort_num,
+            'resource_ids' => $resource_ids,// 图片资源id串(逗号分隔-未尾逗号结束)
+            'resourceIds' => $resource_id,// 此下标为图片资源关系
         ];
 
 //        if($id <= 0) {// 新加;要加入的特别字段
@@ -138,7 +154,7 @@ class ActivityController extends WorksController
      */
     public function ajax_alist(Request $request){
         $this->InitParams($request);
-        return  CTAPIActivityBusiness::getList($request, $this, 2 + 4, [], ['productInfo', 'productHistoryInfo', 'oprateStaff', 'oprateStaffHistory']);
+        return  CTAPIActivityBusiness::getList($request, $this, 2 + 4, [], ['productInfo', 'productHistoryInfo', 'oprateStaff', 'oprateStaffHistory', 'siteResources']);
     }
 
     /**

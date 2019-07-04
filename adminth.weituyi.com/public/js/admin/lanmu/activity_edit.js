@@ -26,11 +26,21 @@ function parent_reset_list(){
     parent.layer.close(PARENT_LAYER_INDEX);
 }
 
+window.onload = function() {
+    var layer_index = layer.load();
+    initPic();
+    layer.close(layer_index)//手动关闭
+};
+function initPic(){
+    baguetteBox.run('.baguetteBoxOne');
+    // baguetteBox.run('.baguetteBoxTwo');
+}
+
 $(function(){
     //执行一个laydate实例
     // 开始日期
     layui.laydate.render({
-        elem: '.begin_time' //指定元素
+        elem: '#begin_time' //指定元素
         ,type: 'date'
         ,value: BEGIN_DATE// '2018-08-18' //必须遵循format参数设定的格式
         // ,min: get_now_format()//'2017-1-1'
@@ -39,7 +49,7 @@ $(function(){
     });
     // 结束日期
     layui.laydate.render({
-        elem: '.end_time' //指定元素
+        elem: '#end_time' //指定元素
         ,type: 'date'
         ,value: END_DATE// '2018-08-18' //必须遵循format参数设定的格式
         // ,min: get_now_format()//'2017-1-1'
@@ -71,6 +81,7 @@ function ajax_form(){
         return false;
     }
 
+
     // 所属商品
     var product_id = $('select[name=product_id]').val();
     var judge_seled = judge_validate(1,'所属商品',product_id,true,'digit','','');
@@ -84,7 +95,6 @@ function ajax_form(){
     if(!judge_validate(4,'活动标题',activity_name,true,'length',1,50)){
         return false;
     }
-
 
     // 开始日期
     var begin_time = $('input[name=begin_time]').val();
@@ -124,6 +134,23 @@ function ajax_form(){
         return false;
     }
 
+    // 判断是否上传图片
+    var uploader = $('#myUploader').data('zui.uploader');
+    var files = uploader.getFiles();
+    var filesCount = files.length;
+
+    var imgObj = $('#myUploader').closest('.resourceBlock').find(".upload_img");
+
+    if( (!judge_list_checked(imgObj,3)) && filesCount <=0 ) {//没有选中的
+        layer_alert('请选择要上传的图片！',3,0);
+        return false;
+    }
+
+
+    var activity_tips = $('input[name=activity_tips]').val();
+    if(!judge_validate(4,'活动提示',activity_tips,true,'length',1,200)){
+        return false;
+    }
     // var work_num = $('input[name=work_num]').val();
     // if(!judge_validate(4,'工号',work_num,true,'length',1,30)){
     //     return false;
@@ -158,8 +185,28 @@ function ajax_form(){
     //     return false;
     // }
 
-
     // 验证通过
+    // 上传图片
+    if(filesCount > 0){
+        var layer_index = layer.load();
+        uploader.start();
+        var intervalId = setInterval(function(){
+            var status = uploader.getState();
+            console.log('获取上传队列状态代码',uploader.getState());
+            if(status == 1){
+                layer.close(layer_index)//手动关闭
+                clearInterval(intervalId);
+                ajax_save(id);
+            }
+        },1000);
+    }else{
+        ajax_save(id);
+    }
+
+}
+
+// 验证通过后，ajax保存
+function ajax_save(id){
     SUBMIT_FORM = false;//标记为已经提交过
     var data = $("#addForm").serialize();
     console.log(SAVE_URL);

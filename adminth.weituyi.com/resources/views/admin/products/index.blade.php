@@ -59,7 +59,7 @@
           <!-- <span class="lbl">全选</span> -->
         </label>
       </th>
-      {{--<th>ID</th>--}}
+      <th>ID</th>
       <th>商品名称</th>
       <th>编码前缀</th>
       <th>排序[降序]</th>

@@ -16,7 +16,11 @@
 
   <div class="wrap">
     <div class="indpic">
-      <img src="{{ asset('web/images/p' . $product_id . '.jpg') }}" alt="">
+
+      @foreach ($resource_list as $k => $v)
+        <img src="{{ $v['resource_url'] }}" alt="">
+      @endforeach
+        {{--<img src="{ { asset('web/images/p' . $product_id . '.jpg') }}" alt="">--}}
     </div>
     <form class="am-form" action="#"  method="post"  id="addForm">
     <div class="indmain">

@@ -77,6 +77,16 @@ class ActivityDBBusiness extends BasePublicDBBusiness
         if(isset($saveData['total_num']) && ($saveData['total_num'] <= 0 || $saveData['total_num'] > 99999) ){
             throws('编号数量必须>0且<=99999！');
         }
+
+        // 是否有图片资源
+        $hasResource = false;
+        $resourceIds = [];
+        if(isset($saveData['resourceIds'])){
+            $hasResource = true;
+            $resourceIds = $saveData['resourceIds'];
+            unset($saveData['resourceIds']);
+        }
+
         // 判断商品是否存在
         $pre_code = '';// 编码前缀
         if( isset($saveData['product_id']) && $saveData['product_id'] > 0 ){
@@ -198,6 +208,12 @@ class ActivityDBBusiness extends BasePublicDBBusiness
                 }
 
             }
+
+            // 同步修改图片资源关系
+            if($hasResource){
+                static::saveResourceSync($id, $resourceIds, $operate_staff_id, $operate_staff_id_history, []);
+            }
+
             if($recreateCode){
                 Tool::arrAppendKeys($codeListArr, ['product_id' => $product_id, 'product_id_history' => $product_id_history
                     , 'activity_id' => $id, 'status' => 1

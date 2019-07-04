@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Business\Controller\API\RunBuy\CTAPIActivityCodeBusiness;
 use App\Services\Request\CommonRequest;
+use App\Services\Tool;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -22,7 +23,20 @@ class IndexController extends BaseWebController
         $reDataArr = $this->reDataArr;
         // $code_id = CommonRequest::getInt($request, 'code_id');
         // 获得兑换码信息
-        $codeInfo = CTAPIActivityCodeBusiness::getInfoData($request, $this, $code_id, ['product_id'], '', 1);
+        $codeInfo = CTAPIActivityCodeBusiness::getInfoData($request, $this, $code_id, ['product_id', 'activity_id'],  ['activityInfo.siteResources'], 1);
+
+        // 资源url
+        $resource_list = [];
+        if(isset($codeInfo['activity_info'])){
+            $activity_info = $codeInfo['activity_info'] ?? [];
+            Tool::resourceUrl($activity_info, 2);
+            $resource_list = Tool::formatResource($activity_info['site_resources'], 2);
+
+            if(isset($codeInfo['activity_info']['site_resources']) ) unset($codeInfo['activity_info']['site_resources']);
+            unset($codeInfo['activity_info']);
+        }
+        $reDataArr['resource_list'] = $resource_list;
+
 
         $reDataArr['code_id'] =  $code_id;
         $reDataArr['code'] =  $code;

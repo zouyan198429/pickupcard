@@ -13,8 +13,21 @@ $(function(){
 function reset_list_self(is_read_page, ajax_async, reset_total, do_num){
     console.log('is_read_page', typeof(is_read_page));
     console.log('ajax_async', typeof(ajax_async));
+    var layer_index = layer.load();
     reset_list(is_read_page, false, reset_total, do_num);
     // initList();
+    initPic();
+    layer.close(layer_index)//手动关闭
+}
+
+window.onload = function() {
+    $('.search_frm').trigger("click");// 触发搜索事件
+    // reset_list_self(false, false, true, 2);
+    // initPic();
+};
+function initPic(){
+    baguetteBox.run('.baguetteBoxOne');
+    // baguetteBox.run('.baguetteBoxTwo');
 }
 
 //业务逻辑部分
@@ -35,6 +48,7 @@ var otheraction = {
     document.write("");
     document.write("        <%for(var i = 0; i<data_list.length;i++){");
     document.write("        var item = data_list[i];");
+    document.write("        var resource_list = item.resource_list;");
     document.write("        var can_modify = false;");
    document.write("        if( item.status == 1 ){");
     document.write("        can_modify = true;");
@@ -56,6 +70,13 @@ var otheraction = {
     document.write("            <td><%=item.begin_num%><\/td>");
     document.write("            <td><%=item.total_num%><\/td>");
     document.write("            <td><%=item.used_num%><\/td>");
+    document.write("            <td><%for(var j = 0; j<resource_list.length;j++){");
+    document.write("                var jitem = resource_list[j];");
+    document.write("                 %>");
+    document.write("               <a href=\"<%=jitem.resource_url%>\">");
+    document.write("                <img  src=\"<%=jitem.resource_url%>\"  style=\"width:60px;\">");
+    document.write("              </a>");
+    document.write("            <%}%><\/td>");
     document.write("            <td><%=item.status_text%><\/td>");
     // document.write("            <td><%=item.sort_num%><\/td>");
     document.write("            <td>");

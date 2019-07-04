@@ -79,6 +79,7 @@
       <th>起始编码</th>
       <th>提货卡总量</th>
       <th>已兑换数量</th>
+      <th>图片</th>
       <th>状态</th>
       {{--<th>排序[降序]</th>--}}
       {{--<th>添加人</th>--}}
@@ -86,7 +87,7 @@
       <th>操作</th>
     </tr>
     </thead>
-    <tbody id="data_list">
+    <tbody id="data_list"  class=" baguetteBoxOne gallery">
     </tbody>
   </table>
   <div class="mmfoot">
@@ -126,7 +127,11 @@
 
       var CODE_LIST_URL = "{{ url('admin/codes') }}"; //兑换码管理
   </script>
-  <script src="{{asset('js/common/list.js')}}"></script>
+<link rel="stylesheet" href="{{asset('js/baguetteBox.js/baguetteBox.min.css')}}">
+<script src="{{asset('js/baguetteBox.js/baguetteBox.min.js')}}" async></script>
+{{--<script src="{{asset('js/baguetteBox.js/highlight.min.js')}}" async></script>--}}
+
+<script src="{{asset('js/common/list.js')}}"></script>
   <script src="{{ asset('js/admin/lanmu/activity.js') }}"  type="text/javascript"></script>
 </body>
 </html>
