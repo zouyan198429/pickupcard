@@ -24,20 +24,19 @@ body {
 }
 .indmain {
 	background: #fff;
-	padding: 20px 0;
+	padding: 20px 0 100px 0;
 }
 .indmain input {
 	width:80%;
 	margin:10px 10%;
 }
-.copyright {
-	position: fixed;
-	left: 0;
+.copyright {  
 	bottom: 20px;
 	font-size: 12px;
 	margin-top: 30px;
 	text-align: center;
 	margin-bottom: 20px;
+	width: 100%;
 }
 
 
@@ -120,4 +119,4 @@ body {
 	width: 100%;
 }
 
-	}
+ }

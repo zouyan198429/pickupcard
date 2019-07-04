@@ -34,7 +34,7 @@ class ExportException extends \Exception
         }else{
             $server = $_SERVER;
             $httpHost = $server['HTTP_HOST'] ?? '';
-            // return redirect(Common::urlRedirect($httpHost, 2));
+            return redirect(Common::urlRedirect($httpHost, 2));
             // return redirect('login');
         }
         // return ajaxDataArr(0, ['code' => $this->code], $this->message);
