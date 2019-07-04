@@ -77,6 +77,7 @@ var otheraction = {
     document.write("                <img  src=\"<%=jitem.resource_url%>\"  style=\"width:60px;\">");
     document.write("              </a>");
     document.write("            <%}%><\/td>");
+    document.write("            <td><%=item.activity_tips%><\/td>");
     document.write("            <td><%=item.status_text%><\/td>");
     // document.write("            <td><%=item.sort_num%><\/td>");
     document.write("            <td>");

@@ -42,6 +42,13 @@ class AddrsController extends BaseWebController
     public function ajax_save(Request $request)
     {
         $this->InitParams($request);
+        $codeInfo = $this->user_info;
+        $code_id = $codeInfo['id'];
+        // 获得兑换码信息
+        $codeInfo = CTAPIActivityCodeBusiness::getInfoData($request, $this, $code_id, ['activity_id'],  ['activityInfo'], 1);
+        $activity_info = $codeInfo['activity_info'] ?? [];
+        $activity_tips = $activity_info['activity_tips'] ?? '操作成功!！';
+
         $id = CommonRequest::getInt($request, 'id');
         // CommonRequest::judgeEmptyParams($request, 'id', $id);
 //        $work_num = CommonRequest::get($request, 'work_num');
@@ -101,6 +108,6 @@ class AddrsController extends BaseWebController
 //            $saveData = array_merge($saveData, $addNewData);
 //        }
         $resultDatas = CTAPIDeliveryAddrBusiness::addAddr($request, $this, $saveData, $id, $this->code_id, true);
-        return ajaxDataArr(1, $resultDatas, '');
+        return ajaxDataArr(1, ['result' => $resultDatas, 'activity_tips' => $activity_tips], '');
     }
 }

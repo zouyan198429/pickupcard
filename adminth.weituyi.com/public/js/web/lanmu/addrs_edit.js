@@ -249,6 +249,7 @@ function ajax_form(){
         'success' : function(ret){
             console.log(ret);
             console.log(ret.result);
+            let result = ret.result;
             if(!ret.apistatus){//失败
                 SUBMIT_FORM = true;//标记为未提交过
                 //alert('失败');
@@ -259,13 +260,15 @@ function ajax_form(){
                 // countdown_alert("操作成功!",1,5);
                 // parent_only_reset_list(false);
                 // wait_close_popus(2,PARENT_LAYER_INDEX);
-                layer.msg('操作成功！', {
+                layer.msg(result.activity_tips, {
                     icon: 1,
                     shade: 0.3,
                     time: 3000 //2秒关闭（如果不配置，默认是3秒）
                 }, function(){
                     var reset_total = true; // 是否重新从数据库获取总页数 true:重新获取,false不重新获取
                     if(id > 0) reset_total = false;
+                    // goTop('http://www.shop.sxmenglv.com');
+                    
                     // parent_reset_list_iframe_close(reset_total);// 刷新并关闭
                     //do something
                 });
