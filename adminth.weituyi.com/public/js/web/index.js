@@ -21,13 +21,30 @@ $(function(){
 function ajax_form(){
     if (!SUBMIT_FORM) return false;//false，则返回
     // 验证信息
-    var code_id = $('input[name=code_id]').val();
-    if(!judge_validate(4,'code_id',code_id,true,'digit','','')){
+    // var code_id = $('input[name=code_id]').val();
+    // if(!judge_validate(4,'code_id',code_id,true,'digit','','')){
+    //     return false;
+    // }
+
+    // 活动
+    // var activity_id = $('input[name=activity_id]:checked').val() || '';
+    // var judge_seled = judge_validate(1,'活动',activity_id,true,'digit','',"");
+    // if(judge_seled != ''){
+    //     layer_alert("请选择活动",3,0);
+    //     //err_alert('<font color="#000000">' + judge_seled + '</font>');
+    //     return false;
+    // }
+
+    var activity_id = $('select[name=activity_id]').val();
+    var judge_seled = judge_validate(1,'活动',activity_id,true,'digit','','');
+    if(judge_seled != ''){
+        layer_alert("请选择活动",3,0);
+        //err_alert('<font color="#000000">' + judge_seled + '</font>');
         return false;
     }
 
     var code = $('input[name=code]').val();
-    var judgeuser =judge_validate(1,'兑换码',code,true,'length',1,20);
+    var judgeuser =judge_validate(1,'卡号',code,true,'length',1,20);
     if(judgeuser != ''){
         layer_alert(judgeuser,3,0);
         // err_alert('<font color="#000000">' + judgeuser + '</font>');

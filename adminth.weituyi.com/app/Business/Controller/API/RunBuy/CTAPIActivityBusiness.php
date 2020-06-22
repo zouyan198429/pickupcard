@@ -571,7 +571,7 @@ class CTAPIActivityBusiness extends BasicPublicCTAPIBusiness
     // 根据父id,获得子数据kv数组
     public static function getListKV(Request $request, Controller $controller, $notLog = 0){
         $company_id = $controller->company_id;
-        $kvParams = ['key' => 'id', 'val' => 'type_name'];
+        $kvParams = ['key' => 'id', 'val' => 'activity_name'];
         $queryParams = [
             'where' => [
                 // ['id', '&' , '16=16'],
@@ -585,7 +585,8 @@ class CTAPIActivityBusiness extends BasicPublicCTAPIBusiness
 //            'select' => [
 //                'id','company_id','type_name','sort_num'
 //            ],
-            'orderBy' => ['sort_num'=>'desc', 'id'=>'desc'],
+            'orderBy' => ['id'=>'desc'],
+           //  'orderBy' => ['sort_num'=>'desc', 'id'=>'desc'],
         ];
         return static::getKVCT( $request,  $controller, '', $kvParams, [], $queryParams, $company_id, $notLog);
     }

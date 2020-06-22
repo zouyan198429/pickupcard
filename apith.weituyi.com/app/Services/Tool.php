@@ -780,6 +780,28 @@ class Tool
     }
 
     // 数组操作
+
+    /**
+     * 判断数组是否是二维数组
+     *
+     * @param array $dataList 源数据 一/二维数组
+     * @param boolean $convertMultiArr 如果是一维数组，是否转为二维数组 false:不转;true:转(注意空一维数组不会处理)
+     * @return boolean true:原数组是二维数组；false:原数组是一维数组或空数组
+     */
+    public static function isMultiArr(&$dataList, $convertMultiArr = false){
+        $isMultiArr = false; // true:二维;false:一维
+        $dataArr = is_object($dataList) ? $dataList->toArray() : $dataList;
+        foreach($dataArr as $k => $v){
+            if(is_array($v) || is_object($v)){
+                $isMultiArr = true;
+            }
+            break;
+        }
+        // 一维
+        if(!$isMultiArr && $convertMultiArr) $dataList = [$dataList];
+        return $isMultiArr;
+    }
+
     /**
      * 二维数组中每个一维数组追加指定的一维数组值
      *

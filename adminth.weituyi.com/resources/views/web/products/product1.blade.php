@@ -27,7 +27,7 @@
     <img src="{{asset('web/images/p1/p105.jpg')}}" alt="">
   </div>
   <div class="probtnbox">
-    <input type="button"  id="submitBtn" lay-submit="" lay-filter="layuiadmin-app-form-submit" value="点击提货" class="layui-btn">
+    <input type="button"  id="submitBtn" lay-submit="" lay-filter="layuiadmin-app-form-submit" value="点击提货" class="layui-btn layui-btn-normal">
   </div>
 </div>
   <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>

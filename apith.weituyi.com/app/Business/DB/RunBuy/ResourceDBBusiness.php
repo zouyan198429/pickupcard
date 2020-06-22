@@ -51,9 +51,9 @@ class ResourceDBBusiness extends BasePublicDBBusiness
      */
     public static function replaceById($saveData, $company_id, &$id, $operate_staff_id = 0, $modifAddOprate = 0){
 
-        if(isset($saveData['resource_name']) && empty($saveData['resource_name'])  ){
-            throws('资源名称不能为空！');
-        }
+//        if(isset($saveData['resource_name']) && empty($saveData['resource_name'])  ){
+//            throws('资源名称不能为空！');
+//        }
 
         // 根据类型自定义id,获得类型自定义历史id
         $type_self_id = $saveData['type_self_id'] ?? 0;

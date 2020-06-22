@@ -236,6 +236,9 @@ Route::get('admin/addrs/import_template', 'Admin\AddrsController@import_template
 // 微网站
 
 // 首页
+
+Route::get('web', 'Web\IndexController@index');// 首页
+Route::get('web/index', 'Web\IndexController@index');// 首页
 Route::get('web/search/{code_id}/{code}', 'Web\IndexController@login');// 查询页 登录
 
 // 产品相关的

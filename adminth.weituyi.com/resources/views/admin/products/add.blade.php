@@ -11,6 +11,8 @@
     @include('admin.layout_public.pagehead')
     <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/css/layui.css')}}" media="all">
     <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/admin.css')}}" media="all">
+    {{--  本页单独使用 --}}
+    <script src="{{asset('dist/lib/kindeditor/kindeditor.min.js')}}"></script>
 </head>
 <body>
 
@@ -26,9 +28,17 @@
                 </td>
             </tr>
             <tr>
-                <th>编码前缀<span class="must">*</span></th>
+                <th>编码前缀<span class="must"></span></th>
                 <td>
                     <input type="text" class="inp wnormal"  name="pre_code" value="{{ $info['pre_code'] or '' }}" placeholder="请输入编码前缀"/>
+                </td>
+            </tr>
+            <tr>
+                <th>内容<span class="must">*</span></th>
+                <td>
+                    <textarea class="kindeditor" name="content" rows="15" id="doc-ta-1" style=" width:770px;height:400px;">{!!  htmlspecialchars($info['content'] ?? '' )   !!}</textarea>
+                    {{--<textarea type="text" class="inptext wlong layui-textarea"  style=" height:500px" /></textarea>
+                    <p class="tip">根据客户描述，进行记录或备注。</p>--}}
                 </td>
             </tr>
             <tr>

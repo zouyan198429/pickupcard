@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Business\Controller\API\RunBuy\CTAPICityBusiness;
 use App\Business\Controller\API\RunBuy\CTAPIDeliveryAddrBusiness;
+use App\Business\Controller\API\RunBuy\CTAPIProductBusiness;
 use App\Http\Controllers\WorksController;
 use App\Services\Request\CommonRequest;
 use App\Services\Tool;
@@ -35,6 +36,10 @@ class AddrsController extends WorksController
         // 状态
         $reDataArr['status'] =  CTAPIDeliveryAddrBusiness::$statusArr;
         $reDataArr['defaultStatus'] = -1;// 默认状态
+        // 获得商品信息
+        $reDataArr['product_kv'] = CTAPIProductBusiness::getListKV($request, $this);
+
+        $reDataArr['defaultProduct'] = -1;// 默认
 
         return view('admin.addrs.index', $reDataArr);
     }
@@ -204,10 +209,14 @@ class AddrsController extends WorksController
      * @return mixed
      * @author zouyan(305463219@qq.com)
      */
-//    public function export(Request $request){
-//        $this->InitParams($request);
-//        CTAPIDeliveryAddrBusiness::getList($request, $this, 1 + 0);
-//    }
+    public function export(Request $request){
+        $this->InitParams($request);
+        CTAPIDeliveryAddrBusiness::getList($request, $this, 1 + 0, [], ['province', 'provinceHistory'
+            , 'city', 'cityHistory', 'area', 'areaHistory'
+            // , 'oprateStaff', 'oprateStaffHistory'
+            , 'productInfo', 'productHistoryInfo'
+            , 'activityInfo', 'codeInfo']);
+    }
 
 
     /**

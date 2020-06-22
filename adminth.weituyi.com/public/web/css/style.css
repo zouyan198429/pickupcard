@@ -24,9 +24,9 @@ body {
 }
 .indmain {
 	background: #fff;
-	padding: 20px 0 100px 0;
+	padding: 20px 0 50px 0;
 }
-.indmain input {
+.indmain input ,.indmain select {
 	width:80%;
 	margin:10px 10%;
 }

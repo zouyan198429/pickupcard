@@ -202,13 +202,19 @@ class CTAPIDeliveryAddrBusiness extends BasicPublicCTAPIBusiness
             $data_list[$k]['oprate_name'] = $oprate_name;
             if(isset($data_list[$k]['oprate_staff'])) unset($data_list[$k]['oprate_staff']);
             if(isset($data_list[$k]['oprate_staff_history'])) unset($data_list[$k]['oprate_staff_history']);
+            // 所属活动
+            $data_list[$k]['activity_name'] = $v['activity_info']['activity_name'] ?? '';
 
         }
         $result['data_list'] = $data_list;
         // 导出功能
         if($isExport == 1){
-//            $headArr = ['work_num'=>'工号', 'department_name'=>'部门'];
-//            ImportExport::export('','excel文件名称',$data_list,1, $headArr, 0, ['sheet_title' => 'sheet名称']);
+            foreach($data_list as $k => $v){
+                $data_list[$k]['addrDetail'] = $v['province_name'] . $v['city_name'] . $v['area_name'] . $v['addr'];
+            }
+            $headArr = ['code'=>'提货码', 'activity_name'=>'所属活动', 'product_name'=>'所提商品', 'created_at'=>'提货时间', 'real_name'=>'收货人',
+                'tel'=>'收货电话', 'addrDetail'=>'收货地址', 'province_name'=>'省', 'city_name'=>'市', 'area_name'=>'县', 'addr'=>'地址', 'status_text'=>'状态'];
+            ImportExport::export('','提货记录',$data_list,1, $headArr, 0, ['sheet_title' => '提货记录']);
             die;
         }
         // 非导出功能

@@ -70,12 +70,12 @@ class ActivityDBBusiness extends BasePublicDBBusiness
 
         }
 
-        if(isset($saveData['begin_num']) && ($saveData['begin_num'] <= 0 || $saveData['begin_num'] > 99999) ){
-            throws('起始编号必须>0且<=99999！');
+        if(isset($saveData['begin_num']) && ($saveData['begin_num'] <= 0 || $saveData['begin_num'] > 9999999999999999) ){
+            throws('起始编号必须>0且<=9999999999999999！');
         }
 
-        if(isset($saveData['total_num']) && ($saveData['total_num'] <= 0 || $saveData['total_num'] > 99999) ){
-            throws('编号数量必须>0且<=99999！');
+        if(isset($saveData['total_num']) && ($saveData['total_num'] <= 0 || $saveData['total_num'] > 100000) ){
+            throws('编号数量必须>0且<=100000！');
         }
 
         // 是否有图片资源
@@ -107,9 +107,16 @@ class ActivityDBBusiness extends BasePublicDBBusiness
             if($activityInfo['status'] != 1) throws('活动状态非未开始状态，不可修改');// 状态1未开始2进行中4已结束
             if( $begin_num == $activityInfo['begin_num'] && $total_num == $activityInfo['total_num'] )  $recreateCode = false;
         }
+        $end_num = $begin_num + $total_num;
         // 生成兑换码
+        $codeLen = 6;
+        $open_status = config('public.default_open_status', 1);// 兑换码 默认 启用状态1待启用2已启用
+        // 如果第一位是0，则按用户指定格式的长度
+        $begin_first_char = substr($begin_num,0,1);
+        if($begin_first_char == 0 || $begin_first_char == '0' ) $end_num = strlen($begin_num);
         $codeListArr = [];
-        $strLen = 5;// 兑换码长度
+        // 如果指定的长度放不下，则按最后一个号的长度
+        $strLen = (strlen($end_num) < $codeLen) ? $codeLen : strlen($end_num);// 兑换码长度
         if($recreateCode){
             for($k = 0; $k < $total_num; $k++){
                 // 生成兑换码
@@ -118,7 +125,7 @@ class ActivityDBBusiness extends BasePublicDBBusiness
                 // 生成密码
                 $temPassword = Tool::createRandChars([
                     [
-                        'type' => 1 + 2,// 字符串类型 可以加起来  1小写字母 ;2大写字母;4数字;8自定义字符串
+                        'type' => 4,// 1 + 2,// 字符串类型 可以加起来  1小写字母 ;2大写字母;4数字;8自定义字符串
                         'length' => 2,// 字符串长度
                         'repeated' => true,// 是否可重复 true：可重复 ; false：不可重复
                         'charsRemove' => 'oO',// 需要排除/移除的字符
@@ -136,6 +143,7 @@ class ActivityDBBusiness extends BasePublicDBBusiness
                     // 'id' => 0,
                     'code' => $temCode,
                     'code_password' => $temPassword,
+                    'open_status' => $open_status,
                 ]);
             }
         }

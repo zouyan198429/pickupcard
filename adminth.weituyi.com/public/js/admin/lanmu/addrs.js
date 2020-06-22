@@ -89,12 +89,12 @@ function reset_list_self(is_read_page, ajax_async, reset_total, do_num){
     document.write("        %>");
     document.write("");
     document.write("        <tr  <%if( item.account_status == 1){%> class=\" red \" <%}%> >");
-    // document.write("            <td>");
-    // document.write("                <label class=\"pos-rel\">");
-    // document.write("                    <input  onclick=\"action.seledSingle(this)\" type=\"checkbox\" class=\"ace check_item\" <%if( false &&  !can_modify){%> disabled <%}%>  value=\"<%=item.id%>\"\/>");
-    // document.write("                  <span class=\"lbl\"><\/span>");
-    // document.write("                <\/label>");
-    // document.write("            <\/td>");
+    document.write("            <td>");
+    document.write("                <label class=\"pos-rel\">");
+    document.write("                    <input  onclick=\"action.seledSingle(this)\" type=\"checkbox\" class=\"ace check_item\" <%if( false &&  !can_modify){%> disabled <%}%>  value=\"<%=item.id%>\"\/>");
+    document.write("                  <span class=\"lbl\"><\/span>");
+    document.write("                <\/label>");
+    document.write("            <\/td>");
     // document.write("            <td><%=item.site_name%><hr/><%=item.partner_name%><\/td>");
     // document.write("            <td><%=item.seller_name%><hr/><%=item.shop_name%><\/td>");
     document.write("            <td><%=item.code%>");

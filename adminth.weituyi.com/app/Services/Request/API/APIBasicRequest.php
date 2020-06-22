@@ -191,7 +191,8 @@ class APIBasicRequest
             $requestData['relations'] = $relations ;
         }
         // 生成带参数的测试get请求
-        // $requestTesUrl = splicQuestAPI($url , $requestData);
+//         $requestTesUrl = splicQuestAPI($url , $requestData);
+//        pr($requestTesUrl);
         return HttpRequest::HttpRequestApi($url, $requestData, [], 'POST');
     }
 

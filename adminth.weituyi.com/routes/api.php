@@ -83,7 +83,7 @@ Route::post('admin/activity/import', 'Admin\ActivityController@import');// 导�
 Route::post('admin/activity/ajax_get_ids', 'Admin\ActivityController@ajax_get_ids');// 获得查询所有记录的id字符串，多个逗号分隔
 
 //兑换码
-Route::post('admin/codes/ajax_alist', 'Admin\CodesController@ajax_alist');//ajax获得列表数据
+Route::any('admin/codes/ajax_alist', 'Admin\CodesController@ajax_alist');//ajax获得列表数据
 Route::post('admin/codes/ajax_del', 'Admin\CodesController@ajax_del');// 删除
 Route::post('admin/codes/ajax_save', 'Admin\CodesController@ajax_save');// 新加/修改
 Route::post('admin/codes/ajax_get_child', 'Admin\CodesController@ajax_get_child');// 根据部门id,小组id获得子类员工数组[kv一维数组]
@@ -93,6 +93,11 @@ Route::post('admin/codes/ajax_import_staff','Admin\CodesController@ajax_import')
 
 Route::post('admin/codes/import', 'Admin\CodesController@import');// 导入excel
 Route::post('admin/codes/ajax_get_ids', 'Admin\CodesController@ajax_get_ids');// 获得查询所有记录的id字符串，多个逗号分隔
+
+Route::post('admin/codes/ajax_open_all', 'Admin\CodesController@ajax_open_all');// 开启所有[根据活动id]
+Route::post('admin/codes/ajax_open', 'Admin\CodesController@ajax_open');// 单个或批量开启
+Route::post('admin/codes/ajax_close_all', 'Admin\CodesController@ajax_close_all');// 关闭所有[根据活动id]
+Route::post('admin/codes/ajax_close', 'Admin\CodesController@ajax_close');// 单个或批量关闭
 
 //收货地址
 Route::any('admin/addrs/ajax_alist', 'Admin\AddrsController@ajax_alist');//ajax获得列表数据
@@ -109,6 +114,7 @@ Route::post('admin/addrs/ajax_get_ids', 'Admin\AddrsController@ajax_get_ids');//
 
 // 微网站
 Route::any('web/ajax_login', 'Web\IndexController@ajax_login');// 登陆
+Route::any('web/ajax_save', 'Web\IndexController@ajax_save');// 提货
 
 //城市
 //Route::any('web/city/ajax_alist', 'Web\CityController@ajax_alist');//ajax获得列表数据

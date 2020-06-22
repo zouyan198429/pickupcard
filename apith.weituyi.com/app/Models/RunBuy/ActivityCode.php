@@ -18,8 +18,14 @@ class ActivityCode extends BasePublicModel
         '4' => '过期',
     ];
 
+    // 启用状态1待启用2已启用
+    public $openStatusArr = [
+        '1' => '待启用',
+        '2' => '已启用',
+    ];
+
     // 表里没有的字段
-    protected $appends = ['status_text'];
+    protected $appends = ['status_text', 'open_status_text'];
 
     /**
      * 获取状态文字
@@ -29,6 +35,16 @@ class ActivityCode extends BasePublicModel
     public function getStatusTextAttribute()
     {
         return $this->statusArr[$this->status] ?? '';
+    }
+
+    /**
+     * 获取审核状态文字
+     *
+     * @return string
+     */
+    public function getOpenStatusTextAttribute()
+    {
+        return $this->openStatusArr[$this->open_status] ?? '';
     }
 
     /**

@@ -25,6 +25,10 @@ class CodesController extends WorksController
         $reDataArr['status'] =  CTAPIActivityCodeBusiness::$statusArr;
         $reDataArr['defaultStatus'] = -1;// 默认状态
 
+        // 启用状态
+        $reDataArr['openStatus'] =  CTAPIActivityCodeBusiness::$openStatusArr;
+        $reDataArr['defaultOpenStatus'] = -1;// 默认状态
+
         $reDataArr['activity_id'] =  CommonRequest::getInt($request, 'activity_id');
         return view('admin.codes.index', $reDataArr);
     }
@@ -170,6 +174,62 @@ class CodesController extends WorksController
     {
         $this->InitParams($request);
         return CTAPIActivityCodeBusiness::delAjax($request, $this);
+    }
+
+    /**
+     * 子帐号管理-开启所有[根据活动id]
+     *
+     * @param Request $request
+     * @return mixed
+     * @author zouyan(305463219@qq.com)
+     */
+    public function ajax_open_all(Request $request)
+    {
+        $this->InitParams($request);
+        $result = CTAPIActivityCodeBusiness::openALLAjax($request, $this,2);
+        return ajaxDataArr(1, $result, '');
+    }
+
+    /**
+     * 子帐号管理-开启
+     *
+     * @param Request $request
+     * @return mixed
+     * @author zouyan(305463219@qq.com)
+     */
+    public function ajax_open(Request $request)
+    {
+        $this->InitParams($request);
+        $result = CTAPIActivityCodeBusiness::openAjax($request, $this,2);
+        return ajaxDataArr(1, $result, '');
+    }
+
+    /**
+     * 子帐号管理-关闭所有[根据活动id]
+     *
+     * @param Request $request
+     * @return mixed
+     * @author zouyan(305463219@qq.com)
+     */
+    public function ajax_close_all(Request $request)
+    {
+        $this->InitParams($request);
+        $result = CTAPIActivityCodeBusiness::openALLAjax($request, $this,1);
+        return ajaxDataArr(1, $result, '');
+    }
+
+    /**
+     * 子帐号管理-关闭
+     *
+     * @param Request $request
+     * @return mixed
+     * @author zouyan(305463219@qq.com)
+     */
+    public function ajax_close(Request $request)
+    {
+        $this->InitParams($request);
+        $result = CTAPIActivityCodeBusiness::openAjax($request, $this,1);
+        return ajaxDataArr(1, $result, '');
     }
 
     /**

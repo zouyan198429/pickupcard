@@ -17,15 +17,10 @@
 
 <div class="wrap">
   <div class="title pro-title">
-    配方驴奶粉
+      {{ $info['product_name'] or '' }}
   </div>
   <div class="propic">
-    <img src="{{asset('web/images/p4/p401.jpg')}}" alt="">
-    <img src="{{asset('web/images/p4/p402.jpg')}}" alt="">
-    <img src="{{asset('web/images/p4/p403.jpg')}}" alt="">
-    <img src="{{asset('web/images/p4/p404.jpg')}}" alt="">
-    <img src="{{asset('web/images/p4/p405.jpg')}}" alt="">
-    <img src="{{asset('web/images/p4/p406.jpg')}}" alt="">
+      {!! $info['content'] or '' !!}
   </div>
   <div class="probtnbox">
     <input type="button"  id="submitBtn" lay-submit="" lay-filter="layuiadmin-app-form-submit" value="点击提货" class="layui-btn layui-btn-normal">
