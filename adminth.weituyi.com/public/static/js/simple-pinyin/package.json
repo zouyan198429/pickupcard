@@ -28,7 +28,7 @@
     "package.json"
   ],
   "devDependencies": {
-    "codecov": "^1.0.1",
+    "codecov": "^3.7.1",
     "gh-pages": "^0.12.0",
     "jest": "^17.0.3",
     "lodash": "^4.17.2",
