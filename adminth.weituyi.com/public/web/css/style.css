@@ -1,13 +1,11 @@
 
 body {
 	padding: 0; 
-	margin:0;
-	height: 100%;
+	margin:0; 
 }
 .wrap {
 	width: 480px;
-	margin:0 auto;
-	height: auto;
+	margin:0 auto; 
 }
 
 .c {
@@ -15,7 +13,15 @@ body {
 }
 /* index */
 
-
+option {
+	font-size: 12px;
+}
+input {
+	border:1px solid #ddd;
+}
+.layui-input {
+	border:1px solid #ddd;
+}
 .indpic {
 	
 }
@@ -39,15 +45,14 @@ body {
 	width: 100%;
 }
 
-
 /* product */
 .title {
 	background: #fff;
 	width: 100%;
 	padding: 15px 0;
 	text-align: center;
-	color: #666;
-	font-size: 20px;
+	color: #555;
+	font-size: 18px;
 }
 
 .propic {
@@ -80,7 +85,12 @@ body {
 
 
 /* tihuo */
- 
+ .layui-form-item {
+ margin-bottom: 5px;
+}
+.layui-form-item .layui-inline {
+	margin-bottom: 5px;
+}
 .th-main{
 	background: #fff;
 	padding: 20px 0;
@@ -89,6 +99,7 @@ body {
 .th-main input {
 	width:80%;
 	margin:10px 10%;
+	height: 36px;
 }
 
 .layui-form-label {

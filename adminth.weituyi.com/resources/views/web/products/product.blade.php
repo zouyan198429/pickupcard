@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/admin.css')}}" media="all">
   <link rel="stylesheet" href="{{asset('web/css/style.css')}}" media="all">
 </head>
-<body  class="layui-layout-body">
+<body>
 
 <div class="wrap">
   <div class="title pro-title">

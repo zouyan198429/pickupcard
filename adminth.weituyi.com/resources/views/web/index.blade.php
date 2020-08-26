@@ -18,12 +18,11 @@
 	  }
 	  .wrap {
 		  height: auto;
+		  max-width: 800px;
 	  }
   </style>
 </head>
 <body >
-
-   
     <div class="indpic">
 		<img src="images/top.jpg" alt="">
         {{--<img src="{ { asset('web/images/p' . $product_id . '.jpg') }}" alt="">--}}
@@ -47,7 +46,7 @@
 
     </div>
     </form>
-	
+
 	<div class="shuoming">
 		<h4>兑换须知：</h4>
 		<p>1.提货卡上印制的提货码及密码，为唯一提货标识，提货密码为一次性使用，请在未提货前勿将涂层刮开。</p>
@@ -56,14 +55,12 @@
 		<p>4.提货卡请在有效期内使用，逾期无法保证指定商品兑换有效性。</p>
 		<p>5.全国大部分地区免费配送，新疆、西藏、内蒙古、青海、海南、宁夏、甘肃、香港、澳门、台湾等区域请联系商家确定是否配送。</p>
 	</div>
-	
-	 
 
 
   <p class="copyright">{{ $copyright or '' }} 版权所有 </p>
-  
+
   <div style="height: 50px; width: 100%; clear:both;">
-	  
+
   </div>
   <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
   <script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.all.js')}}"></script>

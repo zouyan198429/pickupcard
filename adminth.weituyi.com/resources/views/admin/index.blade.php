@@ -101,6 +101,9 @@
 
 
 
+
+
+			@if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)
             <li data-name="home" class="layui-nav-item layui-nav-item">
               <a href="javascript:;" lay-tips="提货卡管理" lay-direction="2">
                 <i class="layui-icon layui-icon-home"></i>
