@@ -100,6 +100,9 @@
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
 
 
+
+
+
 			@if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)
             <li data-name="home" class="layui-nav-item layui-nav-item">
               <a href="javascript:;" lay-tips="提货卡管理" lay-direction="2">
@@ -107,33 +110,39 @@
                 <cite>提货卡管理</cite>
               </a>
               <dl class="layui-nav-child">
-                  
+                  @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)
                 <dd>
                    <a lay-href="{{ url('admin/products') }}">商品管理</a>
                 </dd>
                 <dd>
                   <a lay-href="{{ url('admin/activity') }}">提货卡管理</a>
-                </dd> 
+                </dd>
+                  @endif
+                <dd >
+                  <a lay-href="{{ url('admin/addrs') }}">提货列表</a>
+                </dd>
+                  <dd >
+                      <a lay-href="{{ url('admin/addrs_wait_send') }}">未发货列表</a>
+                  </dd>
+                  <dd >
+                      <a lay-href="{{ url('admin/addrs_sended') }}">已发货列表</a>
+                  </dd>
               </dl>
             </li>
-			 @endif
-			<li data-name="home" class="layui-nav-item layui-nav-item">
-			  <a href="javascript:;" lay-tips="提货卡管理" lay-direction="2">
-			    <i class="layui-icon layui-icon-home"></i>
-			    <cite>发货管理</cite>
-			  </a>
-			  <dl class="layui-nav-child">			    
-			    <dd >
-			      <a lay-href="{{ url('admin/addrs') }}">提货列表</a>
-			    </dd>
-			      <dd >
-			          <a lay-href="{{ url('admin/addrs_wait_send') }}">未发货列表</a>
-			      </dd>
-			      <dd >
-			          <a lay-href="{{ url('admin/addrs_sended') }}">已发货列表</a>
-			      </dd>
-			  </dl>
-			</li> 
+
+              @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)
+            <li data-name="user" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="用户" lay-direction="2">
+                <i class="layui-icon layui-icon-user"></i>
+                <cite>用户管理</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd>
+                  <a lay-href="{{ url('admin/staff') }}">用户列表</a>
+                </dd>
+              </dl>
+            </li>
+              @endif
             <li data-name="set" class="layui-nav-item">
               <a href="javascript:;" lay-tips="设置" lay-direction="2">
                 <i class="layui-icon layui-icon-set"></i>
@@ -147,9 +156,6 @@
                     <dd>
                       <a lay-href="{{ url('admin/city') }}">城市管理</a>
                     </dd>
-					<dd>
-					  <a lay-href="{{ url('admin/staff') }}">管理员列表</a>
-					</dd>
                   </dl>
                 </dd>
                   @endif
