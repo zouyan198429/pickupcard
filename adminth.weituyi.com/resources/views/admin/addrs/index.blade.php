@@ -24,6 +24,12 @@
     {{--</div>--}}
     <form onsubmit="return false;" class="form-horizontal" role="form" method="post" id="search_frm" action="#">
       <div class="msearch fr" style="width:700px;">
+          <select class="wmini" name="product_id" style="width: 100px;">
+              <option value="">请选择商品</option>
+              @foreach ($product_kv as $k=>$txt)
+                  <option value="{{ $k }}"  @if(isset($defaultProduct) && $defaultProduct == $k) selected @endif >{{ $txt }}</option>
+              @endforeach
+          </select>
         <select class="wmini" name="status" style="width: 70px;">
           <option value="">请选择状态</option>
           @foreach ($status as $k=>$txt)
@@ -59,25 +65,26 @@
       </div>
     </form>
   </div>
-  {{--
   <div class="table-header">
-    { {--<button class="btn btn-danger  btn-xs batch_del"  onclick="action.batchDel(this)">批量删除</button>--} }
+{{--    { {--<button class="btn btn-danger  btn-xs batch_del"  onclick="action.batchDel(this)">批量删除</button>--} }--}}
     <button class="btn btn-success  btn-xs export_excel"  onclick="action.batchExportExcel(this)" >导出[按条件]</button>
     <button class="btn btn-success  btn-xs export_excel"  onclick="action.exportExcel(this)" >导出[勾选]</button>
-    <button class="btn btn-success  btn-xs import_excel"  onclick="action.importExcelTemplate(this)">导入模版[EXCEL]</button>
-    <button class="btn btn-success  btn-xs import_excel"  onclick="action.importExcel(this)">导入城市</button>
-    <div style="display:none;" ><input type="file" class="import_file img_input"></div>{ {--导入file对象--} }
+      <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.batchExportExcel(this)" >导出即发货[按条件]</button>
+      <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.exportExcel(this)" >导出即发货[勾选]</button>
+      <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.sendSelected(this)" >发货[勾选]</button>
+{{--    <button class="btn btn-success  btn-xs import_excel"  onclick="action.importExcelTemplate(this)">导入模版[EXCEL]</button>--}}
+{{--    <button class="btn btn-success  btn-xs import_excel"  onclick="action.importExcel(this)">导入城市</button>--}}
+{{--    <div style="display:none;" ><input type="file" class="import_file img_input"></div>{ {--导入file对象--} }--}}
   </div>
---}}
   <table lay-even class="layui-table"  lay-size="lg"  id="dynamic-table"  class="table2">
     <thead>
     <tr>
-      {{--<th>--}}
-        {{--<label class="pos-rel">--}}
-          {{--<input type="checkbox"  class="ace check_all"  value="" onclick="action.seledAll(this)"/>--}}
-{{--<!--           <span class="lbl">全选</span>--}}
- {{---->        </label>--}}
-      {{--</th> --}}
+      <th>
+        <label class="pos-rel">
+          <input type="checkbox"  class="ace check_all"  value="" onclick="action.seledAll(this)"/>
+<!--           <span class="lbl">全选</span>
+ -->        </label>
+      </th>
       <th>提货码</th>
       <th>所属活动</th>
       <th>所提商品</th>
@@ -133,6 +140,8 @@
       const PROVINCE_ID = "{{ $info['province_id'] or -1}}";// 省默认值
       const CITY_ID = "{{ $info['city_id'] or -1 }}";// 市默认值
       const AREA_ID = "{{ $info['area_id'] or -1 }}";// 区默认值
+
+      var AJAX_SEND_URL = "{{ url('api/admin/addrs/ajax_send') }}";//ajax请求发货的url
 
   </script>
   <script src="{{asset('js/common/list.js')}}"></script>

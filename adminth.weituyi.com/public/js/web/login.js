@@ -59,7 +59,7 @@ function ajax_form(){
                 // err_alert('<font color="#000000">' + ret.errorMsg + '</font>');
             }else{//成功
                 // goTop(INDEX_URL);
-                goTop(ret.result.productUrl);
+                 goTop(ret.result.productUrl);
 
                 // var supplier_id = ret.result['supplier_id'];
                 //if(SUPPLIER_ID_VAL <= 0 && judge_integerpositive(supplier_id)){

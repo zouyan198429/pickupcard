@@ -178,7 +178,7 @@ function get_frm_values(frm_ids){
 //                var frmvar_name= param_arr[0];
 //                if(frmvar_name===undefined || frmvar_name===''){
 //                      continue;
-//                } 
+//                }
 //                var frmvar_value = param_arr[1];
 //                if(frmvar_value == '') continue;
 //                //一定不要用转义
@@ -186,10 +186,10 @@ function get_frm_values(frm_ids){
 //                var old_value = data[frmvar_name];
 //                if(old_value!==undefined && old_value!==''){
 //                      frmvar_value = old_value + "," + frmvar_value;
-//                } 
+//                }
 //                data[frmvar_name] = frmvar_value;
 //            }
-//            
+//
             for(var j=0;j<frm_obj.length;j++)
             {
                 var jq_obj= $(frm_obj[j]);
@@ -208,7 +208,7 @@ function get_frm_values(frm_ids){
                 var old_value = data[frmvar_name];
                 if(old_value!==undefined && old_value!==''){
                       frmvar_value = old_value + "," + frmvar_value;
-                } 
+                }
                 //一定不要用转义
                 //data[frmvar_name] = encodeURIComponent(frmvar_value);
                 data[frmvar_name] = frmvar_value;
@@ -273,7 +273,7 @@ function reFromSearchAction(filename,obj)
 {
   var newurl,frmvar_name,frmvar_value;
   newurl="";
-  
+
   for(var i=0;i<obj.length;i++)
   {
 	var jq_obj= $(obj[i]);
@@ -289,7 +289,7 @@ function reFromSearchAction(filename,obj)
 	}else{
 		newurl=newurl+"&"+frmvar_name+"="+encodeURIComponent(frmvar_value);
 	}
-	
+
   }
   obj.action=filename+"?"+newurl;
  return true;
@@ -298,7 +298,7 @@ function reFromSearchAction(filename,obj)
 去掉非数字函数
 param string str 需要操作的字符
 return string 去掉字符后的内容
-姓名：邹燕 
+姓名：邹燕
 时间：2014.8.13
 */
 function del_char(str){
@@ -327,7 +327,7 @@ function numxs(obj){
 	  value = value.replace(/^[\.]{1,}/g,'');//开头是.，去掉
 	  tem_obj.val(value);
    }
-	
+
 }
 //验证只能输入数字[正负]及小数点[最多2位小数]
 function decimal_numxs(obj){
@@ -340,17 +340,17 @@ function decimal_numxs(obj){
 	  value=value.replace(/[^\d\-\.]/g,'');
 	  //obj.value=obj.value.replace(/[\.]{2,}/g,'.');//多个.，只保留一个
 	  value=value.replace(/[\.]{2,}/g,'.');//多个.，只保留一个
-	  //obj.value=obj.value.replace(/^[\.]{1,}/g,'');//开头是.，去掉	  
-	  value=value.replace(/^[\.]{1,}/g,'');//开头是.，去掉	  
+	  //obj.value=obj.value.replace(/^[\.]{1,}/g,'');//开头是.，去掉
+	  value=value.replace(/^[\.]{1,}/g,'');//开头是.，去掉
 	  //obj.value=obj.value.replace(/[\-]{2,}/g,'-');//多个-，只保留一个
 	  value=value.replace(/[\-]{2,}/g,'-');//多个-，只保留一个
 	  tem_obj.val(value);
    }
-	
+
 }
 
 //综合判断
-//err_type 错误误返回类型 
+//err_type 错误误返回类型
 //  1返回错误字符串,空:没有错误;
 //  2返回值 true：正确-通过;false:失败-有误;
 //  4返回2的同时，弹出错误提示窗
@@ -358,7 +358,7 @@ function decimal_numxs(obj){
 //value 需要判断的字符串
 //is_must 是否必填 true:必填;false:非必填
 //reg_msg [多个用,号分隔-后面的单参数的可以无限个,但多参数的只能有一个;前面的优先判断]正则或指定判断关键字[不在下面的，请直接写正则表达式来判断,空：则不进行判断]
-              
+
         //custom 正则验证 min_length 为正则表达式[regexp]
         //length 判断字符长度 min_length 最小长度[为空:不参与判断];max_length 最大长度[为空:不参与判断]
         //range 判断数字范围 min_length 最小值>=[为空:不参与判断];max_length 最大值<=[为空:不参与判断]
@@ -400,7 +400,7 @@ function judge_validate(err_type,tishi_name,value,is_must,reg_msg,min_length,max
             err_str = tishi_name + '不能为空!';
             if(err_type == 4){err_alert(err_str);}
             if(err_type == 1){return err_str;}
-            return false;			
+            return false;
         }
     }
     //为空，则判断是否是空格
@@ -409,7 +409,7 @@ function judge_validate(err_type,tishi_name,value,is_must,reg_msg,min_length,max
             err_str = tishi_name + '不能全为空格!';
             if(err_type == 4){err_alert(err_str);}
             if(err_type == 1){return err_str;}
-            return false;			
+            return false;
         }else{
             if(err_type == 1){return err_str;}
             return true;
@@ -418,14 +418,14 @@ function judge_validate(err_type,tishi_name,value,is_must,reg_msg,min_length,max
     //空,则不进行后面的正则判断
     if(judge_empty(reg_msg)){
         if(err_type == 1){return err_str;}
-        return true; 
+        return true;
     }
     var back_err = "";
     var tem_lower_msg = reg_msg.toLowerCase();
-    var msg_arr= new Array(); //定义一数组 
-    msg_arr = tem_lower_msg.split(","); //字符分割 
-    for (i=0;i<msg_arr.length ;i++ ) 
-    { 
+    var msg_arr= new Array(); //定义一数组
+    msg_arr = tem_lower_msg.split(","); //字符分割
+    for (i=0;i<msg_arr.length ;i++ )
+    {
         back_err = "";
         var tem_reg = msg_arr[i];
         if(judge_empty(tem_reg)){
@@ -434,26 +434,26 @@ function judge_validate(err_type,tishi_name,value,is_must,reg_msg,min_length,max
         switch(tem_reg){
             case "custom":// 正则验证 min_length 为正则表达式[regexp]
                 if(!judge_reg(tem_value,min_length)){
-                   back_err = "格式有误!"; 
+                   back_err = "格式有误!";
                 }
                 break;
             case "length":// 判断字符长度 min_length 最小长度[为空:不参与判断];max_length 最大长度[为空:不参与判断]
-                if(!judge_length(tem_value,min_length,max_length)){	
+                if(!judge_length(tem_value,min_length,max_length)){
                     back_err = '长度为'+min_length+'~'+max_length+'个字符!';
                 }
                 break;
             case "range":// 判断数字范围 min_length 最小值[为空:不参与判断];max_length 最大值[为空:不参与判断]
-                if(!judge_range(tem_value,min_length,max_length)){	
+                if(!judge_range(tem_value,min_length,max_length)){
                     back_err = '范围为'+min_length+'~'+max_length+'!';
                 }
                 break;
             case "compare":// 比较 min_length 比较符[必填];max_length 被比较值[必填]
-                if(!judge_compare(tem_value,min_length,max_length)){	
+                if(!judge_compare(tem_value,min_length,max_length)){
                     back_err = '必须为[' + ' ' + min_length+']!';
                 }
                 break;
             case "data_size":// data_size 判断日期大小 min_length>max_length  min_length 日期2[必填];max_length 日期操作类型[位操作] 1 > ;2< ; 4 =[必填]
-                if(!judge_data_size(tem_value,min_length,max_length)){	
+                if(!judge_data_size(tem_value,min_length,max_length)){
                     var operate_str = "";
                     if( (max_length & 1) == 1 ){//>
                         operate_str +=">";
@@ -467,119 +467,119 @@ function judge_validate(err_type,tishi_name,value,is_must,reg_msg,min_length,max
                     back_err = '必须[' + operate_str + ' ' + min_length+']!';
                 }
                 break;
-            case "email"://邮箱 
+            case "email"://邮箱
                 if(!judge_email(tem_value)){
-                   back_err = "格式不是有效的邮箱格式!"; 
+                   back_err = "格式不是有效的邮箱格式!";
                 }
                 break;
             case "phone":// 电话号码 judge_phone(value)
                 if(!judge_phone(tem_value)){
-                   back_err = "格式不是有效的电话号码格式!"; 
+                   back_err = "格式不是有效的电话号码格式!";
                 }
                 break;
             case "mobile":// 手机 judge_mobile(value)
                 if(!judge_mobile(tem_value)){
-                   back_err = "格式不是有效的手机格式!"; 
+                   back_err = "格式不是有效的手机格式!";
                 }
                 break;
             case "url"://url judge_url(value)
                 if(!judge_url(tem_value)){
-                   back_err = "格式不是有效的网址格式!"; 
+                   back_err = "格式不是有效的网址格式!";
                 }
                 break;
             case "currency":// 货币 judge_currency(value)
                 if(!judge_currency(tem_value)){
-                   back_err = "格式不是有效的货币格式!"; 
+                   back_err = "格式不是有效的货币格式!";
                 }
                 break;
             case "number":// 任何数字验证 judge_number(value)
                 if(!judge_number(tem_value)){
-                   back_err = "只能是数字!"; 
+                   back_err = "只能是数字!";
                 }
                 break;
             case "zip"://邮编 judge_zip(value)
                 if(!judge_zip(tem_value)){
-                   back_err = "格式不是有效的邮编格式!"; 
+                   back_err = "格式不是有效的邮编格式!";
                 }
                 break;
             case "qq"://qq号码 judge_qq(value)
                 if(!judge_qq(tem_value)){
-                   back_err = "不是有效的qq号码!"; 
+                   back_err = "不是有效的qq号码!";
                 }
                 break;
             case "integer":// [-+]正负整数 judge_integer(value)
                 if(!judge_integer(tem_value)){
-                   back_err = "不是[-+]正负整数!"; 
+                   back_err = "不是[-+]正负整数!";
                 }
                 break;
             case "integerpositive":// [+]正整 judge_integerpositive(value)
                 if(!judge_integerpositive(tem_value)){
-                   back_err = "不是[+]正整数!"; 
+                   back_err = "不是[+]正整数!";
                 }
                 break;
             case "double":// [-+] 数字.数字 正负双精度数 judge_double(value)
                 if(!judge_double(tem_value)){
-                   back_err = "不是[-+]正负双精度数!"; 
+                   back_err = "不是[-+]正负双精度数!";
                 }
                 break;
             case "doublepositive":// [+]数字.数字 正双精度数 judge_doublepositive(value)
                 if(!judge_doublepositive(tem_value)){
-                   back_err = "不是[+]数字.数字 正双精度数!"; 
+                   back_err = "不是[+]数字.数字 正双精度数!";
                 }
                 break;
             case "english":// 大小写字母 judge_english(value)
                 if(!judge_english(tem_value)){
-                   back_err = "只能是大小写字母!"; 
+                   back_err = "只能是大小写字母!";
                 }
                 break;
             case "englishsentence":// 大小写字母空格 judge_englishsentence(value)
                 if(!judge_englishsentence(tem_value)){
-                   back_err = "只能是大小写字母空格!"; 
+                   back_err = "只能是大小写字母空格!";
                 }
                 break;
             case "englishnumber":// 大小写字母数字 judge_englishnumber(value)
                 if(!judge_englishnumber(tem_value)){
-                   back_err = "只能是大小写字母数字!"; 
+                   back_err = "只能是大小写字母数字!";
                 }
                 break;
             case "chinese"://  judge_chinese(value)
                 if(!judge_chinese(tem_value)){
-                   back_err = "不是中文!"; 
+                   back_err = "不是中文!";
                 }
                 break;
             case "username":// 至少3位 用户名 judge_username(value)
                 if(!judge_username(tem_value)){
-                   back_err = "至少3位!"; 
+                   back_err = "至少3位!";
                 }
                 break;
             case "nochinese":// 非中文 judge_nochinese(value)
                 if(!judge_nochinese(tem_value)){
-                   back_err = "不是非中文!"; 
+                   back_err = "不是非中文!";
                 }
                 break;
             case "datatime":// 日期时间 judge_datatime(value)
                 if(!judge_datatime(tem_value)){
-                   back_err = "格式不是有效的日期时间格式!"; 
+                   back_err = "格式不是有效的日期时间格式!";
                 }
                 break;
             case "int"://int [\-]负整数或正整数,正的没有+号 judge_int(value)
                 if(!judge_int(tem_value)){
-                   back_err = "格式不是有效的[\-]负整数或正整数,正的没有+号格式!"; 
+                   back_err = "格式不是有效的[\-]负整数或正整数,正的没有+号格式!";
                 }
                 break;
             case "positive_int":// >0正整数[全是数字且>0] judge_positive_int(value)
                 if(!judge_positive_int(tem_value)){
-                   back_err = "格式不是有效的>0正整数[全是数字且>0]格式!"; 
+                   back_err = "格式不是有效的>0正整数[全是数字且>0]格式!";
                 }
                 break;
             case "digit"://:0+正整数 judge_judge_digit(value)
                 if(!judge_judge_digit(tem_value)){
-                   back_err = "不是0或正整数!"; 
+                   back_err = "不是0或正整数!";
                 }
                 break;
             case "date"://date 判断日期格式是否正确 judge_date(dateTime) 日期格式 2012-02-16或2012-02-16 23:59:59 2012-2-8或2012-02-16 23:59:59
                 if(!judge_date(tem_value)){
-                   back_err = "格式不是有效的日期格式!"; 
+                   back_err = "格式不是有效的日期格式!";
                 }
                 break;
             case "time"://time 判断时间格式是否正确 true正确 false 有误  时间格式 23:59:59
@@ -589,17 +589,17 @@ function judge_validate(err_type,tishi_name,value,is_must,reg_msg,min_length,max
                 break;
             default://其它正则表达式
                 if(!judge_reg(tem_value,reg_msg)){
-                   back_err = "格式有误!"; 
+                   back_err = "格式有误!";
                 }
                 break;
         }
-        if(back_err != ''){	
+        if(back_err != ''){
             err_str = tishi_name + back_err;
             if(err_type == 4){
                 err_alert(err_str);
             }
             if(err_type == 1){return err_str;}
-            return false;		
+            return false;
         }
     }
     if(err_type == 1){return err_str;}
@@ -618,7 +618,7 @@ function judge_reg(value,reg2){
        return true;
    }else{
        return false;
-   } 
+   }
 }
 //判断email
 function judge_email(value){
@@ -722,7 +722,7 @@ function judge_int(value){
        return true;
    }else{
        return false;
-   }   
+   }
 }
 //正整数 positive_int >0正整数[全是数字且>0]
 function judge_positive_int(value){
@@ -732,7 +732,7 @@ function judge_positive_int(value){
        return true;
    }else{
        return false;
-   }   
+   }
 }
 //digit:0+正整数
 function judge_judge_digit(value){
@@ -741,7 +741,7 @@ function judge_judge_digit(value){
        return true;
    }else{
        return false;
-   }   
+   }
 }
 //date 判断日期格式是否正确 true正确 false 有误
 //$dateTime 日期格式 2012-02-16或2012-02-16 23:59:59 2012-2-8或2012-02-16 23:59:59
@@ -898,7 +898,7 @@ function judge_data_size(data1,data2,operate){
            //has_operate = true;
            return true;
        }else{//可能还需要判断==
-          //need_wait_eq = true; 
+          //need_wait_eq = true;
        }
     }
     //判断小于
@@ -907,18 +907,18 @@ function judge_data_size(data1,data2,operate){
            //has_operate = true;
            return true;
        }else{//可能还需要判断==
-          //need_wait_eq = true; 
+          //need_wait_eq = true;
        }
     }
-    
+
     //判断等于
     if(   (operate & 4) == 4  ){//=
        if( data1_unix == data2_unix){
            //has_operate = true;
            return true;
        }//else{
-          
-          //return false; 
+
+          //return false;
        //}
     }//else{
         //if(need_wait_eq){
@@ -950,7 +950,7 @@ function format_timestamp(unix_time,format){
     return format_data;
 }
 
-function format_date ( format, timestamp ) { 
+function format_date ( format, timestamp ) {
     var a, jsdate=((timestamp) ? new Date(timestamp*1000) : new Date());
     var pad = function(n, c){
         if( (n = n + "").length < c ) {
@@ -964,7 +964,7 @@ function format_date ( format, timestamp ) {
     var txt_ordin = {1:"st",2:"nd",3:"rd",21:"st",22:"nd",23:"rd",31:"st"};
     var txt_months = ["", "January", "February", "March", "April",
         "May", "June", "July", "August", "September", "October", "November",
-        "December"]; 
+        "December"];
     var f = {
         // Day
             d: function(){
@@ -1138,21 +1138,21 @@ function format_date ( format, timestamp ) {
 
         return ret;
     });
-} 
+}
 
 //获得当前/指定的时间戳
 //dateTime为空，则获得当前的 日期格式 2012-02-16或2012-02-16 23:59:59 2012-2-8或2012-02-16 23:59:59
 //need_msec 是否保留毫秒 true 保留 false不保留
 
-//new date("month dd,yyyy hh:mm:ss"); 
-//new date("month dd,yyyy"); 
-//new date(yyyy,mth,dd,hh,mm,ss); 
-//new date(yyyy,mth,dd); 
+//new date("month dd,yyyy hh:mm:ss");
+//new date("month dd,yyyy");
+//new date(yyyy,mth,dd,hh,mm,ss);
+//new date(yyyy,mth,dd);
 //new date(ms);
 //javascript中日期的构造还可以支持 new date("yyyy/mm/dd"); 其中：mm是整数表示月份从0（1月）到11（12月），这样再利用正则表达式就很方便地能够转换字符串日期了。
 function get_unix_time(dateTime,need_msec){
 	var timestamp = 0;
-	if(judge_date(dateTime)){		
+	if(judge_date(dateTime)){
 		timestamp=new Date(dateTime.replace(/-/g,"/")).getTime();
 	}else{
 		timestamp=new Date().getTime();
@@ -1178,7 +1178,7 @@ function resolve_baidu_template(template_id,json_data,html_id){
     //var bt = baidu.template;
     //设置左分隔符为 <!
     //baidu.template.LEFT_DELIMITER='<!';
-    //设置右分隔符为 <!  
+    //设置右分隔符为 <!
     //baidu.template.RIGHT_DELIMITER='!>';
     //设置默认输出变量是否自动HTML转义，true自动转义，false不转义
     baidu.template.ESCAPE = false;
@@ -1210,7 +1210,7 @@ function layeriframe(weburl,tishi,heightnum,widthnum,operate_num,sure_close_tish
 		area: [heightnum+'px' , widthnum+'px'],
                 //offset: ['0px', '0px'],
 		//close: function(index){
-                cancel: function(index){ 
+                cancel: function(index){
                         var close_tishi = sure_close_tishi || '确定关闭吗？';
 			//layer.msg('您获得了子窗口标记：' + layer.getChildFrame('#name', index).val(),3,1);
 //			var index1 = parent.layer.confirm(close_tishi, function(){
@@ -1249,7 +1249,7 @@ function layeriframe(weburl,tishi,heightnum,widthnum,operate_num,sure_close_tish
                         });
                         return false;
 		}
-	}); 
+	});
 }
 //iframe中的关闭按钮
 //index 父窗口layer对象
@@ -1260,7 +1260,7 @@ function iframeclose(index,operate_num,sure_close_tishi){
     //parent.layer.msg('您将标记"' + $('#name').val() + '"成功传送给了父窗口' , 1);
 	var index1 = parent.layer.confirm(close_tishi, function(){
 		//关闭成功
-		parent.layer.close(index1);	
+		parent.layer.close(index1);
 		switch (operate_num){
 			case 0:
 			  break;
@@ -1269,8 +1269,8 @@ function iframeclose(index,operate_num,sure_close_tishi){
 			  parent.location.reload()
 			  break;
 			default:
-		}		
-		parent.layer.close(index);	
+		}
+		parent.layer.close(index);
 	});
 }
 
@@ -1308,13 +1308,13 @@ function wait_close_popus(sec_num,layer_index){
 //		var url = data.url;
 //		if(state == -1){
 //		//失败
-//			//layer.alert(msg,8,'提示'); 
+//			//layer.alert(msg,8,'提示');
 //			var layer1 =  parent.$.layer({
 //				title: '操作提示',
 //				area: ['auto','auto'],
 //				dialog: {
 //					msg: msg,
-//					btns: 1,                    
+//					btns: 1,
 //					type: 10,
 //					btn: ['确定'],
 //					yes: function(){
@@ -1325,14 +1325,14 @@ function wait_close_popus(sec_num,layer_index){
 //				}
 //			});
 //		}else{
-//		//成功		
-//			//layer.alert(msg,8,'提示'); 
+//		//成功
+//			//layer.alert(msg,8,'提示');
 //			var layer1 =  parent.$.layer({
 //				title: '操作提示',
 //				area: ['auto','auto'],
 //				dialog: {
 //					msg: msg,
-//					btns: 1,                    
+//					btns: 1,
 //					type: 10,
 //					btn: ['确定'],
 //					yes: function(){
@@ -1347,9 +1347,9 @@ function wait_close_popus(sec_num,layer_index){
 //		//关闭iframe
 //		//parent.layer.close(index);
 //		//if (data>0) {
-//			
+//
 //		//}else{
-//		//	layer.alert("添加失败，请重新添加",8,'提示');  
+//		//	layer.alert("添加失败，请重新添加",8,'提示');
 //		//	return;
 //		//}
 //	});
@@ -1386,7 +1386,7 @@ function get_mid_str(oldstr,presplit,backsplit){
 //	   beforeSend:function(){
 //		 //obj.text("正在加载,请稍等!");
 //	  },
-//	   success: function(data){	
+//	   success: function(data){
 //			layer.close(layer_index);
 //			document.write(data);
 //	   }
@@ -1399,10 +1399,10 @@ function get_mid_str(oldstr,presplit,backsplit){
 //area_id 城市编号 0 获得省
 //level 城市等级 1:省;2:市;3:区/县
 //click_obj 点击省/市的当前点击对象
-//[去掉返回值,改用异步]返回select 的option html代码		
+//[去掉返回值,改用异步]返回select 的option html代码
 function reset_area_sel(area_id,level,click_obj){
 	var option_html = "";
-	if(area_id>=0 && level>0){			
+	if(area_id>=0 && level>0){
          var layer_index = layer.load();//layer.msg('加载中', {icon: 16});
 		//ajax请求银行信息
 		var data = {};
@@ -1434,7 +1434,7 @@ function reset_area_sel(area_id,level,click_obj){
 						default:
 					}
                     console.log('省市加载成功');
-				}			
+				}
                 layer.close(layer_index);//手动关闭
 			}
 		});
@@ -1442,9 +1442,9 @@ function reset_area_sel(area_id,level,click_obj){
 	//return option_html;
 }
 //初始化[页面所有的]省下拉框
-//select 的option html代码	
+//select 的option html代码
 function reset_province(option_html){
-	var province_obj = $(".province_id");			
+	var province_obj = $(".province_id");
 	//初始省下拉项及给改变值事件
 	$(".province_id").each(function () {
 		empty_province_option($(this));
@@ -1453,10 +1453,10 @@ function reset_province(option_html){
 			//var province_id = $(this).val();
 			change_province_sel($(this));
 		});
-	}); 
+	});
 }
 //点击省重置市下拉框[清空不在此，请在之前处理]
-//select 的option html代码	
+//select 的option html代码
 //click_obj 点击省/市的当前点击对象
 function reset_city(option_html,click_obj){
 	//清空市、县/区
@@ -1473,7 +1473,7 @@ function reset_city(option_html,click_obj){
 }
 
 //点击市重置县/区下拉框[清空不在此，请在之前处理]
-//select 的option html代码	
+//select 的option html代码
 //click_obj 点击省/市的当前点击对象
 function reset_area(option_html,click_obj){
 	//清空市、县/区
@@ -1543,7 +1543,7 @@ function empty_area_option(record_obj){
 	record_obj.append(empty_option_html);
 }
 //初始化下拉框json串[注意:option_json下标名不能变];{"option_json":{"1": "北京","2": "天津","3": "上海"}}
-//返回select 的option html代码	
+//返回select 的option html代码
 function reset_sel_option(option_json){
 	var sel_option_json={"option_json":option_json};//{"option_json":{"1": "北京","2": "天津","3": "上海"}};
 	var html_sel_option = resolve_baidu_template('baidu_template_option_list',sel_option_json,'');//解析
@@ -1572,12 +1572,12 @@ function init_area_sel(area_json,level){
 		default:
 	}
     console.log(sel_json);
-		
+
 	//下拉框名称
 	var select_name_id = sel_json.id || '';
 	if( trim(select_name_id) == ''  ){
 		return false;
-	}	
+	}
 	var select_obj = $("#"+select_name_id);
 	if(select_obj.length<=0){
 		return false;
@@ -1601,7 +1601,7 @@ function init_area_sel(area_json,level){
 			var option_num = $("#"+ select_name_id +" option").length;
 			if(option_num > 1){
 				close_loop = true;
-				select_obj.val(select_val_id).change();// 如果#select有定义change()事件就会调用		
+				select_obj.val(select_val_id).change();// 如果#select有定义change()事件就会调用
 
 			}
 		}else{//关闭弹窗
@@ -1613,7 +1613,7 @@ function init_area_sel(area_json,level){
 			var tem_level = level+1;
 			init_area_sel(area_json,tem_level);
 		}
-	},1000);	
+	},1000);
 }
 //城市下拉框功能方法结束
 
@@ -1649,7 +1649,7 @@ function judge_power(page_operate_json,page_power_arr,operate_num,operate_arr,it
        //判断当前对象是否在当前操作范围
        if(operate_arr.indexOf(parseInt(obj_i))<0){//不存在
             alert(obj_i + "不存在");
-            continue; 
+            continue;
        }
        var record_power = operate_list[obj_i];
        //判断是否有此权限
@@ -1687,20 +1687,20 @@ function judge_power(page_operate_json,page_power_arr,operate_num,operate_arr,it
                     err_alert('对比值不存在。');
                 }
                 return false;
-            }                    
+            }
             var operate = field_json.operate;
             if(operate == undefined){
                 if(is_alert_err){
                     err_alert('操作符不存在。');
                 }
                 return false;
-            } 
+            }
             //遍历判断的值
             var judge_power_result = false;//true:有权限,false:没有权限
-            for(var k = 0; k < old_val.length; k++) {  
+            for(var k = 0; k < old_val.length; k++) {
                 var contrast_val = old_val[k];
                 var err_msg = judge_validate(1,power_name,field_value,true,"compare",operate,contrast_val);
-                if(judge_empty(err_msg)){//值正确,有权限 
+                if(judge_empty(err_msg)){//值正确,有权限
                     judge_power_result = true;
                     break;
                 }
@@ -1709,7 +1709,7 @@ function judge_power(page_operate_json,page_power_arr,operate_num,operate_arr,it
                 if(is_alert_err){
                     err_alert('您没有['+power_name+']操作权限!');
                 }
-                return false;			
+                return false;
             }else{
                 return true;
             }
@@ -2043,6 +2043,7 @@ function upLoadFileSingle(fileObj, ajaxUrl, operate_num, otherParams) {
             console.log(ret);
             if (!ret.apistatus) {
                 err_alert(ret.errorMsg);
+                fileObj.value = ''; //虽然file的value不能设为有字符的值，但是可以设置为空值
             } else {
                 layer.msg('处理成功！', {
                     icon: 1,

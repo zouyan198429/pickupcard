@@ -63,6 +63,7 @@ class WorksController extends BaseController
             $real_name = $mobile;
         }
         $this->reDataArr['baseArr']['real_name'] = $real_name;
+        $this->reDataArr['baseArr']['staff_id'] = $this->user_id;
         $this->reDataArr['qqMapsKey'] = config('public.qqMapsKey');// 腾讯地图Key鉴权
         // 每*分钟，自动更新一下左则
 //        $recordTime  = time();

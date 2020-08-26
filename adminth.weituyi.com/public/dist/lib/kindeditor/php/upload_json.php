@@ -48,7 +48,7 @@ if(empty($redisKey)) {
 
 $redis = new Redis();
 $redis->connect('localhost', 6379);
-$redis->auth('ABCabc123456!@#');
+$redis->auth('ABCabc123456!@!ABc');
 // $redis->set( "test" , "Hello World");
 //echo $redis->get( "test");
 
@@ -70,7 +70,7 @@ $company_id = $userInfo['company_id'] ?? 0;
 // $php_url = dirname($_SERVER['PHP_SELF']) . '/';
 
 //文件保存目录路径
-$save_path = '/data/runbuy/resource/';//$php_path . '../attached/';
+$save_path = '/data/www/weblv/qqgy.weituyi.com/imgdata/resource/';//$php_path . '../attached/';
 //文件保存目录URL
 $save_url = '/resource/';//$php_url . '../attached/';
 

@@ -42,6 +42,7 @@ $(function(){
              upLoadFileSingle(fileObj, IMPORT_EXCEL_URL, 4, {});
              layer.close(index_query);
          }, function(){
+             fileObj.value = ''; //虽然file的value不能设为有字符的值，但是可以设置为空值
          });
      });
 });

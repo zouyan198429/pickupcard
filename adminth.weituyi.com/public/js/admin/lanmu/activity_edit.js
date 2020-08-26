@@ -122,7 +122,7 @@ function ajax_form(){
     if(!judge_validate(4,'起始编号',begin_num,true,'digit','','')){
         return false;
     }
-    if(!judge_validate(4,'起始编号',begin_num,true,'range',0,99999)){
+    if(!judge_validate(4,'起始编号',begin_num,true,'range',0,9999999999999999)){
         return false;
     }
 
@@ -130,7 +130,7 @@ function ajax_form(){
     if(!judge_validate(4,'编号数量',total_num,true,'digit','','')){
         return false;
     }
-    if(!judge_validate(4,'编号数量',total_num,true,'range',1,99999)){
+    if(!judge_validate(4,'编号数量',total_num,true,'range',1,100000)){
         return false;
     }
 

@@ -27,6 +27,16 @@ function parent_reset_list(){
 }
 
 $(function(){
+
+    // 富文本
+    KindEditor.create('textarea.kindeditor', {
+        basePath: '/dist/lib/kindeditor/',
+        allowFileManager : true,
+        bodyClass : 'article-content',
+        afterBlur : function(){
+            this.sync();
+        }
+    });
     //提交
     $(document).on("click","#submitBtn",function(){
         //var index_query = layer.confirm('您确定提交保存吗？', {
@@ -89,7 +99,12 @@ function ajax_form(){
     }
 
     var pre_code = $('input[name=pre_code]').val();
-    if(!judge_validate(4,'编码前缀',pre_code,true,'length',1,5)){
+    if(!judge_validate(4,'编码前缀',pre_code,false,'length',1,5)){
+        return false;
+    }
+
+    var content = $('textarea[name=content]').val();
+    if(!judge_validate(4,'内容',content,false,'length',0,200000)){
         return false;
     }
 

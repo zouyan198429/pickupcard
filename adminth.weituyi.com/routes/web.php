@@ -227,6 +227,8 @@ Route::get('admin/codes/import_template', 'Admin\CodesController@import_template
 
 // 收货地址
 Route::get('admin/addrs', 'Admin\AddrsController@index');// 列表
+Route::get('admin/addrs_wait_send', 'Admin\AddrsController@addrs_wait_send');// 未发货列表
+Route::get('admin/addrs_sended', 'Admin\AddrsController@addrs_sended');// 已发货列表
 Route::get('admin/addrs/add/{id}', 'Admin\AddrsController@add');// 添加
 // Route::get('admin/addrs/select', 'Admin\AddrsController@select');// 选择-弹窗
 Route::get('admin/addrs/export', 'Admin\AddrsController@export');// 导出
@@ -236,6 +238,9 @@ Route::get('admin/addrs/import_template', 'Admin\AddrsController@import_template
 // 微网站
 
 // 首页
+
+Route::get('web', 'Web\IndexController@index');// 首页
+Route::get('web/index', 'Web\IndexController@index');// 首页
 Route::get('web/search/{code_id}/{code}', 'Web\IndexController@login');// 查询页 登录
 
 // 产品相关的

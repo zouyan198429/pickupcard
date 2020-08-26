@@ -85,13 +85,15 @@ class ProductController extends WorksController
         $product_name = CommonRequest::get($request, 'product_name');
         $pre_code = CommonRequest::get($request, 'pre_code');
         $sort_num = CommonRequest::getInt($request, 'sort_num');
+        $content = CommonRequest::get($request, 'content');
+        $content = stripslashes($content);
 
         $saveData = [
             'product_name' => $product_name,
             'pre_code' => $pre_code,
             'sort_num' => $sort_num,
+            'content' => $content,
         ];
-
 //        if($id <= 0) {// 新加;要加入的特别字段
 //            $addNewData = [
 //                // 'account_password' => $account_password,

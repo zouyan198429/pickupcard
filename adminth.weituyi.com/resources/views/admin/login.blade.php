@@ -11,15 +11,24 @@
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/css/layui.css')}}" media="all">
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/admin.css')}}" media="all">
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/login.css')}}" media="all">
+  <style>
+  .layadmin-user-login-main {
+    background: #fff;
+    box-shadow: 0 0 16px #ddd;
+    border-radius: 4px;
+    padding: 50px;
+    width: 475px;
+  }
+  </style>
 </head>
 <body>
 
   <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
 
-    <div class="layadmin-user-login-main">
+    <div class="layadmin-user-login-main"  >
       <div class="layadmin-user-login-box layadmin-user-login-header">
-        <h2>管理后台</h2>
-        <p>蒙驴驴乳后台系统</p>
+        <h2>提货卡管理后台</h2>
+        <p>  </p>
       </div>
       <form class="am-form" action="#"  method="post"  id="addForm">
       <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
@@ -70,31 +79,8 @@
       </form>
     </div>
     <div class="layui-trans layadmin-user-login-footer">
-
-      {{--<p>© 2018 <a href="http://www.layui.com/" target="_blank">layui.com</a></p>--}}
-      <p>
-        <span><a href="http://admin.jidiwang.com" target="_blank">大后台</a></span>
-        <span><a href="http://city.jidiwang.com" target="_blank">城市代理商后台</a></span>
-        <span><a href="http://seller.jidiwang.com" target="_blank">商家后台</a></span>
-        <span><a href="http://shop.jidiwang.com" target="_blank">店铺后台</a></span>
-      </p>
-    </div>
-    {{--
-  @verbatim
-    <!--<div class="ladmin-user-login-theme">
-      <script type="text/html" template>
-        <ul>
-          <li data-theme=""><img src="{{ layui.setter.base }}style/res/bg-none.jpg"></li>
-          <li data-theme="#03152A" style="background-color: #03152A;"></li>
-          <li data-theme="#2E241B" style="background-color: #2E241B;"></li>
-          <li data-theme="#50314F" style="background-color: #50314F;"></li>
-          <li data-theme="#344058" style="background-color: #344058;"></li>
-          <li data-theme="#20222A" style="background-color: #20222A;"></li>
-        </ul>
-      </script>
-    </div>-->
-    @endverbatim
-  --}}
+ 
+ 
   </div>
 
   <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>

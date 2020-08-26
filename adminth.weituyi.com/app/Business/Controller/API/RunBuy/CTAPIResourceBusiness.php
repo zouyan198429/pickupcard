@@ -795,7 +795,8 @@ class CTAPIResourceBusiness extends BasicPublicCTAPIBusiness
         //$store_result = $photo->store('photo');
         try{
             if($operate_type == 1 ){// 小于等于0时，为没有分片上传 !empty($photo)
-                $store_result = $photo->storeAs($savPath, $saveName);// 返回 "resource/company/1/pro0/2018/10/13//20181013182843dc1a9783e212840f.jpeg"
+                // $store_result = $photo->storeAs($savPath, $saveName);// 返回 "resource/company/1/pro0/2018/10/13//20181013182843dc1a9783e212840f.jpeg"
+                $store_result = $photo->storeAs(rtrim($savPath,'/'), $saveName);
             }else{
                 $publicPath = Tool::getPath('public');
                 //最后合成后的名字及路径

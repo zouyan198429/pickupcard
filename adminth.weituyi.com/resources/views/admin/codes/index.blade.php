@@ -32,6 +32,12 @@
             {{--<option value="{{ $k }}"  @if(isset($province_id) && $province_id == $k) selected @endif >{{ $txt }}</option>--}}
           {{--@endforeach--}}
         {{--</select>--}}
+          <select class="wmini" name="open_status" style="width: 70px;">
+              <option value="">请选择开启状态</option>
+              @foreach ($openStatus as $k=>$txt)
+                  <option value="{{ $k }}"  @if(isset($defaultOpenStatus) && $defaultOpenStatus == $k) selected @endif >{{ $txt }}</option>
+              @endforeach
+          </select>
         <select class="wmini" name="status" style="width: 70px;">
           <option value="">请选择状态</option>
           @foreach ($status as $k=>$txt)
@@ -47,6 +53,10 @@
     </form>
   </div>
   <div class="table-header">
+      <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.openAll(this)" >启用[所有]</button>
+    <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.openSelected(this)" >启用[勾选]</button>
+      <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.closeAll(this)" >关闭[所有]</button>
+    <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.closeSelected(this)" >关闭[勾选]</button>
     {{--<button class="btn btn-danger  btn-xs batch_del"  onclick="action.batchDel(this)">批量删除</button>--}}
     <button class="btn btn-success  btn-xs export_excel"  onclick="action.batchExportExcel(this)" >导出[按条件]</button>
     <button class="btn btn-success  btn-xs export_excel"  onclick="action.exportExcel(this)" >导出[勾选]</button>
@@ -67,9 +77,10 @@
       <th>兑换码</th>
       <th>密码</th>
       {{--<th>二维码</th>--}}
+      <th>开启状态</th>
       <th>状态</th>
       {{--<th>排序[降序]</th>--}}
-      {{--<th>操作</th>--}}
+      <th>操作</th>
     </tr>
     </thead>
     <tbody id="data_list">
@@ -109,6 +120,12 @@
       var IMPORT_EXCEL_TEMPLATE_URL = "{{ url('admin/codes/import_template') }}";//导入EXCEL模版地址
       var IMPORT_EXCEL_URL = "{{ url('api/admin/codes/import') }}";//导入EXCEL地址
       var IMPORT_EXCEL_CLASS = "import_file";// 导入EXCEL的file的class
+
+      var OPEN_ALL_URL = "{{ url('api/admin/codes/ajax_open_all') }}";//开启所有[根据活动id]
+      var OPEN_URL = "{{ url('api/admin/codes/ajax_open') }}";//单个或批量开启地址
+      var CLOSE_ALL_URL = "{{ url('api/admin/codes/ajax_close_all') }}";//关闭所有[根据活动id]
+      var CLOSE_URL = "{{ url('api/admin/codes/ajax_close') }}";//单个或批量关闭地址
+      var CURRENT_ACTIVITY_ID = "{{ $activity_id or 0 }}";// 当前操作的活动id
   </script>
   <script src="{{asset('js/common/list.js')}}"></script>
   <script src="{{ asset('js/admin/lanmu/codes.js') }}"  type="text/javascript"></script>

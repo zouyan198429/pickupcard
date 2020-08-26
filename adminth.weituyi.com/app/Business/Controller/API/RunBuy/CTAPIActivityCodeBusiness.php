@@ -19,6 +19,12 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
         '4' => '过期',
     ];
 
+    // 启用状态1待启用2已启用
+    public static $openStatusArr = [
+        '1' => '待启用',
+        '2' => '已启用',
+    ];
+
     /**
      * 获得列表数据--所有数据
      *
@@ -87,6 +93,9 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
 
             $status = CommonRequest::get($request, 'status');
             if(is_numeric($status) )  array_push($queryParams['where'], ['status', '=', $status]);
+
+            $open_status = CommonRequest::get($request, 'open_status');
+            if(is_numeric($open_status) )  array_push($queryParams['where'], ['open_status', '=', $open_status]);
 
             $code = CommonRequest::get($request, 'code');
             if(!empty($code) )  array_push($queryParams['where'], ['code', '=', $code]);
@@ -160,7 +169,7 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
             foreach($data_list as $k => $v){
                 $data_list[$k]['url'] = config('public.compWebURL') . 'web/search/' . $v['id'] . '/' . $v['code'];
             }
-            $headArr = ['code'=>'兑换码', 'code_password'=>'密码', 'url'=>'二维码地址', 'status_text'=>'状态'];
+            $headArr = ['code'=>'兑换码', 'code_password'=>'密码', 'url'=>'二维码地址', 'open_status_text'=>'开启状态', 'status_text'=>'状态'];
             $activity_name = $data_list[0]['activity_info']['activity_name'] ?? '';// 活动名称
             if(strlen($activity_name) > 0 )  $activity_name = '-' . $activity_name;
             ImportExport::export('','兑换码' . $activity_name ,$data_list,1, $headArr, 0, ['sheet_title' => '兑换码']);
@@ -345,6 +354,7 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
 //        ImportExport::export('','员工导入模版',$data_list,1, $headArr, 0, ['sheet_title' => '员工导入模版']);
         die;
     }
+
     /**
      * 删除单条数据
      *
@@ -362,6 +372,66 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
 
     }
 
+    /**
+     * 开启 批量 或 单条数据
+     *
+     * @param Request $request 请求信息
+     * @param Controller $controller 控制对象
+     * @param int $open_status 操作 状态 1待启用 -- 关闭     2已启用  --- 开启
+     * @param int $notLog 是否需要登陆 0需要1不需要
+     * @return  array 列表数据
+     * @author zouyan(305463219@qq.com)
+     */
+    public static function openAjax(Request $request, Controller $controller, $open_status = 1, $notLog = 0)
+    {
+        $company_id = $controller->company_id;
+        $activity_id = CommonRequest::getInt($request, 'activity_id');
+        $id = CommonRequest::get($request, 'id');// 单个id 或 逗号分隔的多个，或 多个的一维数组
+        $user_id = $controller->user_id;
+        // 调用新加或修改接口
+        $apiParams = [
+            'company_id' => $company_id,
+            'activity_id' => $activity_id,
+            'id' => $id,
+            'open_status' => $open_status,
+            'operate_staff_id' => $user_id,
+            'modifAddOprate' => 0,
+        ];
+        $id = static::exeDBBusinessMethodCT($request, $controller, '',  'openStatusById', $apiParams, $company_id, $notLog);
+        return $id;
+        // return static::delAjaxBase($request, $controller, '', $notLog);
+
+    }
+
+
+    /**
+     * 开启 批量 或 单条数据
+     *
+     * @param Request $request 请求信息
+     * @param Controller $controller 控制对象
+     * @param int $open_status 操作 状态 1待启用 -- 关闭     2已启用  --- 开启
+     * @param int $notLog 是否需要登陆 0需要1不需要
+     * @return  array 列表数据
+     * @author zouyan(305463219@qq.com)
+     */
+    public static function openALLAjax(Request $request, Controller $controller, $open_status = 1, $notLog = 0)
+    {
+        $company_id = $controller->company_id;
+        $activity_id = CommonRequest::getInt($request, 'activity_id');
+        $user_id = $controller->user_id;
+        // 调用新加或修改接口
+        $apiParams = [
+            'company_id' => $company_id,
+            'activity_id' => $activity_id,
+            'open_status' => $open_status,
+            'operate_staff_id' => $user_id,
+            'modifAddOprate' => 0,
+        ];
+        $nums = static::exeDBBusinessMethodCT($request, $controller, '',  'openStatusAll', $apiParams, $company_id, $notLog);
+        return $nums;
+        // return static::delAjaxBase($request, $controller, '', $notLog);
+
+    }
 
     /**
      * 根据id新加或修改单条数据-id 为0 新加，返回新的对象数组[-维],  > 0 ：修改对应的记录，返回true
@@ -611,6 +681,33 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
     }
     // ***********通过组织条件获得kv***结束************************************************************
 
+    public static function save(Request $request, Controller $controller){
+        $activity_id = CommonRequest::get($request, 'activity_id');
+        $code = CommonRequest::get($request, 'code');
+        $code_password = CommonRequest::get($request, 'code_password');
+        if(!is_numeric($activity_id))  throws('参数有误$activity_id！');
+        // 获得活动信息
+        $activityInfo = CTAPIActivityBusiness::getInfoData($request, $controller, $activity_id, [], [], 1);
+        if(empty($activityInfo)) throws('请选择活动！');
+        // 通过 活动id 及提活码，获得提货码id
+        $queryParams = [
+            'where' => [
+                ['activity_id', $activity_id],
+                ['code', $code],
+            ],
+            'select' => [
+                'id',// , 'open_status'// ,'city_name','sort_num'
+                //,'operate_staff_id','operate_staff_history_id'
+            ],
+            // 'orderBy' => ['sort_num'=>'desc','id'=>'asc'],
+        ];
+        $info = static::getInfoQuery($request, $controller, '', 0, 1, $queryParams,[], 1);
+        if(empty($info)) throws('请填写正确的卡号！');
+        // if($info['open_status'] != 2) throws('未启用！');
+        $code_id = $info['id'] ?? '';
+        if(!is_numeric($code_id))  throws('参数有误code_id！');
+        return static::judgeActivity($request, $controller, $code_id, $code, $code_password);
+    }
     /**
      * 登录
      *
@@ -625,10 +722,17 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
         $code = CommonRequest::get($request, 'code');
         $code_password = CommonRequest::get($request, 'code_password');
         if(!is_numeric($code_id))  throws('参数有误code_id！');
+        return static::judgeActivity($request, $controller, $code_id, $code, $code_password);
+    }
+
+    // 判断输入的提货码是否正确
+    public static function judgeActivity(Request $request, Controller $controller, $code_id, $code, $code_password){
+
         // 获得兑换码记录
         $info = static::getInfoData($request, $controller, $code_id, [], ['activityInfo', 'addr', 'productInfo', 'productHistoryInfo'], 1);
 
         if(empty($info)) throws('请填写正确的密码！');
+        if($info['open_status'] != 2) throws('未启用！');
         if($code !== $info['code'] || $code_password !== $info['code_password']) throws('请填写正确的兑换码及密码！');
         $activityInfo = $info['activity_info'] ?? [];
         if(isset($info['activity_info'])) unset($info['activity_info']);
@@ -652,7 +756,7 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
 
         //$preKey = CommonRequest::get($request, 'preKey');// 0 小程序 1后台
         //if(!is_numeric($preKey)){
-            $preKey = 1;
+        $preKey = 1;
         //}
         $reData = [];
         $info['modifyTime'] = time();
