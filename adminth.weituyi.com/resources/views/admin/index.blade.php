@@ -8,13 +8,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/css/layui.css?8')}}" media="all">
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/admin.css')}}" media="all">
-  
+
   <script>
   /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
   </script>
 </head>
 <body class="layui-layout-body">
-  
+
   <div id="LAY_app">
     <div class="layui-layout layui-layout-admin">
       <div class="layui-header">
@@ -42,7 +42,7 @@
           {{----}}
         </ul>
         <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-          
+
           {{--<li class="layui-nav-item" lay-unselect>--}}
             {{--<a lay-href="{{ url('layui/app/message/index') }}" layadmin-event="message" lay-text="消息中心">--}}
               {{--<i class="layui-icon layui-icon-notice"></i>  --}}
@@ -79,7 +79,7 @@
               <dd  style="text-align: center;"><a href="{{ url('admin/logout') }}">退出</a></dd>
             </dl>
           </li>
-          
+
           {{--<li class="layui-nav-item layui-hide-xs" lay-unselect>--}}
             {{--<a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>--}}
           {{--</li>--}}
@@ -88,7 +88,7 @@
           </li>
         </ul>
       </div>
-      
+
       <!-- 侧边菜单 -->
       <div class="layui-side layui-side-menu">
         <div class="layui-side-scroll">
@@ -96,10 +96,10 @@
           <div class="layui-logo" lay-href="{{ url('/help/index.html') }}">
             <span>运营数据中心</span>
           </div>
-          
+
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
- 
- 
+
+
 
             <li data-name="home" class="layui-nav-item layui-nav-item">
               <a href="javascript:;" lay-tips="提货卡管理" lay-direction="2">
@@ -107,18 +107,27 @@
                 <cite>提货卡管理</cite>
               </a>
               <dl class="layui-nav-child">
-                <dd> 
-                   <a lay-href="{{ url('admin/products') }}">商品管理</a> 
-                </dd> 
+                  @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)
+                <dd>
+                   <a lay-href="{{ url('admin/products') }}">商品管理</a>
+                </dd>
                 <dd>
                   <a lay-href="{{ url('admin/activity') }}">提货卡管理</a>
                 </dd>
+                  @endif
                 <dd >
-                  <a lay-href="{{ url('admin/addrs') }}">提货记录</a>
+                  <a lay-href="{{ url('admin/addrs') }}">提货列表</a>
                 </dd>
+                  <dd >
+                      <a lay-href="{{ url('admin/addrs_wait_send') }}">未发货列表</a>
+                  </dd>
+                  <dd >
+                      <a lay-href="{{ url('admin/addrs_sended') }}">已发货列表</a>
+                  </dd>
               </dl>
             </li>
 
+              @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)
             <li data-name="user" class="layui-nav-item">
               <a href="javascript:;" lay-tips="用户" lay-direction="2">
                 <i class="layui-icon layui-icon-user"></i>
@@ -127,23 +136,26 @@
               <dl class="layui-nav-child">
                 <dd>
                   <a lay-href="{{ url('admin/staff') }}">用户列表</a>
-                </dd> 
+                </dd>
               </dl>
             </li>
+              @endif
             <li data-name="set" class="layui-nav-item">
               <a href="javascript:;" lay-tips="设置" lay-direction="2">
                 <i class="layui-icon layui-icon-set"></i>
                 <cite>设置</cite>
               </a>
               <dl class="layui-nav-child">
+                  @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)
                 <dd class="layui-nav-itemed">
                   <a href="javascript:;">系统设置</a>
-                  <dl class="layui-nav-child"> 
+                  <dl class="layui-nav-child">
                     <dd>
                       <a lay-href="{{ url('admin/city') }}">城市管理</a>
-                    </dd> 
+                    </dd>
                   </dl>
                 </dd>
+                  @endif
                 <dd class="layui-nav-itemed">
                   <a href="javascript:;">我的设置</a>
                   <dl class="layui-nav-child">
@@ -180,8 +192,8 @@
           </ul>
         </div>
       </div>
-      
-      
+
+
       <!-- 主体内容 -->
       <div class="layui-body" id="LAY_app_body">
         <div class="layadmin-tabsbody-item layui-show">
@@ -189,7 +201,7 @@
           <iframe src="{{ url('/help/index.html') }}" frameborder="0" class="layadmin-iframe"></iframe>
         </div>
       </div>
-      
+
       <!-- 辅助元素，一般用于移动设备下遮罩 -->
       <div class="layadmin-body-shade" layadmin-event="shade"></div>
     </div>
@@ -212,7 +224,7 @@
   (function() {
     var hm = document.createElement("script");
     hm.src = "https://hm.baidu.com/hm.js?d214947968792b839fd669a4decaaffc";
-    var s = document.getElementsByTagName("script")[0]; 
+    var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
   </script>

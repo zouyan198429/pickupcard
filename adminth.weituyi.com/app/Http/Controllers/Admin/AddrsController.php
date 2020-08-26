@@ -45,6 +45,70 @@ class AddrsController extends WorksController
     }
 
     /**
+     * 未发货列表
+     *
+     * @param Request $request
+     * @return mixed
+     * @author zouyan(305463219@qq.com)
+     */
+    public function addrs_wait_send(Request $request)
+    {
+        $this->InitParams($request);
+        $reDataArr = $this->reDataArr;
+        // $info = CTAPIDeliveryAddrBusiness::getInfoData($request, $this, 1, [], '');
+        // pr($info);
+        // 获得第一级省一维数组[$k=>$v]
+        // $reDataArr['province_kv'] = CTAPICityBusiness::getCityByPid($request, $this,  0);
+        // $reDataArr['province_kv'] = CTAPIStaffBusiness::getChildListKeyVal($request, $this, 0, 1 + 0, 0);
+        // $reDataArr['province_id'] = 0;
+
+        // 省
+        $reDataArr['province_kv'] = CTAPICityBusiness::getCityByPid($request, $this,  0);
+        $reDataArr['defaultProvince'] = -1;
+        // 状态
+        $reDataArr['status'] =  CTAPIDeliveryAddrBusiness::$statusArr;
+        $reDataArr['defaultStatus'] = 1;// 默认状态
+        // 获得商品信息
+        $reDataArr['product_kv'] = CTAPIProductBusiness::getListKV($request, $this);
+
+        $reDataArr['defaultProduct'] = -1;// 默认
+
+        return view('admin.addrs.wait_send', $reDataArr);
+    }
+
+    /**
+     * 已发货列表
+     *
+     * @param Request $request
+     * @return mixed
+     * @author zouyan(305463219@qq.com)
+     */
+    public function addrs_sended(Request $request)
+    {
+        $this->InitParams($request);
+        $reDataArr = $this->reDataArr;
+        // $info = CTAPIDeliveryAddrBusiness::getInfoData($request, $this, 1, [], '');
+        // pr($info);
+        // 获得第一级省一维数组[$k=>$v]
+        // $reDataArr['province_kv'] = CTAPICityBusiness::getCityByPid($request, $this,  0);
+        // $reDataArr['province_kv'] = CTAPIStaffBusiness::getChildListKeyVal($request, $this, 0, 1 + 0, 0);
+        // $reDataArr['province_id'] = 0;
+
+        // 省
+        $reDataArr['province_kv'] = CTAPICityBusiness::getCityByPid($request, $this,  0);
+        $reDataArr['defaultProvince'] = -1;
+        // 状态
+        $reDataArr['status'] =  CTAPIDeliveryAddrBusiness::$statusArr;
+        $reDataArr['defaultStatus'] = 2;// 默认状态
+        // 获得商品信息
+        $reDataArr['product_kv'] = CTAPIProductBusiness::getListKV($request, $this);
+
+        $reDataArr['defaultProduct'] = -1;// 默认
+
+        return view('admin.addrs.sended', $reDataArr);
+    }
+
+    /**
      * 同事选择-弹窗
      *
      * @param Request $request
@@ -243,6 +307,25 @@ class AddrsController extends WorksController
     {
         $this->InitParams($request);
         return CTAPIDeliveryAddrBusiness::delAjax($request, $this);
+    }
+
+    /**
+     * 子帐号管理-发货
+     *
+     * @param Request $request
+     * @return mixed
+     * @author zouyan(305463219@qq.com)
+     */
+    public function ajax_send(Request $request)
+    {
+        $this->InitParams($request);
+        $id = CommonRequest::get($request, 'id');
+        // 数组转为逗号分隔的字符串
+        if(is_array($id)) $id = implode(',', $id);
+        if(strlen($id) <= 0){
+            throws('操作记录标识不能为空！');
+        }
+        return CTAPIDeliveryAddrBusiness::sendAjax($request, $this, $id);
     }
 
     /**

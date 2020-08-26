@@ -30,7 +30,7 @@
                   <option value="{{ $k }}"  @if(isset($defaultProduct) && $defaultProduct == $k) selected @endif >{{ $txt }}</option>
               @endforeach
           </select>
-        <select class="wmini" name="status" style="width: 70px;">
+        <select class="wmini" name="status" style="width: 70px;display: none;">
           <option value="">请选择状态</option>
           @foreach ($status as $k=>$txt)
             <option value="{{ $k }}"  @if(isset($defaultStatus) && $defaultStatus == $k) selected @endif >{{ $txt }}</option>
@@ -69,9 +69,9 @@
 {{--    { {--<button class="btn btn-danger  btn-xs batch_del"  onclick="action.batchDel(this)">批量删除</button>--} }--}}
     <button class="btn btn-success  btn-xs export_excel"  onclick="action.batchExportExcel(this)" >导出[按条件]</button>
     <button class="btn btn-success  btn-xs export_excel"  onclick="action.exportExcel(this)" >导出[勾选]</button>
-      <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.batchExportExcel(this)" >导出即发货[按条件]</button>
-      <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.exportExcel(this)" >导出即发货[勾选]</button>
-      <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.sendSelected(this)" >发货[勾选]</button>
+{{--      <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.batchExportExcel(this)" >导出即发货[按条件]</button>--}}
+{{--      <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.exportExcel(this)" >导出即发货[勾选]</button>--}}
+{{--      <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.sendSelected(this)" >发货[勾选]</button>--}}
 {{--    <button class="btn btn-success  btn-xs import_excel"  onclick="action.importExcelTemplate(this)">导入模版[EXCEL]</button>--}}
 {{--    <button class="btn btn-success  btn-xs import_excel"  onclick="action.importExcel(this)">导入城市</button>--}}
 {{--    <div style="display:none;" ><input type="file" class="import_file img_input"></div>{ {--导入file对象--} }--}}

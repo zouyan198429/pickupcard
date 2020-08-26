@@ -63,15 +63,164 @@ function reset_list_self(is_read_page, ajax_async, reset_total, do_num){
 }
 
 //业务逻辑部分
-// var otheraction = {
-//     staff: function(obj, id, text){// 帐号管理
-//         var obj = $(obj);
-//         var href = STAFF_LIST_URL + '?id=' + id;//
-//         layuiGoIframe(href, text);
-//         return false;
-//     },
-//
-// };
+var otheraction = {
+    send : function(id){
+        var index_query = layer.confirm('确定发货当前记录？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            other_operate_ajax('send',id);
+            layer.close(index_query);
+        }, function(){
+        });
+        return false;
+        //if(false) {
+        //   var sure_cancel_data = {
+        //       'content':'确定删除当前记录？删除后不可恢复! ',//提示文字
+        //       'sure_event':'del_sure('+id+');',//确定
+        //   };
+        //  sure_cancel_alert(sure_cancel_data);
+        //  return false;
+        //}
+    },
+    sendSelected: function(obj){// 开启选中的码
+        var recordObj = $(obj);
+        var index_query = layer.confirm('确定发货当前选中记录？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            var ids = get_list_checked(DYNAMIC_TABLE_BODY,1,1);
+            //ajax开启数据
+            other_operate_ajax('batch_send',ids);
+            layer.close(index_query);
+        }, function(){
+        });
+        return false;
+    },
+    batchExportExcel:function(obj) {// 导出EXCEL-按条件
+        var recordObj = $(obj);
+        var index_query = layer.confirm('确定导出即发货当前查询记录？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            //获得搜索表单的值
+            append_sure_form(SURE_FRM_IDS,FRM_IDS);//把搜索表单值转换到可以查询用的表单中
+            //获得表单各name的值
+            var data = get_frm_values(SURE_FRM_IDS);// {}
+            data['is_export'] = 1;
+            data['status'] = 1;
+            data['is_send'] = 1;
+            console.log(EXPORT_EXCEL_URL);
+            console.log(data);
+            var url_params = get_url_param(data);
+            var url = EXPORT_EXCEL_URL + '?' + url_params;
+            console.log(url);
+            go(url);
+            // go(EXPORT_EXCEL_URL);
+            layer.close(index_query);
+            waitDoing();// 暂停3秒后刷新列表数据
+        }, function(){
+        });
+        return false;
+    },
+    exportExcel:function(obj) {// 导出EXCEL-按选择
+        var recordObj = $(obj);
+        var index_query = layer.confirm('确定导出即发货当前选择记录？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            var ids = get_list_checked(DYNAMIC_TABLE_BODY,1,1);
+            console.log('ids',ids);
+            if( ids==''){
+                err_alert('请选择需要操作的数据');
+                return false;
+            }
+            //获得表单各name的值
+            var data = get_frm_values(SURE_FRM_IDS);// {}
+            data['is_export'] = 1;
+            data['status'] = 1;
+            data['is_send'] = 1;
+            data['ids'] = ids;
+            console.log(EXPORT_EXCEL_URL);
+            console.log(data);
+            var url_params = get_url_param(data);
+            var url = EXPORT_EXCEL_URL + '?' + url_params;
+            console.log(url);
+            go(url);
+            layer.close(index_query);
+            waitDoing();// 暂停3秒后刷新列表数据
+        }, function(){
+        });
+        return false;
+    },
+};
+// 暂停3秒后刷新列表数据
+function waitDoing(){
+    // 暂停3秒后刷新列表数据
+    layer.msg('操作处理中，请稍等！', {
+        icon: 1,
+        shade: 0.3,
+        time: 3000 //2秒关闭（如果不配置，默认是3秒）
+    }, function(){
+        var reset_total = false; // 是否重新从数据库获取总页数 true:重新获取,false不重新获取
+        console.log(LIST_FUNCTION_NAME);
+        eval( LIST_FUNCTION_NAME + '(' + true +', ' + true +', ' + reset_total + ', 2)');
+        //do something
+    });
+}
+
+//操作
+function other_operate_ajax(operate_type, id){
+    if(operate_type =='' || id ==''){
+        err_alert('请选择需要操作的数据');
+        return false;
+    }
+    var operate_txt = "";
+    var data ={};
+    var ajax_url = "";
+    var reset_total = true;// 是否重新从数据库获取总页数 true:重新获取,false不重新获取  ---ok
+    switch(operate_type)
+    {
+        case 'send'://发货
+            operate_txt = "发货";
+            data = {'id':id};
+            ajax_url = AJAX_SEND_URL;// /pms/Supplier/ajax_del?operate_type=1
+            reset_total = false;
+            break;
+        case 'batch_send'://批量发货
+            operate_txt = "批量发货";
+            data = {'id':id};
+            reset_total = false;
+            ajax_url = AJAX_SEND_URL;// "/pms/Supplier/ajax_del?operate_type=2";
+            break;
+        default:
+            break;
+    }
+    console.log('ajax_url:',ajax_url);
+    console.log('data:',data);
+    var layer_index = layer.load();//layer.msg('加载中', {icon: 16});
+    $.ajax({
+        'type' : 'POST',
+        'url' : ajax_url,//'/pms/Supplier/ajax_del',
+        'data' : data,
+        'dataType' : 'json',
+        'success' : function(ret){
+            console.log('ret:',ret);
+            if(!ret.apistatus){//失败
+                //alert('失败');
+                // countdown_alert(ret.errorMsg,0,5);
+                layer_alert(ret.errorMsg,3,0);
+            }else{//成功
+                var msg = ret.errorMsg;
+                if(msg === ""){
+                    msg = operate_txt+"成功";
+                }
+                // countdown_alert(msg,1,5);
+                layer_alert(msg,1,0);
+                // reset_list(true, true);
+                console.log(LIST_FUNCTION_NAME);
+                eval( LIST_FUNCTION_NAME + '(' + true +', ' + true +', ' + reset_total + ', 2)');
+            }
+            layer.close(layer_index)//手动关闭
+        }
+    });
+}
 
 (function() {
     document.write("");
@@ -119,6 +268,11 @@ function reset_list_self(is_read_page, ajax_async, reset_total, do_num){
     document.write("                <%if( can_modify){%>");
     document.write("                <a href=\"javascript:void(0);\" class=\"btn btn-mini btn-info\" onclick=\"action.iframeModify(<%=item.id%>)\">");
     document.write("                    <i class=\"ace-icon fa fa-pencil bigger-60\"> 编辑<\/i>");
+    document.write("                <\/a>");
+    document.write("                <%}%>");
+    document.write("                <%if( can_modify){%>");
+    document.write("                <a href=\"javascript:void(0);\" class=\"btn btn-mini btn-info\" onclick=\"otheraction.send(<%=item.id%>)\">");
+    document.write("                    <i class=\"ace-icon fa fa-paper-plane-o bigger-60\"> 发货<\/i>");
     document.write("                <\/a>");
     document.write("                <%}%>");
     // document.write("                <%if( can_modify){%>");

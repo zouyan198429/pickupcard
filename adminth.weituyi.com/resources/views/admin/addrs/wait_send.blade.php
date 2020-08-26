@@ -30,7 +30,7 @@
                   <option value="{{ $k }}"  @if(isset($defaultProduct) && $defaultProduct == $k) selected @endif >{{ $txt }}</option>
               @endforeach
           </select>
-        <select class="wmini" name="status" style="width: 70px;">
+        <select class="wmini" name="status" style="width: 70px;display: none;">
           <option value="">请选择状态</option>
           @foreach ($status as $k=>$txt)
             <option value="{{ $k }}"  @if(isset($defaultStatus) && $defaultStatus == $k) selected @endif >{{ $txt }}</option>

@@ -103,6 +103,7 @@ Route::post('admin/codes/ajax_close', 'Admin\CodesController@ajax_close');// 单
 Route::any('admin/addrs/ajax_alist', 'Admin\AddrsController@ajax_alist');//ajax获得列表数据
 Route::post('admin/addrs/ajax_del', 'Admin\AddrsController@ajax_del');// 删除
 Route::post('admin/addrs/ajax_save', 'Admin\AddrsController@ajax_save');// 新加/修改
+Route::post('admin/addrs/ajax_send', 'Admin\AddrsController@ajax_send');// 发货
 Route::post('admin/addrs/ajax_get_child', 'Admin\AddrsController@ajax_get_child');// 根据部门id,小组id获得子类员工数组[kv一维数组]
 Route::post('admin/addrs/ajax_get_areachild', 'Admin\AddrsController@ajax_get_areachild');// 根据区县id,街道id获得子类员工数组[kv一维数组]
 Route::post('admin/addrs/ajax_import_staff','Admin\AddrsController@ajax_import'); // 导入员工

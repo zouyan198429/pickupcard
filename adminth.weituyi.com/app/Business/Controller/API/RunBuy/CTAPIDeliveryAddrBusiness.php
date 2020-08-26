@@ -209,6 +209,11 @@ class CTAPIDeliveryAddrBusiness extends BasicPublicCTAPIBusiness
         $result['data_list'] = $data_list;
         // 导出功能
         if($isExport == 1){
+            $isSend = CommonRequest::getInt($request, 'is_send'); // 是否导出即发货 0普通导出 ；1导出即发货
+            if ($isSend == 1) {
+                $recordIds = array_column($data_list, 'id');
+                if(!empty($recordIds)) static::sendAjax($request, $controller, $recordIds);// 发货
+            }
             foreach($data_list as $k => $v){
                 $data_list[$k]['addrDetail'] = $v['province_name'] . $v['city_name'] . $v['area_name'] . $v['addr'];
             }
@@ -432,6 +437,7 @@ class CTAPIDeliveryAddrBusiness extends BasicPublicCTAPIBusiness
 //        ImportExport::export('','员工导入模版',$data_list,1, $headArr, 0, ['sheet_title' => '员工导入模版']);
         die;
     }
+
     /**
      * 删除单条数据
      *
@@ -449,6 +455,37 @@ class CTAPIDeliveryAddrBusiness extends BasicPublicCTAPIBusiness
 
     }
 
+
+    /**
+     * 发货单条数据
+     *
+     * @param Request $request 请求信息
+     * @param Controller $controller 控制对象
+     * @param string $id 需要发货的记录id  多个逗号分隔  或用一维数组
+     * @param int $notLog 是否需要登陆 0需要1不需要
+     * @return  array 列表数据
+     * @author zouyan(305463219@qq.com)
+     */
+    public static function sendAjax(Request $request, Controller $controller, $id, $notLog = 0)
+    {
+        $company_id = $controller->company_id;
+        // $id = CommonRequest::getInt($request, 'id');
+
+        $user_id = $controller->user_id;
+        // $id = CommonRequest::get($request, 'id');
+        // 数组转为逗号分隔的字符串
+        if(is_array($id)) $id = implode(',', $id);
+
+        // 调用删除接口
+        $apiParams = [
+            'company_id' => $company_id,
+            'id' => $id,
+            'operate_staff_id' => $user_id,
+            'modifAddOprate' => 0,
+        ];
+        static::exeDBBusinessMethodCT($request, $controller, '',  'sendById', $apiParams, $company_id, $notLog);
+        return ajaxDataArr(1, $id, '');
+    }
 
     /**
      * 根据id新加或修改单条数据-id 为0 新加，返回新的对象数组[-维],  > 0 ：修改对应的记录，返回true
