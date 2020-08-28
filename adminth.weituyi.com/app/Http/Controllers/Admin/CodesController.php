@@ -8,8 +8,9 @@ use App\Services\Request\CommonRequest;
 use App\Services\Tool;
 use Illuminate\Http\Request;
 
-class CodesController extends WorksController
+class CodesController extends BasicController
 {
+    public static $VIEW_NAME = 'codes';// 视图栏目文件夹目录名称
     /**
      * 首页
      *
@@ -30,7 +31,7 @@ class CodesController extends WorksController
         $reDataArr['defaultOpenStatus'] = -1;// 默认状态
 
         $reDataArr['activity_id'] =  CommonRequest::getInt($request, 'activity_id');
-        return view('admin.codes.index', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.index', $reDataArr);
     }
 
     /**
@@ -47,7 +48,7 @@ class CodesController extends WorksController
 //        $reDataArr['province_kv'] = CTAPIActivityCodeBusiness::getCityByPid($request, $this,  0);
 //        $reDataArr['province_kv'] = CTAPIActivityCodeBusiness::getChildListKeyVal($request, $this, 0, 1 + 0, 0);
 //        $reDataArr['province_id'] = 0;
-//        return view('admin.codes.select', $reDataArr);
+//        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.select', $reDataArr);
 //    }
 
     /**
@@ -71,11 +72,15 @@ class CodesController extends WorksController
 //        if ($id > 0) { // 获得详情数据
 //            $operate = "修改";
 //            $info = CTAPIActivityCodeBusiness::getInfoData($request, $this, $id, [], '');
+//            $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
+//        }else{
+//            $info = CTAPIActivityCodeBusiness::getInfoData($request, $this, $id, [], '');
+//            $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
 //        }
 //        // $reDataArr = array_merge($reDataArr, $resultDatas);
 //        $reDataArr['info'] = $info;
 //        $reDataArr['operate'] = $operate;
-//        return view('admin.codes.add', $reDataArr);
+//        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.add', $reDataArr);
 //    }
 
 
@@ -103,6 +108,7 @@ class CodesController extends WorksController
 ////            $addNewData = [
 ////                // 'account_password' => $account_password,
 ////            ];
+//                $this->appSellerId($addNewData); // 有企业id的记录，添加时，加入所属企业id
 ////            $saveData = array_merge($saveData, $addNewData);
 ////        }
 //        $resultDatas = CTAPIActivityCodeBusiness::replaceById($request, $this, $saveData, $id, true);
@@ -118,6 +124,10 @@ class CodesController extends WorksController
      */
     public function ajax_alist(Request $request){
         $this->InitParams($request);
+        $mergeParams = [];
+        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+        $this->appendSellerIdParams($mergeParams);
+        CTAPIActivityCodeBusiness::mergeRequest($request, $this, $mergeParams);
         return  CTAPIActivityCodeBusiness::getList($request, $this, 2 + 4, [], ['oprateStaff', 'oprateStaffHistory']);
     }
 
@@ -130,6 +140,10 @@ class CodesController extends WorksController
      */
 //    public function ajax_get_ids(Request $request){
 //        $this->InitParams($request);
+//        $mergeParams = [];
+//        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+//        $this->appendSellerIdParams($mergeParams);
+//        CTAPIActivityCodeBusiness::mergeRequest($request, $this, $mergeParams);
 //        $result = CTAPIActivityCodeBusiness::getList($request, $this, 1 + 0);
 //        $data_list = $result['result']['data_list'] ?? [];
 //        $ids = implode(',', array_column($data_list, 'id'));
@@ -146,6 +160,10 @@ class CodesController extends WorksController
      */
     public function export(Request $request){
         $this->InitParams($request);
+        $mergeParams = [];
+        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+        $this->appendSellerIdParams($mergeParams);
+        CTAPIActivityCodeBusiness::mergeRequest($request, $this, $mergeParams);
         CTAPIActivityCodeBusiness::getList($request, $this, 1 + 0, [], ['activityInfo', 'oprateStaff', 'oprateStaffHistory']);
     }
 
@@ -173,6 +191,14 @@ class CodesController extends WorksController
     public function ajax_del(Request $request)
     {
         $this->InitParams($request);
+
+        $id = CommonRequest::get($request, 'id');
+        // 查询所有记录
+        $mergeParams = ['ids' => $id];
+        CTAPIActivityCodeBusiness::mergeRequest($request, $this, $mergeParams);
+        $dataList = CTAPIActivityCodeBusiness::getList($request, $this, 1 + 0, [], [])['result']['data_list'] ?? [];
+        $this->ListIsOwnSellerId($dataList);// 判断数据权限
+
         return CTAPIActivityCodeBusiness::delAjax($request, $this);
     }
 
@@ -200,6 +226,14 @@ class CodesController extends WorksController
     public function ajax_open(Request $request)
     {
         $this->InitParams($request);
+
+        $id = CommonRequest::get($request, 'id');
+        // 查询所有记录
+        $mergeParams = ['ids' => $id];
+        CTAPIActivityCodeBusiness::mergeRequest($request, $this, $mergeParams);
+        $dataList = CTAPIActivityCodeBusiness::getList($request, $this, 1 + 0, [], [])['result']['data_list'] ?? [];
+        $this->ListIsOwnSellerId($dataList);// 判断数据权限
+
         $result = CTAPIActivityCodeBusiness::openAjax($request, $this,2);
         return ajaxDataArr(1, $result, '');
     }
@@ -228,6 +262,14 @@ class CodesController extends WorksController
     public function ajax_close(Request $request)
     {
         $this->InitParams($request);
+
+        $id = CommonRequest::get($request, 'id');
+        // 查询所有记录
+        $mergeParams = ['ids' => $id];
+        CTAPIActivityCodeBusiness::mergeRequest($request, $this, $mergeParams);
+        $dataList = CTAPIActivityCodeBusiness::getList($request, $this, 1 + 0, [], [])['result']['data_list'] ?? [];
+        $this->ListIsOwnSellerId($dataList);// 判断数据权限
+
         $result = CTAPIActivityCodeBusiness::openAjax($request, $this,1);
         return ajaxDataArr(1, $result, '');
     }

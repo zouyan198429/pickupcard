@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class ProductController extends BaseWebController
 {
+    public static $VIEW_NAME = 'products';// 视图栏目文件夹目录名称
 
     /**
      * 首页
@@ -25,10 +26,10 @@ class ProductController extends BaseWebController
         // 根据商品id获得商品详情
         $info = CTAPIProductBusiness::getInfoData($request, $this, $product_id, [], '');
         $reDataArr['info'] = $info;
-        $viewName = 'web.products.product' . $product_id;
+        $viewName = '' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.product' . $product_id;
         // open_used_product_content' => 1,// 是否开始启用 商品自己的详情页 1 开启  非1不开启
         if(config('public.open_used_product_content', 2) == 1){
-            $viewName = 'web.products.product';
+            $viewName = '' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.product';
         }
         return view($viewName, $reDataArr);
     }

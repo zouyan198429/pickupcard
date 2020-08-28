@@ -7,12 +7,13 @@ use App\Services\CommonBusiness;
 use Illuminate\Http\Request;
 use App\Http\Controllers\WorksController;
 
-class UploadController extends WorksController
+class UploadController extends BasicController
 {
     public $model_name = 'Resource';
     // 大后台 admin/年/月/日/文件
     // 企业 company/[生产单元/]年/月/日/文件
     protected $source_path = '/resource/company/';
+    public static $VIEW_NAME = '';// 视图栏目文件夹目录名称
 
     /**
      * 文件上传

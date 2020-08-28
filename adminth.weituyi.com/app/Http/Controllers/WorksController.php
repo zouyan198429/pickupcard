@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class WorksController extends BaseController
 {
+    public static $LOGIN_ADMIN_TYPE = 0;// 当前登录的用户类型1平台2企业4个人
 
     public function InitParams(Request $request)
     {
@@ -202,4 +203,48 @@ class WorksController extends BaseController
 //        return $proUnits;
 //    }
 
+    // 根据登录的类型，获得商家id
+    public function getSellerIdByAdminType($field_name = 'seller_id'){
+        $seller_id = 0;
+        if(static::$LOGIN_ADMIN_TYPE == 2)  $seller_id = $this->user_id;
+        if(static::$LOGIN_ADMIN_TYPE == 4)  $seller_id = $this->user_info[$field_name] ?? 0;
+        // if(static::$LOGIN_ADMIN_TYPE == 8)  $seller_id = $this->user_info['seller_id'] ?? 0;
+        return $seller_id;
+    }
+    // 有企业id的记录，添加时，加入所属企业id
+    public function appSellerId(&$addNewData, $field_name = 'seller_id'){
+        if(in_array(static::$LOGIN_ADMIN_TYPE, [2,4])){// 企业添加时，加入自己的id
+            $addNewData[$field_name] = $this->getSellerIdByAdminType($field_name);
+        }else{
+            if(!isset($saveData[$field_name])) throws('非商家，不可进行此操作！');
+        }
+    }
+
+    // 有企业id的记录，修改时，判断是不是当前企业
+    public function isOwnSellerId($info, $field_name = 'seller_id'){
+        if(in_array(static::$LOGIN_ADMIN_TYPE, [2,4]) ){// 企业添加时，加入自己的id
+            if(empty($info)) throws('记录不存在');
+            if(isset($info[$field_name])){
+                $seller_id = $info[$field_name] ?? 0;
+                if($seller_id !== $this->getSellerIdByAdminType($field_name)){
+                    throws('您没此记录操作权限！');
+                }
+            }
+        }
+    }
+
+    // 有企业id的记录，修改时，判断是不是当前企业
+    public function ListIsOwnSellerId($dataList, $field_name = 'seller_id'){
+        if(in_array(static::$LOGIN_ADMIN_TYPE, [2,4]) ){// 企业添加时，加入自己的id
+           $sellerIds = array_column($dataList, $field_name);
+           if(!empty($sellerIds) && (!empty(array_diff($sellerIds, [$this->getSellerIdByAdminType($field_name)] ))))  throws('您有没有操作权限记录！');
+        }
+    }
+
+    // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+    public function appendSellerIdParams(&$mergeParams, $field_name = 'seller_id'){
+        if(in_array(static::$LOGIN_ADMIN_TYPE, [2,4]) ){// 企业添加时，加入自己的id
+            $mergeParams[$field_name] = $this->getSellerIdByAdminType($field_name);
+        }
+    }
 }

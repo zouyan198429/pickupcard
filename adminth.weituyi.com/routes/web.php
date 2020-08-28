@@ -178,8 +178,8 @@ Route::get('layui/set/system/email', 'Layui\Set\SystemController@email');// 邮�
 Route::get('layui/set/user/info', 'Layui\Set\UserController@info');// 基本资料 set/user/info.html
 Route::get('layui/set/user/password', 'Layui\Set\UserController@password');// 修改密码 set/user/password.html
 // 授权  //www.layui.com/admin/#get
-
-// ----大后台
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~无支付~~~~~~~~~~~~~~~~~开始~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ----大后台--普通【无支付】
 // Admin
 Route::get('admin/index', 'Admin\IndexController@index');// 首页
 Route::get('admin', 'Admin\IndexController@index');
@@ -195,6 +195,27 @@ Route::get('admin/staff/add/{id}', 'Admin\StaffController@add');// 添加
 // Route::get('admin/staff/select', 'Admin\StaffController@select');// 选择-弹窗
 Route::get('admin/staff/export', 'Admin\StaffController@export');// 导出
 Route::get('admin/staff/import_template', 'Admin\StaffController@import_template');// 导入模版
+
+// 后台--企业
+Route::get('admin/seller', 'Admin\SellerController@index');// 列表
+Route::get('admin/seller/add/{id}', 'Admin\SellerController@add');// 添加
+// Route::get('admin/seller/select', 'Admin\SellerController@select');// 选择-弹窗
+Route::get('admin/seller/export', 'Admin\SellerController@export');// 导出
+Route::get('admin/seller/import_template', 'Admin\SellerController@import_template');// 导入模版
+
+// 后台--管理员
+Route::get('admin/employee', 'Admin\EmployeeController@index');// 列表
+//Route::get('admin/employee/add/{id}', 'Admin\EmployeeController@add');// 添加
+// Route::get('admin/employee/select', 'Admin\EmployeeController@select');// 选择-弹窗
+Route::get('admin/employee/export', 'Admin\EmployeeController@export');// 导出
+Route::get('admin/employee/import_template', 'Admin\EmployeeController@import_template');// 导入模版
+
+// 后台--用户
+Route::get('admin/user', 'Admin\UserController@index');// 列表
+//Route::get('admin/user/add/{id}', 'Admin\UserController@add');// 添加
+// Route::get('admin/user/select', 'Admin\UserController@select');// 选择-弹窗
+Route::get('admin/user/export', 'Admin\UserController@export');// 导出
+Route::get('admin/user/import_template', 'Admin\UserController@import_template');// 导入模版
 
 // 城市
 Route::get('admin/city', 'Admin\CityController@index');// 列表
@@ -234,6 +255,75 @@ Route::get('admin/addrs/add/{id}', 'Admin\AddrsController@add');// 添加
 Route::get('admin/addrs/export', 'Admin\AddrsController@export');// 导出
 Route::get('admin/addrs/import_template', 'Admin\AddrsController@import_template');// 导入模版
 
+// ----商家后台--普通【无支付】
+// Seller
+Route::get('seller/index', 'Seller\IndexController@index');// 首页
+Route::get('seller', 'Seller\IndexController@index');
+Route::get('seller/login', 'Seller\IndexController@login');//login.html 登录
+Route::get('seller/logout', 'Seller\IndexController@logout');// 注销
+Route::get('seller/password', 'Seller\IndexController@password');//psdmodify.html 个人信息-修改密码
+Route::get('seller/info', 'Seller\IndexController@info');//myinfo.html 个人信息--显示
+
+// 后台--企业
+Route::get('seller/seller', 'Seller\SellerController@index');// 列表
+Route::get('seller/seller/add/{id}', 'Seller\SellerController@add');// 添加
+// Route::get('seller/seller/select', 'Seller\SellerController@select');// 选择-弹窗
+Route::get('seller/seller/export', 'Seller\SellerController@export');// 导出
+Route::get('seller/seller/import_template', 'Seller\SellerController@import_template');// 导入模版
+
+// 后台--管理员
+Route::get('seller/employee', 'Seller\EmployeeController@index');// 列表
+//Route::get('seller/employee/add/{id}', 'Seller\EmployeeController@add');// 添加
+// Route::get('seller/employee/select', 'Seller\EmployeeController@select');// 选择-弹窗
+Route::get('seller/employee/export', 'Seller\EmployeeController@export');// 导出
+Route::get('seller/employee/import_template', 'Seller\EmployeeController@import_template');// 导入模版
+
+// 后台--用户
+Route::get('seller/user', 'Seller\UserController@index');// 列表
+//Route::get('seller/user/add/{id}', 'Seller\UserController@add');// 添加
+// Route::get('seller/user/select', 'Seller\UserController@select');// 选择-弹窗
+Route::get('seller/user/export', 'Seller\UserController@export');// 导出
+Route::get('seller/user/import_template', 'Seller\UserController@import_template');// 导入模版
+
+// 城市
+Route::get('seller/city', 'Seller\CityController@index');// 列表
+Route::get('seller/city/add/{id}', 'Seller\CityController@add');// 添加
+Route::get('seller/city/select', 'Seller\CityController@select');// 选择-弹窗
+Route::get('seller/city/export', 'Seller\CityController@export');// 导出
+Route::get('seller/city/import_template', 'Seller\CityController@import_template');// 导入模版
+
+// 商品
+Route::get('seller/products', 'Seller\ProductController@index');// 列表
+Route::get('seller/products/add/{id}', 'Seller\ProductController@add');// 添加
+// Route::get('seller/products/select', 'Seller\ProductController@select');// 选择-弹窗
+Route::get('seller/products/export', 'Seller\ProductController@export');// 导出
+Route::get('seller/products/import_template', 'Seller\ProductController@import_template');// 导入模版
+
+// 提货活动
+Route::get('seller/activity', 'Seller\ActivityController@index');// 列表
+Route::get('seller/activity/add/{id}', 'Seller\ActivityController@add');// 添加
+// Route::get('seller/activity/select', 'Seller\ActivityController@select');// 选择-弹窗
+Route::get('seller/activity/export', 'Seller\ActivityController@export');// 导出
+Route::get('seller/activity/import_template', 'Seller\ActivityController@import_template');// 导入模版
+
+// 兑换码
+Route::get('seller/codes', 'Seller\CodesController@index');// 列表
+Route::get('seller/codes/add/{id}', 'Seller\CodesController@add');// 添加
+// Route::get('seller/codes/select', 'Seller\CodesController@select');// 选择-弹窗
+Route::get('seller/codes/export', 'Seller\CodesController@export');// 导出
+Route::get('seller/codes/import_template', 'Seller\CodesController@import_template');// 导入模版
+
+
+// 收货地址
+Route::get('seller/addrs', 'Seller\AddrsController@index');// 列表
+Route::get('seller/addrs_wait_send', 'Seller\AddrsController@addrs_wait_send');// 未发货列表
+Route::get('seller/addrs_sended', 'Seller\AddrsController@addrs_sended');// 已发货列表
+Route::get('seller/addrs/add/{id}', 'Seller\AddrsController@add');// 添加
+// Route::get('seller/addrs/select', 'Seller\AddrsController@select');// 选择-弹窗
+Route::get('seller/addrs/export', 'Seller\AddrsController@export');// 导出
+Route::get('seller/addrs/import_template', 'Seller\AddrsController@import_template');// 导入模版
+
+
 
 // 微网站
 
@@ -242,6 +332,7 @@ Route::get('admin/addrs/import_template', 'Admin\AddrsController@import_template
 Route::get('web', 'Web\IndexController@index');// 首页
 Route::get('web/index', 'Web\IndexController@index');// 首页
 Route::get('web/search/{code_id}/{code}', 'Web\IndexController@login');// 查询页 登录
+Route::get('web/test', 'Web\IndexController@test');// 测试
 
 // 产品相关的
 Route::get('web/product/{product_id}', 'Web\ProductController@index');// 产品1
@@ -252,5 +343,177 @@ Route::get('web/product/{product_id}', 'Web\ProductController@index');// 产品1
 // 收货地址
 Route::get('web/addrs/add', 'Web\AddrsController@add');// 添加
 
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~无支付~~~~~~~~~~~~~~~~~结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~有支付~~~~~~~~~~~~~~~~~开始~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ----大后台--普通【有支付】
+// Manage
+Route::get('manage/index', 'Manage\IndexController@index');// 首页
+Route::get('manage', 'Manage\IndexController@index');
+Route::get('manage/login', 'Manage\IndexController@login');//login.html 登录
+Route::get('manage/logout', 'Manage\IndexController@logout');// 注销
+Route::get('manage/password', 'Manage\IndexController@password');//psdmodify.html 个人信息-修改密码
+Route::get('manage/info', 'Manage\IndexController@info');//myinfo.html 个人信息--显示
+
+
+// 后台--管理员
+Route::get('manage/staff', 'Manage\StaffController@index');// 列表
+Route::get('manage/staff/add/{id}', 'Manage\StaffController@add');// 添加
+// Route::get('manage/staff/select', 'Manage\StaffController@select');// 选择-弹窗
+Route::get('manage/staff/export', 'Manage\StaffController@export');// 导出
+Route::get('manage/staff/import_template', 'Manage\StaffController@import_template');// 导入模版
+
+// 后台--企业
+Route::get('manage/seller', 'Manage\SellerController@index');// 列表
+Route::get('manage/seller/add/{id}', 'Manage\SellerController@add');// 添加
+// Route::get('manage/seller/select', 'Manage\SellerController@select');// 选择-弹窗
+Route::get('manage/seller/export', 'Manage\SellerController@export');// 导出
+Route::get('manage/seller/import_template', 'Manage\SellerController@import_template');// 导入模版
+
+// 后台--管理员
+Route::get('manage/employee', 'Manage\EmployeeController@index');// 列表
+//Route::get('manage/employee/add/{id}', 'Manage\EmployeeController@add');// 添加
+// Route::get('manage/employee/select', 'Manage\EmployeeController@select');// 选择-弹窗
+Route::get('manage/employee/export', 'Manage\EmployeeController@export');// 导出
+Route::get('manage/employee/import_template', 'Manage\EmployeeController@import_template');// 导入模版
+
+// 后台--用户
+Route::get('manage/user', 'Manage\UserController@index');// 列表
+//Route::get('manage/user/add/{id}', 'Manage\UserController@add');// 添加
+// Route::get('manage/user/select', 'Manage\UserController@select');// 选择-弹窗
+Route::get('manage/user/export', 'Manage\UserController@export');// 导出
+Route::get('manage/user/import_template', 'Manage\UserController@import_template');// 导入模版
+
+// 城市
+Route::get('manage/city', 'Manage\CityController@index');// 列表
+Route::get('manage/city/add/{id}', 'Manage\CityController@add');// 添加
+Route::get('manage/city/select', 'Manage\CityController@select');// 选择-弹窗
+Route::get('manage/city/export', 'Manage\CityController@export');// 导出
+Route::get('manage/city/import_template', 'Manage\CityController@import_template');// 导入模版
+
+// 商品
+Route::get('manage/products', 'Manage\ProductController@index');// 列表
+Route::get('manage/products/add/{id}', 'Manage\ProductController@add');// 添加
+// Route::get('manage/products/select', 'Manage\ProductController@select');// 选择-弹窗
+Route::get('manage/products/export', 'Manage\ProductController@export');// 导出
+Route::get('manage/products/import_template', 'Manage\ProductController@import_template');// 导入模版
+
+// 提货活动
+Route::get('manage/activity', 'Manage\ActivityController@index');// 列表
+Route::get('manage/activity/add/{id}', 'Manage\ActivityController@add');// 添加
+// Route::get('manage/activity/select', 'Manage\ActivityController@select');// 选择-弹窗
+Route::get('manage/activity/export', 'Manage\ActivityController@export');// 导出
+Route::get('manage/activity/import_template', 'Manage\ActivityController@import_template');// 导入模版
+
+// 兑换码
+Route::get('manage/codes', 'Manage\CodesController@index');// 列表
+Route::get('manage/codes/add/{id}', 'Manage\CodesController@add');// 添加
+// Route::get('manage/codes/select', 'Manage\CodesController@select');// 选择-弹窗
+Route::get('manage/codes/export', 'Manage\CodesController@export');// 导出
+Route::get('manage/codes/import_template', 'Manage\CodesController@import_template');// 导入模版
+
+
+// 收货地址
+Route::get('manage/addrs', 'Manage\AddrsController@index');// 列表
+Route::get('manage/addrs_wait_send', 'Manage\AddrsController@addrs_wait_send');// 未发货列表
+Route::get('manage/addrs_sended', 'Manage\AddrsController@addrs_sended');// 已发货列表
+Route::get('manage/addrs/add/{id}', 'Manage\AddrsController@add');// 添加
+// Route::get('manage/addrs/select', 'Manage\AddrsController@select');// 选择-弹窗
+Route::get('manage/addrs/export', 'Manage\AddrsController@export');// 导出
+Route::get('manage/addrs/import_template', 'Manage\AddrsController@import_template');// 导入模版
+
+// ----商家后台--普通【有支付】
+// Company
+Route::get('company/index', 'Company\IndexController@index');// 首页
+Route::get('company', 'Company\IndexController@index');
+Route::get('company/login', 'Company\IndexController@login');//login.html 登录
+Route::get('company/logout', 'Company\IndexController@logout');// 注销
+Route::get('company/password', 'Company\IndexController@password');//psdmodify.html 个人信息-修改密码
+Route::get('company/info', 'Company\IndexController@info');//myinfo.html 个人信息--显示
+
+// 后台--企业
+Route::get('company/seller', 'Company\SellerController@index');// 列表
+Route::get('company/seller/add/{id}', 'Company\SellerController@add');// 添加
+// Route::get('company/seller/select', 'Company\SellerController@select');// 选择-弹窗
+Route::get('company/seller/export', 'Company\SellerController@export');// 导出
+Route::get('company/seller/import_template', 'Company\SellerController@import_template');// 导入模版
+
+// 后台--管理员
+Route::get('company/employee', 'Company\EmployeeController@index');// 列表
+//Route::get('company/employee/add/{id}', 'Company\EmployeeController@add');// 添加
+// Route::get('company/employee/select', 'Company\EmployeeController@select');// 选择-弹窗
+Route::get('company/employee/export', 'Company\EmployeeController@export');// 导出
+Route::get('company/employee/import_template', 'Company\EmployeeController@import_template');// 导入模版
+
+// 后台--用户
+Route::get('company/user', 'Company\UserController@index');// 列表
+//Route::get('company/user/add/{id}', 'Company\UserController@add');// 添加
+// Route::get('company/user/select', 'Company\UserController@select');// 选择-弹窗
+Route::get('company/user/export', 'Company\UserController@export');// 导出
+Route::get('company/user/import_template', 'Company\UserController@import_template');// 导入模版
+
+// 城市
+Route::get('company/city', 'Company\CityController@index');// 列表
+Route::get('company/city/add/{id}', 'Company\CityController@add');// 添加
+Route::get('company/city/select', 'Company\CityController@select');// 选择-弹窗
+Route::get('company/city/export', 'Company\CityController@export');// 导出
+Route::get('company/city/import_template', 'Company\CityController@import_template');// 导入模版
+
+// 商品
+Route::get('company/products', 'Company\ProductController@index');// 列表
+Route::get('company/products/add/{id}', 'Company\ProductController@add');// 添加
+// Route::get('company/products/select', 'Company\ProductController@select');// 选择-弹窗
+Route::get('company/products/export', 'Company\ProductController@export');// 导出
+Route::get('company/products/import_template', 'Company\ProductController@import_template');// 导入模版
+
+// 提货活动
+Route::get('company/activity', 'Company\ActivityController@index');// 列表
+Route::get('company/activity/add/{id}', 'Company\ActivityController@add');// 添加
+// Route::get('company/activity/select', 'Company\ActivityController@select');// 选择-弹窗
+Route::get('company/activity/export', 'Company\ActivityController@export');// 导出
+Route::get('company/activity/import_template', 'Company\ActivityController@import_template');// 导入模版
+
+// 兑换码
+Route::get('company/codes', 'Company\CodesController@index');// 列表
+Route::get('company/codes/add/{id}', 'Company\CodesController@add');// 添加
+// Route::get('company/codes/select', 'Company\CodesController@select');// 选择-弹窗
+Route::get('company/codes/export', 'Company\CodesController@export');// 导出
+Route::get('company/codes/import_template', 'Company\CodesController@import_template');// 导入模版
+
+
+// 收货地址
+Route::get('company/addrs', 'Company\AddrsController@index');// 列表
+Route::get('company/addrs_wait_send', 'Company\AddrsController@addrs_wait_send');// 未发货列表
+Route::get('company/addrs_sended', 'Company\AddrsController@addrs_sended');// 已发货列表
+Route::get('company/addrs/add/{id}', 'Company\AddrsController@add');// 添加
+// Route::get('company/addrs/select', 'Company\AddrsController@select');// 选择-弹窗
+Route::get('company/addrs/export', 'Company\AddrsController@export');// 导出
+Route::get('company/addrs/import_template', 'Company\AddrsController@import_template');// 导入模版
+
+
+
+// 微网站
+
+// 首页
+
+Route::get('site', 'Site\IndexController@index');// 首页
+Route::get('site/index', 'Site\IndexController@index');// 首页
+Route::get('site/search/{code_id}/{code}', 'Site\IndexController@product');// 第一页，显示商品页
+Route::get('site/login/{code_id}/{code}', 'Site\IndexController@login');// 查询页 登录--输入卡密
+Route::get('site/test', 'Site\IndexController@test');// 测试
+
+// 产品相关的
+Route::get('site/product/{product_id}', 'Site\ProductController@index');// 产品1
+//Route::get('site/product2', 'Site\ProductController@product2');// 产品2
+//Route::get('site/product3', 'Site\ProductController@product3');// 产品3
+//Route::get('site/product4', 'Site\ProductController@product4');// 产品4
+
+// 收货地址
+Route::get('site/addrs/add', 'Site\AddrsController@add');// 添加
+Route::get('site/addrs/payOK', 'Site\AddrsController@payOK');// 支付成功
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~有支付~~~~~~~~~~~~~~~~~结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 

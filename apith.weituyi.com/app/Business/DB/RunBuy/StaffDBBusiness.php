@@ -30,7 +30,7 @@ class StaffDBBusiness extends BasePublicDBBusiness
         // $mainDBObj = null ;
         // $historyDBObj = null ;
         return static::compareHistoryOrUpdateVersion($mainDBObj, $id, StaffHistoryDBBusiness::$model_name
-            , StaffHistoryDBBusiness::$table_name, $historyDBObj, $historySearch, ['staff_id'], $forceIncVersion);
+            , StaffHistoryDBBusiness::$table_name, $historyDBObj, $historySearch, ['staff_id', 'lastlogintime'], $forceIncVersion);
     }
 
     /**

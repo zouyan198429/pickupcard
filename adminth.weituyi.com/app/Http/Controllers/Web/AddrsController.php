@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class AddrsController extends BaseWebController
 {
+    public static $VIEW_NAME = 'addrs';// 视图栏目文件夹目录名称
 
     /**
      * 首页
@@ -29,7 +30,7 @@ class AddrsController extends BaseWebController
         // 状态
         $reDataArr['status'] =  CTAPIDeliveryAddrBusiness::$statusArr;
         $reDataArr['defaultStatus'] = -1;// 默认状态
-        return view('web.addrs.add', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.add', $reDataArr);
     }
 
     /**
@@ -85,6 +86,7 @@ class AddrsController extends BaseWebController
 //            'mobile' => $mobile,
             'tel' => $tel,
 //            'qq_number' => $qq_number,
+            'seller_id' => $codeInfo['seller_id'] ?? 0,
             'province_id' => $province_id,
             'city_id' => $city_id,
             'area_id' => $area_id,

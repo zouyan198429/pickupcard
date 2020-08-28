@@ -9,8 +9,11 @@ use App\Services\Request\CommonRequest;
 use App\Services\Tool;
 use Illuminate\Http\Request;
 
-class StaffController extends WorksController
+class StaffController extends BasicController
 {
+    public static $ADMIN_TYPE = 1;// 类型1平台2企业4管理员8个人
+    public static $VIEW_NAME = 'staff';// 视图文件夹名称
+
     /**
      * 首页
      *
@@ -41,9 +44,14 @@ class StaffController extends WorksController
         $reDataArr['admin_type'] =  CommonRequest::getInt($request, 'admin_type');
         $reDataArr['city_site_id'] =  CommonRequest::getInt($request, 'city_site_id');
         $reDataArr['city_partner_id'] =  CommonRequest::getInt($request, 'city_partner_id');
-        $reDataArr['seller_id'] =  CommonRequest::getInt($request, 'seller_id');
+        $seller_id = CommonRequest::getInt($request, 'seller_id');
+        // 企业 的 个人--只能读自己的人员信息
+        if($this->user_info['admin_type'] == 2 && in_array(static::$ADMIN_TYPE, [4,8])){
+            $seller_id = $this->company_id;
+        }
+        $reDataArr['seller_id'] =  $seller_id;
         $reDataArr['shop_id'] =  CommonRequest::getInt($request, 'shop_id');
-        return view('admin.staff.index', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.index', $reDataArr);
     }
 
     /**
@@ -60,7 +68,7 @@ class StaffController extends WorksController
 //        $reDataArr['province_kv'] = CTAPIStaffBusiness::getStaffByPid($request, $this,  0);
 //        $reDataArr['province_kv'] = CTAPIStaffBusiness::getChildListKeyVal($request, $this, 0, 1 + 0, 0);
 //        $reDataArr['province_id'] = 0;
-//        return view('admin.staff.select', $reDataArr);
+//        return view('' . static::$VIEW_PATH. '.' . static::$VIEW_NAME. '.select', $reDataArr);
 //    }
 
     /**
@@ -84,6 +92,9 @@ class StaffController extends WorksController
         if ($id > 0) { // 获得详情数据
             $operate = "修改";
             $info = CTAPIStaffBusiness::getInfoData($request, $this, $id, [], '');
+            if(empty($info)) throws('记录不存在');
+            if($info['admin_type'] != static::$ADMIN_TYPE) throws('用户类型不一致');
+            if(in_array(static::$ADMIN_TYPE, [4,8])) $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
         }
         $reDataArr['adminType'] =  CTAPIStaffBusiness::$adminType;
         $reDataArr['defaultAdminType'] = $info['admin_type'] ?? -1;// 列表页默认状态
@@ -93,7 +104,7 @@ class StaffController extends WorksController
         $reDataArr['province_kv'] = CTAPICityBusiness::getCityByPid($request, $this,  0);
 //        $reDataArr['province_kv'] = CTAPIStaffBusiness::getChildListKeyVal($request, $this, 0, 1 + 0, 0);
 //        $reDataArr['province_id'] = 0;
-        return view('admin.staff.add', $reDataArr);
+        return view('' . static::$VIEW_PATH. '.' . static::$VIEW_NAME. '.add', $reDataArr);
     }
 
 
@@ -130,7 +141,7 @@ class StaffController extends WorksController
         $sure_password = CommonRequest::get($request, 'sure_password');
 
         $saveData = [
-            'admin_type' => 1,
+            'admin_type' => static::$ADMIN_TYPE,
 //            'work_num' => $work_num,
 //            'department_id' => $department_id,
 //            'group_id' => $group_id,
@@ -150,6 +161,15 @@ class StaffController extends WorksController
             'longitude' => $longitude,
             'admin_username' => $admin_username,
         ];
+//        // 企业 的 个人--只能读自己的人员信息
+//        if($this->user_info['admin_type'] == 2 && in_array(static::$ADMIN_TYPE, [4,8])){
+//            $saveData['seller_id'] = $this->company_id;
+//        }
+        // 企业会有企业名称
+        if(static::$ADMIN_TYPE == 2) {
+            $saveData['seller_name'] = CommonRequest::get($request, 'seller_name');
+        }
+
         if($admin_password != '' || $sure_password != ''){
             if ($admin_password != $sure_password){
                 return ajaxDataArr(0, null, '密码和确定密码不一致！');
@@ -157,12 +177,18 @@ class StaffController extends WorksController
             $saveData['admin_password'] = $admin_password;
         }
 
-//        if($id <= 0) {// 新加;要加入的特别字段
-//            $addNewData = [
-//                // 'account_password' => $account_password,
-//            ];
-//            $saveData = array_merge($saveData, $addNewData);
-//        }
+        if($id <= 0) {// 新加;要加入的特别字段
+            $addNewData = [
+                // 'account_password' => $account_password,
+            ];
+            if(in_array(static::$ADMIN_TYPE, [4,8])) $this->appSellerId($addNewData); // 有企业id的记录，添加时，加入所属企业id
+            $saveData = array_merge($saveData, $addNewData);
+        }else{
+            $info = CTAPIStaffBusiness::getInfoData($request, $this, $id, [], '');
+            if(empty($info)) throws('记录不存在');
+            if($info['admin_type'] != static::$ADMIN_TYPE) throws('用户类型不一致');
+            if(in_array(static::$ADMIN_TYPE, [4,8])) $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
+        }
         $resultDatas = CTAPIStaffBusiness::replaceById($request, $this, $saveData, $id, true);
         return ajaxDataArr(1, $resultDatas, '');
     }
@@ -176,7 +202,19 @@ class StaffController extends WorksController
      */
     public function ajax_alist(Request $request){
         $this->InitParams($request);
-        $request->merge(['admin_type' => 1]);
+        // $request->merge(['admin_type' => 1]);
+        $mergeParams = [
+            'admin_type' => static::$ADMIN_TYPE,// 类型1平台2企业4个人
+        ];
+        // 企业 的 个人--只能读自己的人员信息
+//        if($this->user_info['admin_type'] == 2 && static::$ADMIN_TYPE == 4){
+//            $mergeParams['seller_id'] = $this->company_id;
+//        }
+        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+        if(in_array(static::$ADMIN_TYPE, [4,8])) $this->appendSellerIdParams($mergeParams);
+        CTAPIStaffBusiness::mergeRequest($request, $this, $mergeParams);
+
+
         return  CTAPIStaffBusiness::getList($request, $this, 2 + 4, [], ['province', 'provinceHistory'
             , 'city', 'cityHistory', 'area', 'areaHistory'
             , 'cityinfo' ]);// , 'cityPartner', 'seller' , 'shop'
@@ -191,6 +229,16 @@ class StaffController extends WorksController
      */
 //    public function ajax_get_ids(Request $request){
 //        $this->InitParams($request);
+//        $mergeParams = [
+//            'admin_type' => static::$ADMIN_TYPE,// 类型1平台2企业4个人
+//        ];
+//        // 企业 的 个人--只能读自己的人员信息
+////        if($this->user_info['admin_type'] == 2 && in_array(static::$ADMIN_TYPE, [4,8])){
+////            $mergeParams['seller_id'] = $this->company_id;
+////        }
+//        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+//        if(in_array(static::$ADMIN_TYPE, [4,8])) $this->appendSellerIdParams($mergeParams);
+//        CTAPIStaffBusiness::mergeRequest($request, $this, $mergeParams);
 //        $result = CTAPIStaffBusiness::getList($request, $this, 1 + 0);
 //        $data_list = $result['result']['data_list'] ?? [];
 //        $ids = implode(',', array_column($data_list, 'id'));
@@ -207,6 +255,16 @@ class StaffController extends WorksController
      */
 //    public function export(Request $request){
 //        $this->InitParams($request);
+//        $mergeParams = [
+//            'admin_type' => static::$ADMIN_TYPE,// 类型1平台2企业4个人
+//        ];
+//        // 企业 的 个人--只能读自己的人员信息
+////        if($this->user_info['admin_type'] == 2 && in_array(static::$ADMIN_TYPE, [4,8])){
+////            $mergeParams['seller_id'] = $this->company_id;
+////        }
+//        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+//        if(in_array(static::$ADMIN_TYPE, [4,8])) $this->appendSellerIdParams($mergeParams);
+//        CTAPIStaffBusiness::mergeRequest($request, $this, $mergeParams);
 //        CTAPIStaffBusiness::getList($request, $this, 1 + 0);
 //    }
 
@@ -234,6 +292,14 @@ class StaffController extends WorksController
     public function ajax_del(Request $request)
     {
         $this->InitParams($request);
+        if(in_array(static::$ADMIN_TYPE, [4,8])){
+            $id = CommonRequest::get($request, 'id');
+            // 查询所有记录
+            $mergeParams = ['ids' => $id];
+            CTAPIStaffBusiness::mergeRequest($request, $this, $mergeParams);
+            $dataList = CTAPIStaffBusiness::getList($request, $this, 1 + 0, [], [])['result']['data_list'] ?? [];
+            $this->ListIsOwnSellerId($dataList);// 判断数据权限
+        }
         return CTAPIStaffBusiness::delAjax($request, $this);
     }
 

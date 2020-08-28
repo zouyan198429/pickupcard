@@ -19,6 +19,13 @@ class CTAPIActivityBusiness extends BasicPublicCTAPIBusiness
         '4' => '已结束',
     ];
 
+
+    // 兑换码生成是是否启用1待启用2直接启用
+    public static $defaultOpenStatusArr = [
+        '1' => '待启用',
+        '2' => '直接启用',
+    ];
+
     /**
      * 获得列表数据--所有数据
      *
@@ -79,8 +86,16 @@ class CTAPIActivityBusiness extends BasicPublicCTAPIBusiness
             $product_id = CommonRequest::getInt($request, 'product_id');
             if($product_id > 0 )  array_push($queryParams['where'], ['product_id', '=', $product_id]);
 
+
             $product_id_history = CommonRequest::getInt($request, 'product_id_history');
             if($product_id_history > 0 )  array_push($queryParams['where'], ['product_id_history', '=', $product_id_history]);
+
+            $seller_id = CommonRequest::getInt($request, 'seller_id');
+            if($seller_id > 0 )  array_push($queryParams['where'], ['seller_id', '=', $seller_id]);
+
+            $default_open_status = CommonRequest::getInt($request, 'default_open_status');
+            if($default_open_status > 0 )  array_push($queryParams['where'], ['default_open_status', '=', $default_open_status]);
+
 
             $status = CommonRequest::get($request, 'status');
             if(is_numeric($status) )  array_push($queryParams['where'], ['status', '=', $status]);
@@ -377,7 +392,8 @@ class CTAPIActivityBusiness extends BasicPublicCTAPIBusiness
 
         $user_id = $controller->user_id;
         $id = CommonRequest::getInt($request, 'id');
-
+        $info = static::getInfoData($request, $controller, $id, [], '');
+        $controller->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
         // 调用删除接口
         $apiParams = [
             'company_id' => $company_id,

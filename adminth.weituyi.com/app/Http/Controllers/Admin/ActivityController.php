@@ -9,8 +9,10 @@ use App\Services\Request\CommonRequest;
 use App\Services\Tool;
 use Illuminate\Http\Request;
 
-class ActivityController extends WorksController
+class ActivityController extends BasicController
 {
+    public static $VIEW_NAME = 'activity';// 视图栏目文件夹目录名称
+
     /**
      * 首页
      *
@@ -23,13 +25,14 @@ class ActivityController extends WorksController
         $this->InitParams($request);
         $reDataArr = $this->reDataArr;
         // 获得商品信息
-        $reDataArr['product_kv'] = CTAPIProductBusiness::getListKV($request, $this);
+        $seller_id = $this->getSellerIdByAdminType();
+        $reDataArr['product_kv'] = CTAPIProductBusiness::getListKV($request, $this, 0, $seller_id);
         $reDataArr['defaultProduct'] = -1;// 默认
         // 状态
         $reDataArr['status'] =  CTAPIActivityBusiness::$statusArr;
         $reDataArr['defaultStatus'] = -1;// 默认状态
 
-        return view('admin.activity.index', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.index', $reDataArr);
     }
 
     /**
@@ -46,7 +49,7 @@ class ActivityController extends WorksController
 //        $reDataArr['province_kv'] = CTAPIActivityBusiness::getCityByPid($request, $this,  0);
 //        $reDataArr['province_kv'] = CTAPIActivityBusiness::getChildListKeyVal($request, $this, 0, 1 + 0, 0);
 //        $reDataArr['province_id'] = 0;
-//        return view('admin.activity.select', $reDataArr);
+//        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.select', $reDataArr);
 //    }
 
     /**
@@ -70,16 +73,23 @@ class ActivityController extends WorksController
         if ($id > 0) { // 获得详情数据
             $operate = "修改";
             $info = CTAPIActivityBusiness::getInfoData($request, $this, $id, [], ['siteResources']);
+            $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
         }
         // $reDataArr = array_merge($reDataArr, $resultDatas);
 
         // 获得商品信息
-        $reDataArr['product_kv'] = CTAPIProductBusiness::getListKV($request, $this);
+        $seller_id = $this->getSellerIdByAdminType();
+        $reDataArr['product_kv'] = CTAPIProductBusiness::getListKV($request, $this, 0, $seller_id);
         $reDataArr['defaultProduct'] = $info['product_id'] ?? -1;// 默认
+
+        // 兑换码生成是是否启用1待启用2直接启用
+        $reDataArr['defaultOpenStatus'] = CTAPIActivityBusiness::$defaultOpenStatusArr;
+        $reDataArr['defaultDefaultOpenStatus'] = $info['default_open_status'] ?? -1;// 默认
+
 
         $reDataArr['info'] = $info;
         $reDataArr['operate'] = $operate;
-        return view('admin.activity.add', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.add', $reDataArr);
     }
 
 
@@ -102,6 +112,8 @@ class ActivityController extends WorksController
         $end_time = CommonRequest::get($request, 'end_time');
         $begin_num = CommonRequest::getInt($request, 'begin_num');
         $total_num = CommonRequest::getInt($request, 'total_num');
+        $code_len = CommonRequest::getInt($request, 'code_len');
+        $default_open_status = CommonRequest::getInt($request, 'default_open_status');
 //        $sort_num = CommonRequest::getInt($request, 'sort_num');
 
         // 图片资源
@@ -130,17 +142,23 @@ class ActivityController extends WorksController
             'end_time' => $end_time,
             'begin_num' => $begin_num,
             'total_num' => $total_num,
+            'code_len' => $code_len,
+            'default_open_status' => $default_open_status,
 //            'sort_num' => $sort_num,
             'resource_ids' => $resource_ids,// 图片资源id串(逗号分隔-未尾逗号结束)
             'resourceIds' => $resource_id,// 此下标为图片资源关系
         ];
 
-//        if($id <= 0) {// 新加;要加入的特别字段
-//            $addNewData = [
-//                // 'account_password' => $account_password,
-//            ];
-//            $saveData = array_merge($saveData, $addNewData);
-//        }
+        if($id <= 0) {// 新加;要加入的特别字段
+            $addNewData = [
+                // 'account_password' => $account_password,
+            ];
+            $this->appSellerId($addNewData); // 有企业id的记录，添加时，加入所属企业id
+            $saveData = array_merge($saveData, $addNewData);
+        }else{
+            $info = CTAPIActivityBusiness::getInfoData($request, $this, $id, [], '');
+            $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
+        }
         $resultDatas = CTAPIActivityBusiness::replaceById($request, $this, $saveData, $id, true);
         return ajaxDataArr(1, $resultDatas, '');
     }
@@ -154,6 +172,10 @@ class ActivityController extends WorksController
      */
     public function ajax_alist(Request $request){
         $this->InitParams($request);
+        $mergeParams = [];
+        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+        $this->appendSellerIdParams($mergeParams);
+        CTAPIActivityBusiness::mergeRequest($request, $this, $mergeParams);
         return  CTAPIActivityBusiness::getList($request, $this, 2 + 4, [], ['productInfo', 'productHistoryInfo', 'oprateStaff', 'oprateStaffHistory', 'siteResources']);
     }
 
@@ -166,6 +188,10 @@ class ActivityController extends WorksController
      */
 //    public function ajax_get_ids(Request $request){
 //        $this->InitParams($request);
+//        $mergeParams = [];
+//        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+//        $this->appendSellerIdParams($mergeParams);
+//        CTAPIActivityBusiness::mergeRequest($request, $this, $mergeParams);
 //        $result = CTAPIActivityBusiness::getList($request, $this, 1 + 0);
 //        $data_list = $result['result']['data_list'] ?? [];
 //        $ids = implode(',', array_column($data_list, 'id'));
@@ -182,6 +208,10 @@ class ActivityController extends WorksController
      */
 //    public function export(Request $request){
 //        $this->InitParams($request);
+//        $mergeParams = [];
+//        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+//        $this->appendSellerIdParams($mergeParams);
+//        CTAPIActivityBusiness::mergeRequest($request, $this, $mergeParams);
 //        CTAPIActivityBusiness::getList($request, $this, 1 + 0);
 //    }
 
@@ -209,6 +239,14 @@ class ActivityController extends WorksController
     public function ajax_del(Request $request)
     {
         $this->InitParams($request);
+
+        $id = CommonRequest::get($request, 'id');
+        // 查询所有记录
+        $mergeParams = ['ids' => $id];
+        CTAPIActivityBusiness::mergeRequest($request, $this, $mergeParams);
+        $dataList = CTAPIActivityBusiness::getList($request, $this, 1 + 0, [], [])['result']['data_list'] ?? [];
+        $this->ListIsOwnSellerId($dataList);// 判断数据权限
+
         return CTAPIActivityBusiness::delAjax($request, $this);
     }
 

@@ -73,6 +73,10 @@ class CTAPIProductBusiness extends BasicPublicCTAPIBusiness
 //            $province_id = CommonRequest::getInt($request, 'province_id');
 //            if($province_id > 0 )  array_push($queryParams['where'], ['city_ids', 'like', '' . $province_id . ',%']);
 
+            $seller_id = CommonRequest::getInt($request, 'seller_id');
+            if($seller_id > 0 )  array_push($queryParams['where'], ['seller_id', '=', $seller_id]);
+
+
 
             $field = CommonRequest::get($request, 'field');
             $keyWord = CommonRequest::get($request, 'keyword');
@@ -413,7 +417,7 @@ class CTAPIProductBusiness extends BasicPublicCTAPIBusiness
     }
 
     // 根据父id,获得子数据kv数组
-    public static function getListKV(Request $request, Controller $controller, $notLog = 0){
+    public static function getListKV(Request $request, Controller $controller, $notLog = 0, $seller_id = 0){
         $company_id = $controller->company_id;
         $kvParams = ['key' => 'id', 'val' => 'product_name'];
         $queryParams = [
@@ -431,6 +435,7 @@ class CTAPIProductBusiness extends BasicPublicCTAPIBusiness
 //            ],
             'orderBy' => ['sort_num'=>'desc', 'id'=>'desc'],
         ];
+        if($seller_id > 0) array_push($queryParams['where'], ['seller_id', $seller_id]);
         return static::getKVCT( $request,  $controller, '', $kvParams, [], $queryParams, $company_id, $notLog);
     }
     // ***********获得kv***结束************************************************************

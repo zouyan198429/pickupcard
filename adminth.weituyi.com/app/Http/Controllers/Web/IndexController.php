@@ -11,7 +11,46 @@ use Illuminate\Support\Facades\Log;
 
 class IndexController extends BaseWebController
 {
+    public static $VIEW_NAME = '';// 视图栏目文件夹目录名称
 
+    /**
+     * 测试
+     *
+     * @param Request $request
+     * @return mixed
+     * @author zouyan(305463219@qq.com)
+     */
+    public function test(Request $request)
+    {
+
+        $preKey = Tool::getProjectKey(1, ':', ':');
+        pr($preKey);
+        $user = Tool::getRedis( 'wechat_user', 2);
+        pr($user);
+        $preKey = Tool::getProjectKey(1, ':', ':');
+        pr($preKey);
+        $app = app('wechat.official_account');
+//        $oauth = $app->oauth;// 未登录
+//        if (empty($_SESSION['wechat_user'])) {
+//        $response = $app->oauth->scopes(['snsapi_userinfo'])
+//            ->redirect();
+//            $response = $app->oauth->scopes(['snsapi_userinfo'])
+//                ->redirect($request->fullUrl());
+//            $response = $app->oauth->scopes(['snsapi_base'])
+//                ->redirect($request->fullUrl());
+//            return $response;
+//        }
+//        if (!session_id()) session_start();
+//        $_SESSION['wechat_user'] = $redisKey;
+//
+//        //回调后获取user时也要设置$request对象
+//      $user = $app->oauth->setRequest($request)->user();
+//      if(!empty($user)){
+//          pr($user);
+//      }
+//        echo 'aaa';
+//        pr($response);
+    }
 
     /**
      * 首页
@@ -52,7 +91,7 @@ class IndexController extends BaseWebController
         $reDataArr['copyright'] = config('public.copyright');
 
         // Log::info('日志测试---search页',[]);
-         return view('web.index', $reDataArr);
+         return view('' . static::$VIEW_PATH . '.index', $reDataArr);
     }
 
     /**
@@ -90,7 +129,7 @@ class IndexController extends BaseWebController
         $reDataArr['copyright'] = config('public.copyright');
 
         // Log::info('日志测试---search页',[]);
-        return view('web.search', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.search', $reDataArr);
     }
 
 

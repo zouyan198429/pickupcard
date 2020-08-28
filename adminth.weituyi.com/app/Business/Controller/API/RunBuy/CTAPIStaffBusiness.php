@@ -16,14 +16,20 @@ class CTAPIStaffBusiness extends BasicPublicCTAPIBusiness
     public static $model_name = 'API\RunBuy\StaffAPI';
 
     // 拥有者类型1平台2城市分站4城市代理8商家16店铺32快跑人员64用户
+//    public static $adminType = [
+//        '1' => '平台',
+//       // '2' => '城市分站',
+//        '4' => '城市代理',
+//        '8' => '商家',
+//        '16' => '店铺',
+//        '32' => '快跑人员',
+//        '64' => '用户',
+//    ];
     public static $adminType = [
         '1' => '平台',
-       // '2' => '城市分站',
-        '4' => '城市代理',
-        '8' => '商家',
-        '16' => '店铺',
-        '32' => '快跑人员',
-        '64' => '用户',
+        '2' => '企业',
+        '4' => '管理员',
+        '8' => '用户',
     ];
 
     // 状态 0正常 1冻结
@@ -364,9 +370,9 @@ class CTAPIStaffBusiness extends BasicPublicCTAPIBusiness
             // $data_list[$k]['partner_id'] = $v['city_partner']['id'] ?? 0;
             if(isset($data_list[$k]['city_partner'])) unset($data_list[$k]['city_partner']);
             // 商家
-            $data_list[$k]['seller_name'] = $v['seller']['seller_name'] ?? '';
-            // $data_list[$k]['seller_id'] = $v['seller']['id'] ?? 0;
-            if(isset($data_list[$k]['seller'])) unset($data_list[$k]['seller']);
+//            $data_list[$k]['seller_name'] = $v['seller']['seller_name'] ?? '';
+//            // $data_list[$k]['seller_id'] = $v['seller']['id'] ?? 0;
+//            if(isset($data_list[$k]['seller'])) unset($data_list[$k]['seller']);
             // 铺店
             $data_list[$k]['shop_name'] = $v['shop']['shop_name'] ?? '';
             // $data_list[$k]['shop_id'] = $v['shop']['id'] ?? 0;
@@ -422,22 +428,22 @@ class CTAPIStaffBusiness extends BasicPublicCTAPIBusiness
         if(isset($info['city_partner'])) unset($info['city_partner']);
         $info['now_partner_state'] = $now_partner_state;
         // 商家
-        $seller_name = $info['seller_history']['seller_name'] ?? '';
-        if(empty($seller_name)) $seller_name = $info['seller']['seller_name'] ?? '';
-        $info['seller_name'] = $seller_name;
-        $now_seller_state = 0;// 最新的商家 0没有变化 ;1 已经删除  2 试卷不同
-        if(isset($info['seller_history']) && isset($info['seller'])){
-            $history_version_num = $info['seller_history']['version_num'] ?? '';
-            $version_num = $info['seller']['version_num'] ?? '';
-            if(empty($info['seller'])){
-                $now_seller_state = 1;
-            }elseif($version_num != '' && $history_version_num != $version_num){
-                $now_seller_state = 2;
-            }
-        }
-        if(isset($info['seller_history'])) unset($info['seller_history']);
-        if(isset($info['seller'])) unset($info['seller']);
-        $info['now_seller_state'] = $now_seller_state;
+//        $seller_name = $info['seller_history']['seller_name'] ?? '';
+//        if(empty($seller_name)) $seller_name = $info['seller']['seller_name'] ?? '';
+//        $info['seller_name'] = $seller_name;
+//        $now_seller_state = 0;// 最新的商家 0没有变化 ;1 已经删除  2 试卷不同
+//        if(isset($info['seller_history']) && isset($info['seller'])){
+//            $history_version_num = $info['seller_history']['version_num'] ?? '';
+//            $version_num = $info['seller']['version_num'] ?? '';
+//            if(empty($info['seller'])){
+//                $now_seller_state = 1;
+//            }elseif($version_num != '' && $history_version_num != $version_num){
+//                $now_seller_state = 2;
+//            }
+//        }
+//        if(isset($info['seller_history'])) unset($info['seller_history']);
+//        if(isset($info['seller'])) unset($info['seller']);
+//        $info['now_seller_state'] = $now_seller_state;
         // 店铺
         $shop_name = $info['shop_history']['shop_name'] ?? '';
         if(empty($shop_name)) $shop_name = $info['shop']['shop_name'] ?? '';
@@ -590,6 +596,7 @@ class CTAPIStaffBusiness extends BasicPublicCTAPIBusiness
         $info = static::getInfoDataBase($request, $controller,'', $id, [], '', $notLog);
         if( empty($info)) throws('记录不存在!');
         if($info['issuper'] == 1) throws('超级帐户不可删除!');
+        if($controller->user_info['admin_type'] == 2 && $info['seller_id'] != $company_id) throws('不能删除非自己企业的用户!');
 
         return static::delAjaxBase($request, $controller, '', $notLog);
 

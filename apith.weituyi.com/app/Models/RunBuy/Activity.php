@@ -18,8 +18,14 @@ class Activity extends BasePublicModel
         '4' => '已结束',
     ];
 
+    // 兑换码生成是是否启用1待启用2直接启用
+    public $defaultOpenStatusArr = [
+        '1' => '待启用',
+        '2' => '直接启用',
+    ];
+
     // 表里没有的字段
-    protected $appends = ['status_text'];
+    protected $appends = ['status_text', 'default_open_status_text'];
 
     /**
      * 获取状态文字
@@ -29,6 +35,16 @@ class Activity extends BasePublicModel
     public function getStatusTextAttribute()
     {
         return $this->statusArr[$this->status] ?? '';
+    }
+
+    /**
+     * 获取状态文字
+     *
+     * @return string
+     */
+    public function getDefaultOpenStatusTextAttribute()
+    {
+        return $this->defaultOpenStatusArr[$this->default_open_status] ?? '';
     }
 
     /**

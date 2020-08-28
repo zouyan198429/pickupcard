@@ -88,6 +88,21 @@ class CTAPIDeliveryAddrBusiness extends BasicPublicCTAPIBusiness
             $code_id = CommonRequest::getInt($request, 'code_id');
             if($code_id > 0 )  array_push($queryParams['where'], ['code_id', '=', $code_id]);
 
+            $seller_id = CommonRequest::getInt($request, 'seller_id');
+            if($seller_id > 0 )  array_push($queryParams['where'], ['seller_id', '=', $seller_id]);
+
+            $order_no = CommonRequest::get($request, 'order_no');
+            if(strlen($order_no) > 0 )  array_push($queryParams['where'], ['order_no', '=', $order_no]);
+
+            $user_id = CommonRequest::getInt($request, 'user_id');
+            if($user_id > 0 )  array_push($queryParams['where'], ['user_id', '=', $user_id]);
+
+            $pay_status = CommonRequest::getInt($request, 'pay_status');
+            if($pay_status > 0 )  array_push($queryParams['where'], ['pay_status', '=', $pay_status]);
+
+            $pay_no = CommonRequest::get($request, 'pay_no');
+            if(strlen($pay_no) > 0 )  array_push($queryParams['where'], ['pay_no', '=', $pay_no]);
+
 
             $status = CommonRequest::get($request, 'status');
             if(is_numeric($status) )  array_push($queryParams['where'], ['status', '=', $status]);

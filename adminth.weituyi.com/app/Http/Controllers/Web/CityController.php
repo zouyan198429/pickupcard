@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Web;
 
 use App\Business\Controller\API\RunBuy\CTAPICityBusiness;
-use App\Http\Controllers\Web\BaseWebController;
 use App\Services\Request\CommonRequest;
 use App\Services\Tool;
 use Illuminate\Http\Request;
 
 class CityController extends BaseWebController
 {
+    public static $VIEW_NAME = '';// 视图栏目文件夹目录名称
     /**
      * ajax根据部门id,小组id获得所属部门小组下的员工数组[kv一维数组]
      *

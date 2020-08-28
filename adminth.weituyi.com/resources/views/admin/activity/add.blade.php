@@ -67,6 +67,22 @@
                     <input type="text" class="inp wnormal"  name="total_num" value="{{ $info['total_num'] or '' }}" placeholder="生成数量"  onkeyup="isnum(this) " onafterpaste="isnum(this)"  />
                 </td>
             </tr>
+            <tr>
+                <th>兑换码长度<span class="must">*</span></th>
+                <td>
+                    <input type="text" class="inp wnormal"  name="code_len" value="{{ $info['code_len'] or '' }}" placeholder="兑换码长度"  onkeyup="isnum(this) " onafterpaste="isnum(this)"  />
+                    <span>指定生成的兑换码的长度。</span>
+                </td>
+            </tr>
+            <tr>
+                <th>生成兑换码时默认状态<span class="must">*</span></th>
+                <td>
+                    @foreach ($defaultOpenStatus as $k=>$txt)
+                    <label><input type="radio"  name="default_open_status"  value="{{ $k }}"  @if(isset($defaultDefaultOpenStatus) && $defaultDefaultOpenStatus == $k) checked="checked"  @endif />{{ $txt }} </label>
+
+                    @endforeach
+                </td>
+            </tr>
             {{--<tr>--}}
                 {{--<th>排序[降序]<span class="must">*</span></th>--}}
                 {{--<td>--}}
@@ -150,7 +166,7 @@
 {{--<script src="{{asset('js/baguetteBox.js/highlight.min.js')}}" async></script>--}}
 <!-- zui js -->
 <script src="{{asset('dist/js/zui.min.js') }}"></script>
-<script src="{{ asset('/js/admin/lanmu/activity_edit.js') }}"  type="text/javascript"></script>
+<script src="{{ asset('/js/admin/lanmu/activity_edit.js') }}?2"  type="text/javascript"></script>
 @component('component.upfileincludejs')
 @endcomponent
 </body>

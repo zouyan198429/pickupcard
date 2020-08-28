@@ -8,8 +8,9 @@ use App\Services\Request\CommonRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class IndexController extends WorksController
+class IndexController extends BasicController
 {
+    public static $VIEW_NAME = '';// 视图栏目文件夹目录名称
 
     public function test(){
 //        $this->company_id = 1;
@@ -43,7 +44,7 @@ class IndexController extends WorksController
     {
         $this->InitParams($request);
         $reDataArr = $this->reDataArr;
-        return view('admin.index', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.index', $reDataArr);
     }
 
     /**
@@ -58,7 +59,7 @@ class IndexController extends WorksController
         $reDataArr = $this->reDataArr;
 
         Log::info('日志测试---login页',[]);
-        return view('admin.login', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.login', $reDataArr);
     }
 
     /**
@@ -74,7 +75,7 @@ class IndexController extends WorksController
         $reDataArr = $this->reDataArr;
         $user_info = $this->user_info;
         $reDataArr = array_merge($reDataArr, $user_info);
-        return view('admin.admin.password', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.admin.password', $reDataArr);
     }
 
     /**
@@ -93,7 +94,7 @@ class IndexController extends WorksController
         $reDataArr['adminType'] =  CTAPIStaffBusiness::$adminType;
         $reDataArr['defaultAdminType'] = $user_info['admin_type'] ?? 0;// 列表页默认状态
         $reDataArr = array_merge($reDataArr, $user_info);
-        return view('admin.admin.info', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.admin.info', $reDataArr);
     }
 
     /**
@@ -121,7 +122,7 @@ class IndexController extends WorksController
         // $this->InitParams($request);
         // $company_id = $this->company_id;
 
-        return CTAPIStaffBusiness::login($request, $this,1);
+        return CTAPIStaffBusiness::login($request, $this,static::$LOGIN_ADMIN_TYPE);
 
     }
 

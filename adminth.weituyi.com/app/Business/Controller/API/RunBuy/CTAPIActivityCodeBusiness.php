@@ -91,6 +91,10 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
             $activity_id = CommonRequest::getInt($request, 'activity_id');
             if($activity_id > 0 )  array_push($queryParams['where'], ['activity_id', '=', $activity_id]);
 
+            $seller_id = CommonRequest::getInt($request, 'seller_id');
+            if($seller_id > 0 )  array_push($queryParams['where'], ['seller_id', '=', $seller_id]);
+
+
             $status = CommonRequest::get($request, 'status');
             if(is_numeric($status) )  array_push($queryParams['where'], ['status', '=', $status]);
 
@@ -166,8 +170,12 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
         $result['data_list'] = $data_list;
         // 导出功能
         if($isExport == 1){
+            $url_pre = config('public.compWebURL') . 'web/search/';// 默认为无支付
+            if( in_array($controller::$VIEW_PATH, ['company', 'manage']) ){
+                $url_pre = config('public.compWebPayURL') . 'site/search/';// 默认为有支付
+            }
             foreach($data_list as $k => $v){
-                $data_list[$k]['url'] = config('public.compWebURL') . 'web/search/' . $v['id'] . '/' . $v['code'];
+                $data_list[$k]['url'] = $url_pre . $v['id'] . '/' . $v['code'];
             }
             $headArr = ['code'=>'兑换码', 'code_password'=>'密码', 'url'=>'二维码地址', 'open_status_text'=>'开启状态', 'status_text'=>'状态'];
             $activity_name = $data_list[0]['activity_info']['activity_name'] ?? '';// 活动名称
@@ -226,7 +234,7 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
             }
         }
         if(isset($info['product_history_info'])) unset($info['product_history_info']);
-        if(isset($info['product_info'])) unset($info['product_info']);
+//        if(isset($info['product_info'])) unset($info['product_info']);
 
         $info['now_product_state'] = $now_product_state;
 
@@ -386,6 +394,10 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
     {
         $company_id = $controller->company_id;
         $activity_id = CommonRequest::getInt($request, 'activity_id');
+
+        $activityInfo = CTAPIActivityBusiness::getInfoData($request, $controller, $activity_id, [], []);
+        $controller->isOwnSellerId($activityInfo);// 有企业id的记录，判断是不是当前企业
+
         $id = CommonRequest::get($request, 'id');// 单个id 或 逗号分隔的多个，或 多个的一维数组
         $user_id = $controller->user_id;
         // 调用新加或修改接口
@@ -418,6 +430,10 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
     {
         $company_id = $controller->company_id;
         $activity_id = CommonRequest::getInt($request, 'activity_id');
+
+        $activityInfo = CTAPIActivityBusiness::getInfoData($request, $controller, $activity_id, [], []);
+        $controller->isOwnSellerId($activityInfo);// 有企业id的记录，判断是不是当前企业
+
         $user_id = $controller->user_id;
         // 调用新加或修改接口
         $apiParams = [
@@ -771,7 +787,11 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
         // $_SESSION['userInfo'] = $userInfo; //保存某个session信息
         $redisKey = $controller->setUserInfo($info, $preKey);
         $reData['redisKey'] = $redisKey;
-        $reData['productUrl'] =  config('public.compWebURL') . 'web/product/' . $product_id;//url('web/product/' . $product_id);
+        $url_pre = config('public.compWebURL') . 'web/product/' . $product_id;// 默认为无支付
+        if( in_array($controller::$VIEW_PATH, ['company', 'manage', 'site']) ){
+            $url_pre = config('public.compWebPayURL') . 'site/addrs/add';// 默认为有支付
+        }
+        $reData['productUrl'] =  $url_pre;//url('web/product/' . $product_id);
 
         return ajaxDataArr(1, $reData, '');
     }

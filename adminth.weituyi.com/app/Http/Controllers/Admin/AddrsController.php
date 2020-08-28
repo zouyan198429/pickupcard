@@ -10,8 +10,9 @@ use App\Services\Request\CommonRequest;
 use App\Services\Tool;
 use Illuminate\Http\Request;
 
-class AddrsController extends WorksController
+class AddrsController extends BasicController
 {
+    public static $VIEW_NAME = 'addrs';// 视图栏目文件夹目录名称
     /**
      * 首页
      *
@@ -41,7 +42,7 @@ class AddrsController extends WorksController
 
         $reDataArr['defaultProduct'] = -1;// 默认
 
-        return view('admin.addrs.index', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.index', $reDataArr);
     }
 
     /**
@@ -73,7 +74,7 @@ class AddrsController extends WorksController
 
         $reDataArr['defaultProduct'] = -1;// 默认
 
-        return view('admin.addrs.wait_send', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.wait_send', $reDataArr);
     }
 
     /**
@@ -105,7 +106,7 @@ class AddrsController extends WorksController
 
         $reDataArr['defaultProduct'] = -1;// 默认
 
-        return view('admin.addrs.sended', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.sended', $reDataArr);
     }
 
     /**
@@ -122,7 +123,7 @@ class AddrsController extends WorksController
 //        $reDataArr['province_kv'] = CTAPIDeliveryAddrBusiness::getStaffByPid($request, $this,  0);
 //        $reDataArr['province_kv'] = CTAPIDeliveryAddrBusiness::getChildListKeyVal($request, $this, 0, 1 + 0, 0);
 //        $reDataArr['province_id'] = 0;
-//        return view('admin.addrs.select', $reDataArr);
+//        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.select', $reDataArr);
 //    }
 
     /**
@@ -145,6 +146,7 @@ class AddrsController extends WorksController
         if ($id > 0) { // 获得详情数据
             $operate = "修改";
             $info = CTAPIDeliveryAddrBusiness::getInfoData($request, $this, $id, [], '');
+            $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
         }
         // $reDataArr = array_merge($reDataArr, $resultDatas);
         $reDataArr['info'] = $info;
@@ -157,7 +159,7 @@ class AddrsController extends WorksController
         $reDataArr['status'] =  CTAPIDeliveryAddrBusiness::$statusArr;
         $reDataArr['defaultStatus'] = $info['status'] ?? -1;// 默认状态
 
-        return view('admin.addrs.add', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.add', $reDataArr);
     }
 
 
@@ -223,12 +225,16 @@ class AddrsController extends WorksController
 //            $saveData['admin_password'] = $admin_password;
 //        }
 
-//        if($id <= 0) {// 新加;要加入的特别字段
-//            $addNewData = [
-//                // 'account_password' => $account_password,
-//            ];
-//            $saveData = array_merge($saveData, $addNewData);
-//        }
+        if($id <= 0) {// 新加;要加入的特别字段
+            $addNewData = [
+                // 'account_password' => $account_password,
+            ];
+            $this->appSellerId($addNewData); // 有企业id的记录，添加时，加入所属企业id
+            $saveData = array_merge($saveData, $addNewData);
+        }else{
+            $info = CTAPIDeliveryAddrBusiness::getInfoData($request, $this, $id, [], '');
+            $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
+        }
         $resultDatas = CTAPIDeliveryAddrBusiness::replaceById($request, $this, $saveData, $id, true);
         return ajaxDataArr(1, $resultDatas, '');
     }
@@ -243,6 +249,10 @@ class AddrsController extends WorksController
     public function ajax_alist(Request $request){
         $this->InitParams($request);
         $request->merge(['admin_type' => 1]);
+        $mergeParams = [];
+        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+        $this->appendSellerIdParams($mergeParams);
+        CTAPIDeliveryAddrBusiness::mergeRequest($request, $this, $mergeParams);
         return  CTAPIDeliveryAddrBusiness::getList($request, $this, 2 + 4, [], ['province', 'provinceHistory'
             , 'city', 'cityHistory', 'area', 'areaHistory'
            // , 'oprateStaff', 'oprateStaffHistory'
@@ -259,6 +269,10 @@ class AddrsController extends WorksController
      */
 //    public function ajax_get_ids(Request $request){
 //        $this->InitParams($request);
+//        $mergeParams = [];
+//        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+//        $this->appendSellerIdParams($mergeParams);
+//        CTAPIDeliveryAddrBusiness::mergeRequest($request, $this, $mergeParams);
 //        $result = CTAPIDeliveryAddrBusiness::getList($request, $this, 1 + 0);
 //        $data_list = $result['result']['data_list'] ?? [];
 //        $ids = implode(',', array_column($data_list, 'id'));
@@ -275,6 +289,10 @@ class AddrsController extends WorksController
      */
     public function export(Request $request){
         $this->InitParams($request);
+        $mergeParams = [];
+        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+        $this->appendSellerIdParams($mergeParams);
+        CTAPIDeliveryAddrBusiness::mergeRequest($request, $this, $mergeParams);
         CTAPIDeliveryAddrBusiness::getList($request, $this, 1 + 0, [], ['province', 'provinceHistory'
             , 'city', 'cityHistory', 'area', 'areaHistory'
             // , 'oprateStaff', 'oprateStaffHistory'
@@ -306,6 +324,14 @@ class AddrsController extends WorksController
     public function ajax_del(Request $request)
     {
         $this->InitParams($request);
+
+        $id = CommonRequest::get($request, 'id');
+        // 查询所有记录
+        $mergeParams = ['ids' => $id];
+        CTAPIDeliveryAddrBusiness::mergeRequest($request, $this, $mergeParams);
+        $dataList = CTAPIDeliveryAddrBusiness::getList($request, $this, 1 + 0, [], [])['result']['data_list'] ?? [];
+        $this->ListIsOwnSellerId($dataList);// 判断数据权限
+
         return CTAPIDeliveryAddrBusiness::delAjax($request, $this);
     }
 

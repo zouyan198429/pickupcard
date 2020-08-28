@@ -99,19 +99,25 @@ class ActivityDBBusiness extends BasePublicDBBusiness
         $total_num = $saveData['total_num'] ?? 1;
 
         $recreateCode = true;// 是否需要重新生成兑换码及密码
+//        $keepExistCode = true;// 是否保留已存在的部换码 -- 长度一样
 
         // 获得当前记录，判断是否可以进行修改操作
+        $seller_id = $saveData['seller_id'] ?? 0;
+        $codeLen = 6;
+        if(isset($saveData['code_len']) && is_numeric($saveData['code_len']) && $saveData['code_len'] > 0) $codeLen = $saveData['code_len'];
+        $open_status = config('public.default_open_status', 1);// 兑换码 默认 启用状态1待启用2已启用
+        if(isset($saveData['default_open_status']) && is_numeric($saveData['default_open_status']) && $saveData['default_open_status'] > 0) $open_status = $saveData['default_open_status'];
         if($id > 0){
-            $activityInfo = static::getInfo($id, ['status', 'begin_num', 'total_num']);
+            $activityInfo = static::getInfo($id, ['status', 'begin_num', 'total_num', 'code_len', 'seller_id']);
             if(empty($activityInfo)) throws('活动记录不存在');
             if($activityInfo['status'] != 1) throws('活动状态非未开始状态，不可修改');// 状态1未开始2进行中4已结束
-            if( $begin_num == $activityInfo['begin_num'] && $total_num == $activityInfo['total_num'] )  $recreateCode = false;
+            if( $begin_num == $activityInfo['begin_num'] && $total_num == $activityInfo['total_num'] && $codeLen == $activityInfo['code_len'] )  $recreateCode = false;
+//            if($codeLen == $activityInfo['code_len']) $keepExistCode = false;
+            if(!is_numeric($seller_id) || $seller_id <= 0) $seller_id = $activityInfo['seller_id'];
         }
         $end_num = $begin_num + $total_num;
         // 生成兑换码
-        $codeLen = 6;
-        $open_status = config('public.default_open_status', 1);// 兑换码 默认 启用状态1待启用2已启用
-        // 如果第一位是0，则按用户指定格式的长度
+            // 如果第一位是0，则按用户指定格式的长度
         $begin_first_char = substr($begin_num,0,1);
         if($begin_first_char == 0 || $begin_first_char == '0' ) $end_num = strlen($begin_num);
         $codeListArr = [];
@@ -141,6 +147,7 @@ class ActivityDBBusiness extends BasePublicDBBusiness
                 ]);
                 array_push($codeListArr, [
                     // 'id' => 0,
+                    'seller_id' => $seller_id,
                     'code' => $temCode,
                     'code_password' => $temPassword,
                     'open_status' => $open_status,
@@ -198,7 +205,7 @@ class ActivityDBBusiness extends BasePublicDBBusiness
 
 
                 // 获得当前已有的兑换码
-                if($recreateCode){
+                if($recreateCode){// && $keepExistCode 长度也要一样
                     $queryParams = [
                         'where' => [
                             ['activity_id', $id],

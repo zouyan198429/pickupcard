@@ -77,6 +77,7 @@
       <th>兑换商品</th>
       <th>编码前缀</th>
       <th>起始编码</th>
+      <th>兑换码长度</th>
       <th>提货卡总量</th>
       <th>已兑换数量</th>
       <th>图片</th>
@@ -133,6 +134,6 @@
 {{--<script src="{{asset('js/baguetteBox.js/highlight.min.js')}}" async></script>--}}
 
 <script src="{{asset('js/common/list.js')}}"></script>
-  <script src="{{ asset('js/admin/lanmu/activity.js') }}"  type="text/javascript"></script>
+  <script src="{{ asset('js/admin/lanmu/activity.js') }}?1"  type="text/javascript"></script>
 </body>
 </html>

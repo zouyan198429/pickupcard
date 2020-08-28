@@ -8,8 +8,9 @@ use App\Services\Request\CommonRequest;
 use App\Services\Tool;
 use Illuminate\Http\Request;
 
-class ProductController extends WorksController
+class ProductController extends BasicController
 {
+    public static $VIEW_NAME = 'products';// 视图栏目文件夹目录名称
     /**
      * 首页
      *
@@ -21,7 +22,7 @@ class ProductController extends WorksController
     {
         $this->InitParams($request);
         $reDataArr = $this->reDataArr;
-        return view('admin.products.index', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.index', $reDataArr);
     }
 
     /**
@@ -38,7 +39,7 @@ class ProductController extends WorksController
 //        $reDataArr['province_kv'] = CTAPIProductBusiness::getCityByPid($request, $this,  0);
 //        $reDataArr['province_kv'] = CTAPIProductBusiness::getChildListKeyVal($request, $this, 0, 1 + 0, 0);
 //        $reDataArr['province_id'] = 0;
-//        return view('admin.products.select', $reDataArr);
+//        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.select', $reDataArr);
 //    }
 
     /**
@@ -62,11 +63,12 @@ class ProductController extends WorksController
         if ($id > 0) { // 获得详情数据
             $operate = "修改";
             $info = CTAPIProductBusiness::getInfoData($request, $this, $id, [], '');
+            $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
         }
         // $reDataArr = array_merge($reDataArr, $resultDatas);
         $reDataArr['info'] = $info;
         $reDataArr['operate'] = $operate;
-        return view('admin.products.add', $reDataArr);
+        return view('' . static::$VIEW_PATH. '.' . static::$VIEW_NAME. '.add', $reDataArr);
     }
 
 
@@ -94,12 +96,17 @@ class ProductController extends WorksController
             'sort_num' => $sort_num,
             'content' => $content,
         ];
-//        if($id <= 0) {// 新加;要加入的特别字段
-//            $addNewData = [
-//                // 'account_password' => $account_password,
-//            ];
-//            $saveData = array_merge($saveData, $addNewData);
-//        }
+        if($id <= 0) {// 新加;要加入的特别字段
+            $addNewData = [
+                // 'account_password' => $account_password,
+            ];
+            $this->appSellerId($addNewData); // 有企业id的记录，添加时，加入所属企业id
+
+            $saveData = array_merge($saveData, $addNewData);
+        }else{
+            $info = CTAPIProductBusiness::getInfoData($request, $this, $id, [], '');
+            $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
+        }
         $resultDatas = CTAPIProductBusiness::replaceById($request, $this, $saveData, $id, true);
         return ajaxDataArr(1, $resultDatas, '');
     }
@@ -113,6 +120,10 @@ class ProductController extends WorksController
      */
     public function ajax_alist(Request $request){
         $this->InitParams($request);
+        $mergeParams = [];
+        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+        $this->appendSellerIdParams($mergeParams);
+        CTAPIProductBusiness::mergeRequest($request, $this, $mergeParams);
         return  CTAPIProductBusiness::getList($request, $this, 2 + 4, [], ['oprateStaff', 'oprateStaffHistory']);
     }
 
@@ -125,6 +136,10 @@ class ProductController extends WorksController
      */
 //    public function ajax_get_ids(Request $request){
 //        $this->InitParams($request);
+//        $mergeParams = [];
+//        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+//        $this->appendSellerIdParams($mergeParams);
+//        CTAPIProductBusiness::mergeRequest($request, $this, $mergeParams);
 //        $result = CTAPIProductBusiness::getList($request, $this, 1 + 0);
 //        $data_list = $result['result']['data_list'] ?? [];
 //        $ids = implode(',', array_column($data_list, 'id'));
@@ -140,6 +155,10 @@ class ProductController extends WorksController
      * @author zouyan(305463219@qq.com)
      */
 //    public function export(Request $request){
+//        $mergeParams = [];
+//        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+//        $this->appendSellerIdParams($mergeParams);
+//        CTAPIProductBusiness::mergeRequest($request, $this, $mergeParams);
 //        $this->InitParams($request);
 //        CTAPIProductBusiness::getList($request, $this, 1 + 0);
 //    }
@@ -168,6 +187,14 @@ class ProductController extends WorksController
     public function ajax_del(Request $request)
     {
         $this->InitParams($request);
+
+        $id = CommonRequest::get($request, 'id');
+        // 查询所有记录
+        $mergeParams = ['ids' => $id];
+        CTAPIProductBusiness::mergeRequest($request, $this, $mergeParams);
+        $dataList = CTAPIProductBusiness::getList($request, $this, 1 + 0, [], [])['result']['data_list'] ?? [];
+        $this->ListIsOwnSellerId($dataList);// 判断数据权限
+
         return CTAPIProductBusiness::delAjax($request, $this);
     }
 

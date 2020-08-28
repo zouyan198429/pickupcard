@@ -8,8 +8,9 @@ use App\Services\Request\CommonRequest;
 use App\Services\Tool;
 use Illuminate\Http\Request;
 
-class LabelsController extends WorksController
+class LabelsController extends BasicController
 {
+    public static $VIEW_NAME = 'labels';// 视图栏目文件夹目录名称
     /**
      * 首页
      *
@@ -21,7 +22,7 @@ class LabelsController extends WorksController
     {
         $this->InitParams($request);
         $reDataArr = $this->reDataArr;
-        return view('admin.labels.index', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.index', $reDataArr);
     }
 
     /**
@@ -38,7 +39,7 @@ class LabelsController extends WorksController
 //        $reDataArr['province_kv'] = CTAPILabelsBusiness::getCityByPid($request, $this,  0);
 //        $reDataArr['province_kv'] = CTAPILabelsBusiness::getChildListKeyVal($request, $this, 0, 1 + 0, 0);
 //        $reDataArr['province_id'] = 0;
-//        return view('admin.labels.select', $reDataArr);
+//        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.select', $reDataArr);
 //    }
 
     /**
@@ -62,11 +63,12 @@ class LabelsController extends WorksController
         if ($id > 0) { // 获得详情数据
             $operate = "修改";
             $info = CTAPILabelsBusiness::getInfoData($request, $this, $id, [], '');
+//            $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
         }
         // $reDataArr = array_merge($reDataArr, $resultDatas);
         $reDataArr['info'] = $info;
         $reDataArr['operate'] = $operate;
-        return view('admin.labels.add', $reDataArr);
+        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.add', $reDataArr);
     }
 
 
@@ -94,7 +96,11 @@ class LabelsController extends WorksController
 //            $addNewData = [
 //                // 'account_password' => $account_password,
 //            ];
+//            $this->appSellerId($addNewData); // 有企业id的记录，添加时，加入所属企业id
 //            $saveData = array_merge($saveData, $addNewData);
+//        }else{
+//            $info = CTAPILabelsBusiness::getInfoData($request, $this, $id, [], '');
+//            $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
 //        }
         $resultDatas = CTAPILabelsBusiness::replaceById($request, $this, $saveData, $id, true);
         return ajaxDataArr(1, $resultDatas, '');
@@ -109,6 +115,10 @@ class LabelsController extends WorksController
      */
     public function ajax_alist(Request $request){
         $this->InitParams($request);
+        $mergeParams = [];
+        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+//        $this->appendSellerIdParams($mergeParams);
+        CTAPILabelsBusiness::mergeRequest($request, $this, $mergeParams);
         return  CTAPILabelsBusiness::getList($request, $this, 2 + 4);
     }
 
@@ -121,6 +131,10 @@ class LabelsController extends WorksController
      */
 //    public function ajax_get_ids(Request $request){
 //        $this->InitParams($request);
+//        $mergeParams = [];
+//        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+////        $this->appendSellerIdParams($mergeParams);
+//        CTAPILabelsBusiness::mergeRequest($request, $this, $mergeParams);
 //        $result = CTAPILabelsBusiness::getList($request, $this, 1 + 0);
 //        $data_list = $result['result']['data_list'] ?? [];
 //        $ids = implode(',', array_column($data_list, 'id'));
@@ -137,6 +151,10 @@ class LabelsController extends WorksController
      */
 //    public function export(Request $request){
 //        $this->InitParams($request);
+//        $mergeParams = [];
+//        // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
+////        $this->appendSellerIdParams($mergeParams);
+//        CTAPILabelsBusiness::mergeRequest($request, $this, $mergeParams);
 //        CTAPILabelsBusiness::getList($request, $this, 1 + 0);
 //    }
 
@@ -164,6 +182,14 @@ class LabelsController extends WorksController
     public function ajax_del(Request $request)
     {
         $this->InitParams($request);
+
+        $id = CommonRequest::get($request, 'id');
+        // 查询所有记录
+        $mergeParams = ['ids' => $id];
+        CTAPILabelsBusiness::mergeRequest($request, $this, $mergeParams);
+        $dataList = CTAPILabelsBusiness::getList($request, $this, 1 + 0, [], [])['result']['data_list'] ?? [];
+        $this->ListIsOwnSellerId($dataList);// 判断数据权限
+
         return CTAPILabelsBusiness::delAjax($request, $this);
     }
 

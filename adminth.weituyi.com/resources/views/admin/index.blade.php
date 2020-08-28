@@ -107,14 +107,14 @@
                 <cite>提货卡管理</cite>
               </a>
               <dl class="layui-nav-child">
-                  @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)
+{{--                  @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)--}}
                 <dd>
                    <a lay-href="{{ url('admin/products') }}">商品管理</a>
                 </dd>
                 <dd>
                   <a lay-href="{{ url('admin/activity') }}">提货卡管理</a>
                 </dd>
-                  @endif
+{{--                  @endif--}}
                 <dd >
                   <a lay-href="{{ url('admin/addrs') }}">提货列表</a>
                 </dd>
@@ -127,26 +127,41 @@
               </dl>
             </li>
 
-              @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)
+{{--              @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)--}}
             <li data-name="user" class="layui-nav-item">
               <a href="javascript:;" lay-tips="用户" lay-direction="2">
                 <i class="layui-icon layui-icon-user"></i>
-                <cite>用户管理</cite>
+                <cite>管理员管理</cite>
               </a>
               <dl class="layui-nav-child">
                 <dd>
-                  <a lay-href="{{ url('admin/staff') }}">用户列表</a>
+                  <a lay-href="{{ url('admin/staff') }}">管理员列表</a>
                 </dd>
               </dl>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a lay-href="{{ url('admin/seller') }}">商家列表</a>
+                    </dd>
+                </dl>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a lay-href="{{ url('seller/employee') }}">员工列表</a>
+                    </dd>
+                </dl>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a lay-href="{{ url('admin/user') }}">用户列表</a>
+                    </dd>
+                </dl>
             </li>
-              @endif
+{{--              @endif--}}
             <li data-name="set" class="layui-nav-item">
               <a href="javascript:;" lay-tips="设置" lay-direction="2">
                 <i class="layui-icon layui-icon-set"></i>
                 <cite>设置</cite>
               </a>
               <dl class="layui-nav-child">
-                  @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)
+{{--                  @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)--}}
                 <dd class="layui-nav-itemed">
                   <a href="javascript:;">系统设置</a>
                   <dl class="layui-nav-child">
@@ -155,7 +170,7 @@
                     </dd>
                   </dl>
                 </dd>
-                  @endif
+{{--                  @endif--}}
                 <dd class="layui-nav-itemed">
                   <a href="javascript:;">我的设置</a>
                   <dl class="layui-nav-child">

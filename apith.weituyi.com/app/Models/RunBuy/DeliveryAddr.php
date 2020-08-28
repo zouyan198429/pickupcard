@@ -18,8 +18,15 @@ class DeliveryAddr extends BasePublicModel
         '4' => '已收货',
     ];
 
+    // 付款状态1无需付款2待支付4支付失败8已付款
+    public $payStatusArr = [
+        '1' => '无需付款',
+        '2' => '待支付',
+        '4' => '支付失败',
+        '8' => '已付款',
+    ];
     // 表里没有的字段
-    protected $appends = ['status_text'];
+    protected $appends = ['status_text', 'pay_status_text'];
 
     /**
      * 获取状态文字
@@ -29,6 +36,16 @@ class DeliveryAddr extends BasePublicModel
     public function getStatusTextAttribute()
     {
         return $this->statusArr[$this->status] ?? '';
+    }
+
+    /**
+     * 获取付款状态文字
+     *
+     * @return string
+     */
+    public function getPayStatusTextAttribute()
+    {
+        return $this->payStatusArr[$this->pay_status] ?? '';
     }
 
 
