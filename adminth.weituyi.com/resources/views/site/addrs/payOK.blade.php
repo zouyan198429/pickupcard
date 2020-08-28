@@ -12,13 +12,47 @@
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/css/layui.css')}}" media="all">
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/admin.css')}}" media="all">
   <link rel="stylesheet" href="{{asset('web/css/style.css')}}" media="all">
+  <style>
+	  .wrap {
+	    	  height: auto;
+	  		  width: 100%;
+	  			  max-width: 800px;
+	  		  text-align: center;
+			  padding-bottom: 5em;
+			  height: 100%;
+			  background-color: #fff;
+	  }
+	  .icon-ok {
+		  margin:80px auto 15px auto;
+		  width:6em;
+		  height: auto;
+		  
+	  }
+	  .txt1 {
+		  font-size: 24px;
+		  
+		  line-height: 200%;
+	  }
+	  .txt2 {
+		  font-size: 16px;
+		  color: #888;
+		  width:20em;
+	  }
+	  body {
+		  background-color: #fff;
+		  height: 100%;
+	  }
+	  .layui-btn-normal {
+		  margin-top:2em;
+	  }
+  </style>
 </head>
 <body  class="layui-layout-body">
 
 <div class="wrap">
-
-        <p>恭喜您，订单提交成功！</p>
-        <p>我们会尽快给您安排发货，请您耐心等待。</p>
+		<img src="http://qqgy.weituyi.com/resource/company/3/images/2020/08/28/icon-ok.jpg" alt="" class="icon-ok">
+        <p class="txt1">恭喜您，订单提交成功！</p>
+        <p class="txt2">我们会尽快给您安排发货，请您耐心等待。</p>
     <input type="button"  id="submitBtn" lay-submit="" lay-filter="layuiadmin-app-form-submit" value="返回" class="layui-btn layui-btn-normal">
 
 
