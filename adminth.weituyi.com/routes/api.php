@@ -572,6 +572,7 @@ Route::any('site/city/ajax_get_child', 'Site\CityController@ajax_get_child');// 
 // 微信登录回调
 Route::any('site/wx/callback/{redisKey}', 'Site\WeChatController@callback');// 授权回调页
 
+Route::any('site/pay/wechatNotify', 'Site\PayController@wechatNotify');// 支付结果通知--回调
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~有支付~~~~~~~~~~~~~~~~~结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

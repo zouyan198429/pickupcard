@@ -2162,4 +2162,101 @@ class Tool
         }
         return true;
     }
+
+    /**
+     *
+     * 获得项目标识前紭
+     * @param int $keyNum 标识前紭编号 1 项目(整个资源集合)唯一标识；2 站点唯一标识,为空则为当前域及端口；
+     *                                  4 环境标识 本地开发环境:local; 测试环境:testing;生产环境:production
+     *                                  8  数据库ip ;  16 数据库端口  ; 32 数据库名
+     *                                  64 数据库关键字;--如果为空，则默认为 数据库ip + 数据库端口 + 数据库名
+     * @param string $itemSplit 数组转让字符串时的分隔符 默认 ':'
+     * @param string $appendStr 字符不为空，则未尾加的字符 默认 ':'
+     * @return string 项目标识前紭 字符
+     * @author zouyan(305463219@qq.com)
+     */
+    public static function getProjectKey($keyNum = 0, $itemSplit = ':', $appendStr = ':'){
+        $keyStr = implode($itemSplit, static::getProjectKeyArr($keyNum));
+        if(strlen($keyStr) > 0 && strlen($appendStr) > 0) $keyStr .= $appendStr;
+        return $keyStr;
+    }
+
+    /**
+     *
+     * 获得项目标识前紭
+     * @param int $keyNum 标识前紭编号 1 项目(整个资源集合)唯一标识；2 站点唯一标识,为空则为当前域及端口；
+     *                                  4 环境标识 本地开发环境:local; 测试环境:testing;生产环境:production
+     *                                  8  数据库ip ;  16 数据库端口  ; 32 数据库名
+     *                                  64 数据库关键字;--如果为空，则默认为 数据库ip + 数据库端口 + 数据库名
+     * @return array 项目标识前紭数组
+     * @author zouyan(305463219@qq.com)
+     */
+    public static function getProjectKeyArr($keyNum = 0){
+        $keyArr = [];
+        // 1 项目(整个资源集合)唯一标识；
+        $appProject = '';
+        if(($keyNum & 1) == 1){
+            $appProject = config('public.appProject', '');
+            if(strlen($appProject) > 0) $keyArr[] = $appProject;
+        }
+        // 2 站点唯一标识,为空则为当前域及端口；
+        $appWebSite = '';
+        if(($keyNum & 2) == 2){
+            $appWebSite = config('public.appWebSite', '');
+            if(strlen($appWebSite) <= 0) {
+                // $server = \Illuminate\Support\Facades\Request::server();
+                $serviceNmae = \Illuminate\Support\Facades\Request::server('SERVER_NAME');// runbuy.admin.cunwo.net
+                $servicePort = \Illuminate\Support\Facades\Request::server('SERVER_PORT');// 80
+                // dd($servicePort);
+                $appWebSite = str_replace(".","-",$serviceNmae . $servicePort);// runbuy-admin-cunwo-net80
+            }
+            if(strlen($appWebSite) > 0) $keyArr[] = $appWebSite;
+        }
+        // 4 环境标识 本地开发环境:local; 测试环境:testing;生产环境:production
+        $appEnv = '';
+        if(($keyNum & 4) == 4){
+            $appEnv = config('public.appEnv', '');
+            if(strlen($appEnv) > 0) $keyArr[] = $appEnv;
+        }
+        // 8  数据库ip
+        $dbHost = '';
+        if(($keyNum & 8) == 8 || ($keyNum & 64) == 64 ){
+            $dbHost = config('public.dbHost', '');
+            $dbHost = str_replace(".","-",$dbHost);
+            if(($keyNum & 8) == 8 && strlen($dbHost) > 0) $keyArr[] = $dbHost;
+        }
+        // 16 数据库端口
+        $dbPort = '';
+        if(($keyNum & 16) == 16 || ($keyNum & 64) == 64 ){
+            $dbPort = config('public.dbPort', '');
+            if(($keyNum & 16) == 16 && strlen($dbPort) > 0) $keyArr[] = $dbPort;
+        }
+        // 32 数据库名
+        $dbDatabase = '';
+        if(($keyNum & 32) == 32 || ($keyNum & 64) == 64 ){
+            $dbDatabase = config('public.dbDatabase', '');
+            $dbDatabase = str_replace("_", "-", $dbDatabase);
+            if(($keyNum & 32) == 32 && strlen($dbDatabase) > 0) $keyArr[] = $dbDatabase;
+        }
+        // 64 数据库关键字;--如果为空，则默认为 数据库ip + 数据库端口 + 数据库名
+        $dbKey = '';
+        if(($keyNum & 64) == 64){
+            $dbKey = config('public.dbKey', '');
+            if(strlen($dbKey) <= 0) $dbKey = $dbHost . $dbPort . $dbDatabase;
+            if(strlen($dbKey) > 0) $keyArr[] = $dbKey;
+        }
+        return $keyArr;
+    }
+
+    /**
+     * 判断是否微信访问 true:微信访问 ；false:非微信访问
+     * @return bool
+     */
+    public static function isWeixinVisit(){
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

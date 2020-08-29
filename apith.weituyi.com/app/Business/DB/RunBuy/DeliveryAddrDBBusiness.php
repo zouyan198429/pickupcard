@@ -308,4 +308,207 @@ class DeliveryAddrDBBusiness extends BasePublicDBBusiness
         DB::commit();
         return $id;
     }
+
+
+    /**
+     * 支付回调--微信
+     *
+     * @param array $message 回调的参数
+    {
+    "appid": "wxcb82783fe211782f",
+    "bank_type": "CFT",// 银行类型
+    "cash_fee": "1",// 现金
+    "fee_type": "CNY",// 币种
+    "is_subscribe": "N",// 是否订阅
+    "mch_id": "1527642191",
+    "nonce_str": "5c8e67b1d9bc3",
+    "openid": "owfFF4ydu2HmuvmSDS4goIoAIYEs",
+    "out_trade_no": "119108029350007",
+    "result_code": "SUCCESS",// 支付结果 FAIL:失败;SUCCESS:成功
+    "return_code": "SUCCESS",// 表示通信状态: SUCCESS 成功
+    "sign": "C6ACF2C7C8AF999048094ED2264F0ABC",
+    "time_end": "20190317232919",// 交易时间
+    "total_fee": "1",// 交易金额
+    "trade_type": "JSAPI",// 交易类型
+    "transaction_id": "4200000288201903177135850941"// 交易号
+    }
+     * @param array $queryMessage 商户订单号查询 结果
+     *
+    商户订单号查询 结果
+    {
+    "return_code": "SUCCESS",
+    "return_msg": "OK",
+    "appid": "wxcb82783fe211782f",
+    "mch_id": "1527642191",
+    "nonce_str": "aA5oRYgVOf7osQv3",
+    "sign": "DCD3A1790A8C4E1A4BBE2339E812AB3C",
+    "result_code": "SUCCESS",
+    "openid": "owfFF4ydu2HmuvmSDS4goIoAIYEs",
+    "is_subscribe": "N",
+    "trade_type": "JSAPI",
+    "bank_type": "CFT",
+    "total_fee": "1",
+    "fee_type": "CNY",
+    "transaction_id": "4200000288201903177135850941",
+    "out_trade_no": "119108029350007",
+    "attach": null,
+    "time_end": "20190317232919",
+    "trade_state": "SUCCESS",// 交易状态
+    "cash_fee": "1",
+    "trade_state_desc": "支付成功"
+    }
+     *
+     * 交易状态
+    SUCCESS—支付成功
+    REFUND—转入退款
+    NOTPAY—未支付
+    CLOSED—已关闭
+    REVOKED—已撤销（付款码支付）
+    USERPAYING--用户支付中（付款码支付）
+    PAYERROR--支付失败(其他原因，如银行返回失败)
+    支付状态机请见下单API页面
+     * @return  mixed string throws错误，请再通知我  正常返回 :不用通知我了
+     * @author zouyan(305463219@qq.com)
+     */
+    public static function payWXNotify($message, $queryMessage){
+
+        try{
+            // 查询订单
+            $out_trade_no = $message['out_trade_no'] ?? '';// 我方单号--与第三方对接用
+            $out_trade_no = trim($out_trade_no);
+            if(empty($out_trade_no)) throws('参数out_trade_no不能为空!');
+            $transaction_id = $message['transaction_id'] ?? '';// 第三方单号[有则填]
+            $transaction_id = trim($transaction_id);
+            if(empty($transaction_id)) throws('参数transaction_id不能为空!');
+            // 查询支付单
+            $queryParams = [
+                'where' => [
+                    ['order_no', $out_trade_no],
+                ],
+                /*
+                'select' => [
+                    'id','title','sort_num','volume'
+                    ,'operate_staff_id','operate_staff_id_history'
+                    ,'created_at' ,'updated_at'
+                ],
+                */
+                //   'orderBy' => [ 'id'=>'desc'],//'sort_num'=>'desc',
+            ];
+            // 查询记录
+            $wrInfo = static::getInfoByQuery(1, $queryParams, []);
+            if(empty($wrInfo)) return '记录不存在';// 1; //记录不存在
+
+            $status = $wrInfo->pay_status;// 付款状态1无需付款2待支付4支付失败8已付款
+            if(in_array($status, [1,8])) return '已关闭或成功';//  return 1;// 已关闭或成功
+
+        } catch ( \Exception $e) {
+            // throws('失败；信息[' . $e->getMessage() . ']');
+//            return $e->getMessage();// $fail($e->getMessage());
+            throws($e->getMessage());
+        }
+        // pr($wrInfo->toArray());
+        // pr($message);
+        // pr($queryMessage);
+
+//            if (!$order || $order->paid_at) { // 如果订单不存在 或者 订单已经支付过了
+//                return true; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
+//            }
+
+//            ///////////// <- 建议在这里调用微信的【订单查询】接口查一下该笔订单的情况，确认是已经支付 /////////////
+//
+        $returnStr = '';
+        if ($message['return_code'] === 'SUCCESS') { // return_code 表示通信状态，不代表支付状态
+
+            $lockObj = Tool::getLockRedisesLaravelObj();
+            $lockState = $lockObj->lock('lock:' . Tool::getUniqueKey([Tool::getProjectKey(1, ':', ':'), Tool::getActionMethod(), __CLASS__, __FUNCTION__, $out_trade_no]), 2000, 2000);//加锁
+            if($lockState)
+            {
+                try {
+                    DB::beginTransaction();
+                    try {
+                        $wrInfo->pay_no = $transaction_id;
+                        // 用户是否支付成功 1无需付款2待支付4支付失败8已付款
+                        $payStatus = 1;// 1失败  2 成功
+                        if ($message['result_code'] === 'SUCCESS' && $queryMessage['trade_state'] === 'SUCCESS') {
+                            $payStatus = 2;// 1失败  2 成功
+                            $wrInfo->pay_status = 8;
+                            $wrInfo->pay_time = date("Y-m-d H:i:s",time());
+                            //                    $order->paid_at = time(); // 更新支付时间为当前时间
+                            //                    $order->status = 'paid';
+                            //                $saveData['status'] = 2;
+                            //                $saveData['pay_run_price'] = 1;
+                            //                $saveData['pay_order_no'] = $transaction_id;
+                            //                $saveData['pay_time'] = date("Y-m-d H:i:s",time());
+
+                            // 用户支付失败
+                        } elseif ($message['result_code'] === 'FAIL') {
+                            $wrInfo->pay_status = 4;
+                            //                    $order->status = 'paid_fail';
+                            // $saveData['pay_run_price'] = 4;
+                        }
+                        $wrInfo->save();
+
+                        //            try{
+                        //                $resultDatas = CTAPIOrdersDoingBusiness::replaceById($request, $this, $saveData, $id, false, 1);
+                        //                $resultOrder = CTAPIOrdersBusiness::replaceById($request, $this, $saveData, $order_id, false, 1);
+                        //
+                        //            } catch ( \Exception $e) {
+                        //                // throws('失败；信息[' . $e->getMessage() . ']');
+                        //                return $fail($e->getMessage());
+                        //            }
+
+                        $operate_staff_id_history = 0;
+                        // Log::info('微信支付日志 $orderDatas' . __FUNCTION__, [$saveData, $resultDatas, $resultOrder ]);
+                        // return 1;
+                        DB::commit();
+                    } catch ( \Exception $e) {
+                        DB::rollBack();
+                        $errMsg = $e->getMessage();
+                        $errCode = $e->getCode();
+//                        if($errCode == 10 ){
+//                            $returnStr = $errMsg;
+//                            return $returnStr;
+//                        }else{
+        //                    throws('操作失败；信息[' . $e->getMessage() . ']');
+                            throws($e->getMessage(), $errCode);
+//                        }
+        //                if(is_numeric($errMsg) || $errMsg == 1){
+        //
+        //                }else{
+        //                    DB::rollBack();
+        ////                    throws('操作失败；信息[' . $e->getMessage() . ']');
+        //                     throws($e->getMessage());
+        //                }
+                    }
+
+                } catch ( \Exception $e) {
+                    $errStr = $e->getMessage();
+                    $errCode = $e->getCode();
+                    if($errCode == 10 ){
+                        $returnStr = $errStr;
+                        return $returnStr;
+                    }else{
+                        //                    throws('操作失败；信息[' . $e->getMessage() . ']');
+                        throws($errStr, $errCode);
+                    }
+                    // throws($e->getMessage());
+                }finally{
+                    $lockObj->unlock($lockState);//解锁
+                }
+            }else{
+                throws('操作失败，请稍后重试!');
+            }
+            return $returnStr;
+        } else {
+//            return '通信失败，请稍后再通知我';// $fail('通信失败，请稍后再通知我');
+            throws('通信失败，请稍后再通知我');
+        }
+        return '';
+//
+//            $order->save(); // 保存订单
+
+//            return true; // 返回处理完成
+    }
+
+
 }
