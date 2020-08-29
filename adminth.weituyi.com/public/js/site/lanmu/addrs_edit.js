@@ -255,7 +255,7 @@ function ajax_form(){
                 //alert('失败');
                 err_alert(ret.errorMsg);
             }else{//成功
-                // go(LIST_URL);
+                // go(LIST_URL + REDIS_KEY);
                 // 1有微信订单 2 无微信订单
                 let pay_type = result.pay_type;//
                 let pay_config = result.pay_config;//
@@ -277,7 +277,7 @@ function ajax_form(){
                                 var reset_total = true; // 是否重新从数据库获取总页数 true:重新获取,false不重新获取
                                 if(id > 0) reset_total = false;
                                 // goTop('http://www.shop.sxmenglv.com');
-                                go(LIST_URL);
+                                go(LIST_URL + REDIS_KEY);
                                 // parent_reset_list_iframe_close(reset_total);// 刷新并关闭
                                 //do something
                             });
@@ -300,7 +300,7 @@ function ajax_form(){
                     //             var reset_total = true; // 是否重新从数据库获取总页数 true:重新获取,false不重新获取
                     //             if(id > 0) reset_total = false;
                     //             // goTop('http://www.shop.sxmenglv.com');
-                    //             go(LIST_URL);
+                    //             go(LIST_URL + REDIS_KEY);
                     //             // parent_reset_list_iframe_close(reset_total);// 刷新并关闭
                     //             //do something
                     //         });
@@ -315,7 +315,7 @@ function ajax_form(){
                         var reset_total = true; // 是否重新从数据库获取总页数 true:重新获取,false不重新获取
                         if(id > 0) reset_total = false;
                         // goTop('http://www.shop.sxmenglv.com');
-                        go(LIST_URL);
+                        go(LIST_URL + REDIS_KEY);
                         // parent_reset_list_iframe_close(reset_total);// 刷新并关闭
                         //do something
                     });
