@@ -774,6 +774,9 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
         //if(!is_numeric($preKey)){
         $preKey = 1;
         //}
+        if( in_array($controller::$VIEW_PATH, ['company', 'manage', 'site']) ){
+            $preKey = 0;
+        }
         $reData = [];
         $info['modifyTime'] = time();
         // 保存session
@@ -786,11 +789,11 @@ class CTAPIActivityCodeBusiness extends BasicPublicCTAPIBusiness
         if (!session_id()) session_start(); // 初始化session
         // $_SESSION['userInfo'] = $userInfo; //保存某个session信息
         $redisKey = $controller->setUserInfo($info, $preKey);
-        $reData['redisKey'] = $redisKey;
         $url_pre = config('public.compWebURL') . 'web/product/' . $product_id;// 默认为无支付
         if( in_array($controller::$VIEW_PATH, ['company', 'manage', 'site']) ){
-            $url_pre = config('public.compWebPayURL') . 'site/addrs/add';// 默认为有支付
+            $url_pre = config('public.compWebPayURL') . 'site/addrs/add/' . $redisKey;// 默认为有支付
         }
+        $reData['redisKey'] = $redisKey;
         $reData['productUrl'] =  $url_pre;//url('web/product/' . $product_id);
 
         return ajaxDataArr(1, $reData, '');

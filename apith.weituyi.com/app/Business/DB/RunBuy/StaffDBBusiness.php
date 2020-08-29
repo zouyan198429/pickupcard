@@ -193,6 +193,40 @@ class StaffDBBusiness extends BasePublicDBBusiness
     }
 
     /**
+     * 小程序 old  根据id新加或修改单条数据-id 为0 新加，返回新的对象数组[-维],  > 0 ：修改对应的记录，返回true
+     *
+     * @param array $saveData 要保存或修改的数组
+     * @param int  $company_id 企业id
+     * @param int $id id
+     * @param int $operate_staff_id 操作人id
+     * @param int $modifAddOprate 修改时是否加操作人，1:加;0:不加[默认]
+     * @return  array 单条数据 - -维数组 为0 新加，返回新的对象数组[-维],  > 0 ：修改对应的记录，
+     * @author zouyan(305463219@qq.com)
+     */
+//    public static function replaceByIdWX($saveData, $company_id, &$id, $operate_staff_id = 0, $modifAddOprate = 0)
+//    {
+//        if (isset($paramsData['mini_openid']) && empty($paramsData['mini_openid'])) {
+//            throws('小程序 openid不能为空！');
+//        }
+//
+//        // 查询存在的 mini_openid
+//        if(is_numeric($id) &&  $id <= 0 &&  isset($saveData['mini_openid']) ){
+//            $otherWhere = [];
+//            if(isset($saveData['admin_type'])  && $saveData['admin_type'] > 0 ) array_push($otherWhere, ['admin_type', $saveData['admin_type']]) ;
+//            if( isset($saveData['wx_unionid']) ) array_push($otherWhere, ['wx_unionid', $saveData['wx_unionid']]);
+//            $info = static::judgeFieldExist($company_id, 0 ,"mini_openid", $saveData['mini_openid']
+//                , $otherWhere,2);
+//            if(!empty($info)) $id = $info['id'];
+//        }
+//
+//        if($id <= 0 && isset($saveData['admin_type']) && $saveData['admin_type'] == 32){
+//            $saveData['open_status'] = 1;// 审核状态1待审核2审核通过3审核未通过--32快跑人员用
+//        }
+//        $res = static::replaceById($saveData, $company_id,$id, $operate_staff_id, $modifAddOprate);
+//        return $res;
+//    }
+
+    /**
      * 小程序  根据id新加或修改单条数据-id 为0 新加，返回新的对象数组[-维],  > 0 ：修改对应的记录，返回true
      *
      * @param array $saveData 要保存或修改的数组
@@ -213,14 +247,100 @@ class StaffDBBusiness extends BasePublicDBBusiness
         if(is_numeric($id) &&  $id <= 0 &&  isset($saveData['mini_openid']) ){
             $otherWhere = [];
             if(isset($saveData['admin_type'])  && $saveData['admin_type'] > 0 ) array_push($otherWhere, ['admin_type', $saveData['admin_type']]) ;
-            if( isset($saveData['wx_unionid']) ) array_push($otherWhere, ['wx_unionid', $saveData['wx_unionid']]);
-            $info = static::judgeFieldExist($company_id, 0 ,"mini_openid", $saveData['mini_openid']
-                , $otherWhere,2);
+            $wx_unionid = $saveData['wx_unionid'] ?? '';
+            $wx_unionid = trim($wx_unionid);
+            if(!empty($wx_unionid)){
+                $temOtherWhere = $otherWhere;
+
+                // if( isset($saveData['wx_unionid']) ) array_push($temOtherWhere, ['wx_unionid', $saveData['wx_unionid']]);
+                $info = static::judgeFieldExist($company_id, 0 ,"wx_unionid", $wx_unionid
+                    , $temOtherWhere,2);
+
+                // 如果是空，则按mini_openid再查一下
+                if( empty($info) ){
+                    array_push($temOtherWhere, ['wx_unionid', '']);// 是空的，也要加，因为索引
+                    $info = static::judgeFieldExist($company_id, 0 ,"mini_openid", $saveData['mini_openid']
+                        , $temOtherWhere,2);
+                }
+
+            }else{// 为空
+                // if( isset($saveData['wx_unionid']) ) array_push($otherWhere, ['wx_unionid', $saveData['wx_unionid']]);// 是空的，也要加，因为索引
+                array_push($otherWhere, ['wx_unionid', '']);// 是空的，也要加，因为索引
+                $info = static::judgeFieldExist($company_id, 0 ,"mini_openid", $saveData['mini_openid']
+                    , $otherWhere,2);
+            }
+
             if(!empty($info)) $id = $info['id'];
         }
 
         if($id <= 0 && isset($saveData['admin_type']) && $saveData['admin_type'] == 32){
             $saveData['open_status'] = 1;// 审核状态1待审核2审核通过3审核未通过--32快跑人员用
+            // 如果是app登录
+            if($saveData['admin_type'] == 32){
+                $nickName = $saveData['nickname'] ?? '';
+                if ( empty($nickName) ) throws('新用户昵称不能为空！');
+                // if (isset($saveData['avatar_url']) && empty($saveData['avatar_url'])) throws('新用户头像不能为空！');
+            }
+        }
+        $res = static::replaceById($saveData, $company_id,$id, $operate_staff_id, $modifAddOprate);
+        return $res;
+    }
+
+    /**
+     * 服务号  根据id新加或修改单条数据-id 为0 新加，返回新的对象数组[-维],  > 0 ：修改对应的记录，返回true
+     *
+     * @param array $saveData 要保存或修改的数组
+     * @param int  $company_id 企业id
+     * @param int $id id
+     * @param int $operate_staff_id 操作人id
+     * @param int $modifAddOprate 修改时是否加操作人，1:加;0:不加[默认]
+     * @return  array 单条数据 - -维数组 为0 新加，返回新的对象数组[-维],  > 0 ：修改对应的记录，
+     * @author zouyan(305463219@qq.com)
+     */
+    public static function replaceByIdMP($saveData, $company_id, &$id, $operate_staff_id = 0, $modifAddOprate = 0)
+    {
+        if (isset($paramsData['mp_openid']) && empty($paramsData['mp_openid'])) {
+            throws('服务号 openid不能为空！');
+        }
+
+        // 查询存在的 mp_openid
+        if(is_numeric($id) &&  $id <= 0 &&  isset($saveData['mp_openid']) ){
+            $otherWhere = [];
+            if(isset($saveData['admin_type'])  && $saveData['admin_type'] > 0 ) array_push($otherWhere, ['admin_type', $saveData['admin_type']]) ;
+            $wx_unionid = $saveData['wx_unionid'] ?? '';
+            $wx_unionid = trim($wx_unionid);
+            if(!empty($wx_unionid)){
+                $temOtherWhere = $otherWhere;
+
+                // if( isset($saveData['wx_unionid']) ) array_push($temOtherWhere, ['wx_unionid', $saveData['wx_unionid']]);
+                $info = static::judgeFieldExist($company_id, 0 ,"wx_unionid", $wx_unionid
+                    , $temOtherWhere,2);
+
+                // 如果是空，则按mp_openid再查一下
+                if( empty($info) ){
+                    array_push($temOtherWhere, ['wx_unionid', '']);// 是空的，也要加，因为索引
+                    $info = static::judgeFieldExist($company_id, 0 ,"mp_openid", $saveData['mp_openid']
+                        , $temOtherWhere,2);
+                }
+
+            }else{// 为空
+                // if( isset($saveData['wx_unionid']) ) array_push($otherWhere, ['wx_unionid', $saveData['wx_unionid']]);// 是空的，也要加，因为索引
+                array_push($otherWhere, ['wx_unionid', '']);// 是空的，也要加，因为索引
+                $info = static::judgeFieldExist($company_id, 0 ,"mp_openid", $saveData['mp_openid']
+                    , $otherWhere,2);
+            }
+
+            if(!empty($info)) $id = $info['id'];
+        }
+
+        if(false && $id <= 0 && isset($saveData['admin_type']) && $saveData['admin_type'] == 32){
+            $saveData['open_status'] = 1;// 审核状态1待审核2审核通过3审核未通过--32快跑人员用
+            // 如果是app登录
+            if($saveData['admin_type'] == 32){
+                $nickName = $saveData['nickname'] ?? '';
+                if ( empty($nickName) ) throws('新用户昵称不能为空！');
+                // if (isset($saveData['avatar_url']) && empty($saveData['avatar_url'])) throws('新用户头像不能为空！');
+            }
         }
         $res = static::replaceById($saveData, $company_id,$id, $operate_staff_id, $modifAddOprate);
         return $res;

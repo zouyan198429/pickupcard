@@ -646,7 +646,8 @@ class CTAPIStaffBusiness extends BasicPublicCTAPIBusiness
             'modifAddOprate' => 0,
         ];
         $methodName = 'replaceById';
-        if(isset($saveData['mini_openid']))  $methodName = 'replaceByIdWX';
+        if(isset($saveData['mini_openid']) )  $methodName = 'replaceByIdWX';
+        if(isset($saveData['mp_openid']))  $methodName = 'replaceByIdMP';
         $saveData = static::exeDBBusinessMethodCT($request, $controller, '',  $methodName, $apiParams, $company_id, $notLog);
         /*
         // 查询手机号是否已经有企业使用--账号表里查

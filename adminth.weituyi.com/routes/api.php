@@ -569,6 +569,8 @@ Route::any('site/addrs/ajax_save', 'Site\AddrsController@ajax_save');// 新加/�
 
 Route::any('site/city/ajax_get_child', 'Site\CityController@ajax_get_child');// 根据部门id,小组id获得子类员工数组[kv一维数组]
 
+// 微信登录回调
+Route::any('site/wx/callback/{redisKey}', 'Site\WeChatController@callback');// 授权回调页
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~有支付~~~~~~~~~~~~~~~~~结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
