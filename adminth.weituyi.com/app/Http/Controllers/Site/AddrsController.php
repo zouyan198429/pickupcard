@@ -71,13 +71,25 @@ class AddrsController extends BaseWebController
      */
     public function ajax_save(Request $request)
     {
+        $this->judgeWeixinVisit();// 判断是否微信内浏览器
+
+        $redisKey = CommonRequest::get($request, 'redisKey');
+        if(empty($redisKey)) throws('请先提交密码');
+        $request->merge(['redisKey' => $redisKey]);
         $this->InitParams($request);
+
+        // 判断是否登录，需要登录了
+        $openid = $this->autoSiteGetOpenid($request, $redisKey);//判断是否在微信内及是否已经获得用户微信openid[登录]
+        if(!is_string($openid)) return $openid;// 需要重新登录--微信登录
+
         $codeInfo = $this->user_info;
         $code_id = $codeInfo['id'];
         // 获得兑换码信息
         $codeNewInfo = CTAPIActivityCodeBusiness::getInfoData($request, $this, $code_id, ['activity_id'],  ['activityInfo'], 1);
         $activity_info = $codeNewInfo['activity_info'] ?? [];
         $activity_tips = $activity_info['activity_tips'] ?? '操作成功!！';
+//        throws(json_encode($codeNewInfo));
+
 
         $id = CommonRequest::getInt($request, 'id');
         // CommonRequest::judgeEmptyParams($request, 'id', $id);

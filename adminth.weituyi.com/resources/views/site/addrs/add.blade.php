@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/css/layui.css')}}" media="all">
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/admin.css')}}" media="all">
   <link rel="stylesheet" href="{{asset('web/css/style.css')}}" media="all">
-  
+
   <style>
 	  body {
 		  background-color: #f1f1f1;
@@ -63,7 +63,7 @@
 		  font-size: 16px;
 		  text-indent: 10px;
 		  text-align: left;
-	  } 
+	  }
 	  .price-sc {
 	  		  width:45%;
 	  		  float: left;
@@ -112,10 +112,10 @@
 <body   >
 
 <div class="wrap">
-	
+
 	<img src="http://qqgy.weituyi.com/resource/company/3/images/2020/08/28/top01.jpg" alt="">
 	<img src="http://qqgy.weituyi.com/resource/company/3/images/2020/08/28/top02.jpg" alt="">
-	<!-- 
+	<!--
     <p>{{ $info['activity_info']['activity_theme'] or '' }}</p>
     <p>{{ $info['activity_info']['activity_subtitle'] or '' }}</p> -->
     @if(false)
@@ -130,7 +130,7 @@
 
 {{--        <p>{!! $info['product_info']['content'] or '' !!}</p>--}}
 	<div class="box1">
-		
+
 			<!-- <div class="title">
 				吊牌价
 			</div>
@@ -161,11 +161,12 @@
 			</div>
 			<div class="c line"></div>
 		</div>
-		
-	</div> 
-	
+
+	</div>
+
   <form class="am-form am-form-horizontal" method="post"  id="addForm">
     <input type="hidden" name="id" value="{{ $info['id'] or 0 }}"/>
+    <input type="hidden" name="redisKey" value="{{ $redisKey or '' }}"/>
 	<div class="box1">
 		<div class="th-title">
 			  受赠人信息
@@ -195,18 +196,18 @@
 					  </select>
 					  <select name="area_id" style="width:120px;">
 						<option value="">请选择县/区</option>
-					  </select>				  
+					  </select>
 					</div>
 				</div>
 				<input type="text" name="addr" value="" lay-verify="required" placeholder="请输入详细地址" autocomplete="off" class="layui-input">
-				
+
 			</div>
 		</div>
-		
+
 	</div>
 	<div style="height: 5em; width: 100%; clear: both;"></div>
 	<div class="foot">
-        <div class="price-sc"> 
+        <div class="price-sc">
 			<span>合计支付</span> <strong> {{ $info['activity_info']['pay_price'] or '0.00' }}</strong><span>元</span>
 		</div>
 		<input type="button"  id="submitBtn" lay-submit="" lay-filter="layuiadmin-app-form-submit" value="支付领取" class="btn-normal">
@@ -233,5 +234,7 @@
     const PROVINCE_ID = "-1";// 省默认值
     const CITY_ID = "-1";// 市默认值
     const AREA_ID = "-1";// 区默认值
+
+    {{--var REDIS_KEY = "{{ $redisKey or '' }}";--}}
 </script>
 <script src="{{ asset('/js/site/lanmu/addrs_edit.js') }}"  type="text/javascript"></script>

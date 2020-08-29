@@ -94,15 +94,6 @@ class IndexController extends BaseWebController
      */
     public function index(Request $request)
     {
-        $session_openid_key = 'openid';
-        Log::info('微信日志-index',['首页!' . $session_openid_key]);
-//        SessionCustom::set($session_openid_key, 'aabbcc', 60 * 30);
-        echo 'index:';
-        $kkk = SessionCustom::get($session_openid_key);
-        // $kkk = CookieOperate::get($session_openid_key);
-        Log::info('微信日志-index',['首页!' . $kkk]);
-        pr($kkk);
-
         $reDataArr = $this->reDataArr;
         // 获得当前不效的提货活动
 //        $reDataArr['activity_kv'] = CTAPIActivityBusiness::getListKV($request, $this, 1);
