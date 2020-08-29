@@ -38,7 +38,8 @@ class AddrsController extends BasicController
         $reDataArr['status'] =  CTAPIDeliveryAddrBusiness::$statusArr;
         $reDataArr['defaultStatus'] = -1;// 默认状态
         // 获得商品信息
-        $reDataArr['product_kv'] = CTAPIProductBusiness::getListKV($request, $this);
+        $seller_id = $this->getSellerIdByAdminType();
+        $reDataArr['product_kv'] = CTAPIProductBusiness::getListKV($request, $this, 0, $seller_id);
 
         $reDataArr['defaultProduct'] = -1;// 默认
 
@@ -70,7 +71,8 @@ class AddrsController extends BasicController
         $reDataArr['status'] =  CTAPIDeliveryAddrBusiness::$statusArr;
         $reDataArr['defaultStatus'] = 1;// 默认状态
         // 获得商品信息
-        $reDataArr['product_kv'] = CTAPIProductBusiness::getListKV($request, $this);
+        $seller_id = $this->getSellerIdByAdminType();
+        $reDataArr['product_kv'] = CTAPIProductBusiness::getListKV($request, $this, 0, $seller_id);
 
         $reDataArr['defaultProduct'] = -1;// 默认
 
@@ -102,7 +104,8 @@ class AddrsController extends BasicController
         $reDataArr['status'] =  CTAPIDeliveryAddrBusiness::$statusArr;
         $reDataArr['defaultStatus'] = 2;// 默认状态
         // 获得商品信息
-        $reDataArr['product_kv'] = CTAPIProductBusiness::getListKV($request, $this);
+        $seller_id = $this->getSellerIdByAdminType();
+        $reDataArr['product_kv'] = CTAPIProductBusiness::getListKV($request, $this, 0, $seller_id);
 
         $reDataArr['defaultProduct'] = -1;// 默认
 
