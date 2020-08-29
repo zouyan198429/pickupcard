@@ -16,9 +16,11 @@
   <style>
 	  body {
 		  background-color: #f1f1f1;
+		  min-height: 100%;
 	  }
 	  .wrap {
 	    	  height: auto;
+			  min-height: 100%;
 	  		  width: 100%;
 			  max-width: 800px;
 	  		  text-align: center;
@@ -107,7 +109,7 @@
 	   }
   </style>
 </head>
-<body  class="layui-layout-body" >
+<body   >
 
 <div class="wrap">
 	
@@ -202,7 +204,7 @@
 		</div>
 		
 	</div>
-	<div style="height: 5em; width: 100%;"></div>
+	<div style="height: 5em; width: 100%; clear: both;"></div>
 	<div class="foot">
         <div class="price-sc"> 
 			<span>合计支付</span> <strong> {{ $info['activity_info']['pay_price'] or '0.00' }}</strong><span>元</span>
