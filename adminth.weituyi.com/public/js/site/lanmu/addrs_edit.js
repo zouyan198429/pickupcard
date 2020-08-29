@@ -256,22 +256,74 @@ function ajax_form(){
                 err_alert(ret.errorMsg);
             }else{//成功
                 // go(LIST_URL);
-
+                // 1有微信订单 2 无微信订单
+                let pay_type = result.pay_type;//
+                let pay_config = result.pay_config;//
+                if(pay_type == 1){
+                    WeixinJSBridge.invoke(
+                        'getBrandWCPayRequest', pay_config,
+                    function(res){
+                        if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                            // 使用以上方式判断前端返回,微信团队郑重提示：
+                            // res.err_msg将在用户支付成功后返回
+                            // ok，但并不保证它绝对可靠。
+                            console.log('成功');
+                            // 支付成功后的回调函数
+                            layer.msg(result.activity_tips, {
+                                icon: 1,
+                                shade: 0.3,
+                                time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function(){
+                                var reset_total = true; // 是否重新从数据库获取总页数 true:重新获取,false不重新获取
+                                if(id > 0) reset_total = false;
+                                // goTop('http://www.shop.sxmenglv.com');
+                                go(LIST_URL);
+                                // parent_reset_list_iframe_close(reset_total);// 刷新并关闭
+                                //do something
+                            });
+                        }
+                    }
+                );
+                    // wx.chooseWXPay({
+                    //     timestamp:  pay_config['timestamp'] ,
+                    //     nonceStr: pay_config['nonceStr'] ,
+                    //     package: pay_config['package'],
+                    //     signType: pay_config['signType'],
+                    //     paySign: pay_config['paySign'], // 支付签名
+                    //     success: function (res) {
+                    //         // 支付成功后的回调函数
+                    //         layer.msg(result.activity_tips, {
+                    //             icon: 1,
+                    //             shade: 0.3,
+                    //             time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                    //         }, function(){
+                    //             var reset_total = true; // 是否重新从数据库获取总页数 true:重新获取,false不重新获取
+                    //             if(id > 0) reset_total = false;
+                    //             // goTop('http://www.shop.sxmenglv.com');
+                    //             go(LIST_URL);
+                    //             // parent_reset_list_iframe_close(reset_total);// 刷新并关闭
+                    //             //do something
+                    //         });
+                    //     }
+                    // });
+                }else{
+                    layer.msg(result.activity_tips, {
+                        icon: 1,
+                        shade: 0.3,
+                        time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function(){
+                        var reset_total = true; // 是否重新从数据库获取总页数 true:重新获取,false不重新获取
+                        if(id > 0) reset_total = false;
+                        // goTop('http://www.shop.sxmenglv.com');
+                        go(LIST_URL);
+                        // parent_reset_list_iframe_close(reset_total);// 刷新并关闭
+                        //do something
+                    });
+                }
                 // countdown_alert("操作成功!",1,5);
                 // parent_only_reset_list(false);
                 // wait_close_popus(2,PARENT_LAYER_INDEX);
-                layer.msg(result.activity_tips, {
-                    icon: 1,
-                    shade: 0.3,
-                    time: 3000 //2秒关闭（如果不配置，默认是3秒）
-                }, function(){
-                    var reset_total = true; // 是否重新从数据库获取总页数 true:重新获取,false不重新获取
-                    if(id > 0) reset_total = false;
-                    // goTop('http://www.shop.sxmenglv.com');
-                    go(LIST_URL);
-                    // parent_reset_list_iframe_close(reset_total);// 刷新并关闭
-                    //do something
-                });
+
                 // var supplier_id = ret.result['supplier_id'];
                 //if(SUPPLIER_ID_VAL <= 0 && judge_integerpositive(supplier_id)){
                 //    SUPPLIER_ID_VAL = supplier_id;

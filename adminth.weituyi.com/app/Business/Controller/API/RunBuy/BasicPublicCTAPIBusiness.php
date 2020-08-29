@@ -33,10 +33,11 @@ class BasicPublicCTAPIBusiness extends BasicCTAPIBusiness
         switch ($orderType)
         {
             case 1:// 订单
+                $prefix = '';
                 $userIdBack = str_pad(substr($user_id, -2), 2, '0', STR_PAD_LEFT);
                 $midFix = $userIdBack;
                 $namespace = 'order' . $userIdBack;
-                $length = 4;
+                $length = 3;
                 $needNum = 1 + 2 + 8;
 //                $expireNums = [
 //                  [1000,1100,365 * 24 * 60 * 60]  // 缓存的秒数365 * 24 * 60 * 60

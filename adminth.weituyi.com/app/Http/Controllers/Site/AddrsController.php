@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Site;
 use App\Business\Controller\API\RunBuy\CTAPIActivityCodeBusiness;
 use App\Business\Controller\API\RunBuy\CTAPICityBusiness;
 use App\Business\Controller\API\RunBuy\CTAPIDeliveryAddrBusiness;
+use App\Business\Controller\API\RunBuy\CTAPIStaffBusiness;
+use App\Services\pay\weixin\easyWechatPay;
 use App\Services\Request\CommonRequest;
 use App\Services\Tool;
 use Illuminate\Http\Request;
@@ -86,9 +88,10 @@ class AddrsController extends BaseWebController
         $code_id = $codeInfo['id'];
         // 获得兑换码信息
         $codeNewInfo = CTAPIActivityCodeBusiness::getInfoData($request, $this, $code_id, ['activity_id'],  ['activityInfo'], 1);
-        $activity_info = $codeNewInfo['activity_info'] ?? [];
+        $activity_info = $codeNewInfo['activity_info'] ?? [];// 活动
         $activity_tips = $activity_info['activity_tips'] ?? '操作成功!！';
-//        throws(json_encode($codeNewInfo));
+
+        $pay_price = Tool::formatFloat($activity_info['price'] + $activity_info['freight_price'] + $activity_info['insured_price']);;
 
 
         $id = CommonRequest::getInt($request, 'id');
@@ -114,6 +117,24 @@ class AddrsController extends BaseWebController
 //        $admin_password = CommonRequest::get($request, 'admin_password');
 //        $sure_password = CommonRequest::get($request, 'sure_password');
 
+        // 获得用户信息
+        $queryParams = [
+            'where' => [
+                // ['company_id',$company_id],
+                ['admin_type',8],
+                ['mp_openid', $openid],
+            ],
+//            'whereIn' => [
+//                'admin_type' => array_keys(self::$adminType),
+//            ],
+            // 'select' => ['id','company_id','admin_username','real_name','admin_type'],
+            // 'limit' => 1
+        ];
+        $userInfo = CTAPIStaffBusiness::getInfoQuery($request, $this, '', 0, 1, $queryParams, [], 1);
+        if(empty($userInfo)) throws('用户记录不存在！');
+        // 生成订单号
+        // 重新发起一笔支付要使用原订单号，避免重复支付；已支付过或已调用关单、撤销（请见后文的API列表）的订单号不能重新发起支付。--支付未成功的订单号，可以重新发起支付
+        $orderNum = CTAPIActivityCodeBusiness::createSn($request, $this , 1);
         $saveData = [
 //            'admin_type' => 1,
 //            'work_num' => $work_num,
@@ -136,7 +157,48 @@ class AddrsController extends BaseWebController
 //            'latitude' => $latitude,
 //            'longitude' => $longitude,
 //            'admin_username' => $admin_username,
+            'order_no' => $orderNum,// 订单号
+            'user_id' => $userInfo['id'],// 用户id
+            'pay_price' => $pay_price,// 支付费用
+            // 'pay_time' => $activity_info['aaaaa'],// 付款时间
+            'pay_status' => ($pay_price <= 0) ? 1 : 2,// 付款状态1无需付款2待支付4支付失败8已付款
+            // 'pay_no' => $activity_info['aaaaa'],// 支付单号(第三方)
+            'tag_price' => $activity_info['tag_price'],// 原价格【吊牌价-不参与付费】
+            'price' => $activity_info['price'],// 商品价【参与付费】
+            'freight_price' => $activity_info['freight_price'],// 快递费【参与付费】
+            'insured_price' => $activity_info['insured_price'],// 保价费【参与付费】
         ];
+        $config = [];
+        $pay_type = 1;// 1有微信订单 2 无微信订单
+        if($pay_price <= 0){
+            $pay_type = 2;
+            $saveData['pay_time'] = date('Y-m-d H:i:s');
+        }else{
+            $app = app('wechat.payment.mxpay');
+            $params = [
+                'body' => $activity_info['activity_name'] . '领取商品[' .  $codeInfo['product_name'] . ']微信支付',
+                'out_trade_no' => $orderNum,
+                'total_fee' => ceil($pay_price * 100),
+                // 'spbill_create_ip' => '123.12.12.123', // 可选，如不传该参数，SDK 将会自动获取相应 IP 地址
+                // 'notify_url' => 'https://pay.weixin.qq.com/wxpay/pay.action', // 支付结果通知网址，如果不设置则会使用配置里的默认地址
+                'trade_type' => 'JSAPI', // 请对应换成你的支付方式对应的值类型
+                'openid' => $openid, // 'oUpF8uMuAJO_M2pxb1Q9zNjWeS6o',
+            ];
+            try{
+                $result = easyWechatPay::miniProgramunify($app, $params, 4);
+            } catch ( \Exception $e) {
+                throws('失败；信息[' . $e->getMessage() . ']');
+            }
+            // 去掉敏感信息
+//            Tool::formatArrKeys($result, Tool::arrEqualKeyVal(['timeStamp', 'nonceStr', 'package', 'signType', 'paySign']), true );
+//            pr($result);
+            $prepay_id = $result['prepay_id'];
+            $jssdk = $app->jssdk;
+            $json = $jssdk->bridgeConfig($prepay_id, false); // 返回 json 字符串，如果想返回数组，传第二个参数 false
+//
+//            $config = $result;//$jssdk->sdkConfig($prepay_id); // 返回数组
+
+        }
 //        if($admin_password != '' || $sure_password != ''){
 //            if ($admin_password != $sure_password){
 //                return ajaxDataArr(0, null, '密码和确定密码不一致！');
@@ -151,7 +213,7 @@ class AddrsController extends BaseWebController
 //            $saveData = array_merge($saveData, $addNewData);
 //        }
         $resultDatas = CTAPIDeliveryAddrBusiness::addAddr($request, $this, $saveData, $id, $this->code_id, true);
-        return ajaxDataArr(1, ['result' => $resultDatas, 'activity_tips' => $activity_tips], '');
+        return ajaxDataArr(1, ['result' => $resultDatas, 'activity_tips' => $activity_tips, 'pay_type' => $pay_type , 'pay_config' => $json], '');
     }
 
     /**

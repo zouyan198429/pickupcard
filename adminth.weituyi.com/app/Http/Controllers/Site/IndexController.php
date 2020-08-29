@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Site;
 
 use App\Business\Controller\API\RunBuy\CTAPIActivityBusiness;
 use App\Business\Controller\API\RunBuy\CTAPIActivityCodeBusiness;
+use App\Business\Controller\API\RunBuy\CTAPIDeliveryAddrBusiness;
 use App\Business\Controller\API\RunBuy\CTAPIStaffBusiness;
 use App\Services\Cookie\CookieOperate;
 use App\Services\Request\CommonRequest;
@@ -25,6 +26,63 @@ class IndexController extends BaseWebController
      */
     public function test(Request $request)
     {
+//        Array
+//        (
+//            [appid] => wxda970fdddb6914c6
+//            [bank_type] => CCB_DEBIT
+//    [cash_fee] => 300
+//    [fee_type] => CNY
+//    [is_subscribe] => Y
+//    [mch_id] => 1527642191
+//    [nonce_str] => 5f4a19b4776e7
+//    [openid] => o5MtAw40KOeGC0c5jlU5pxUeoS-k
+//    [out_trade_no] => 2034704300026
+//    [result_code] => SUCCESS
+//    [return_code] => SUCCESS
+//    [sign] => 61641AF6E088D5A0565CDACEF4D0BBB4
+//    [time_end] => 20200829170303
+//    [total_fee] => 300
+//    [trade_type] => JSAPI
+//    [transaction_id] => 4200000686202008294842262236
+//)
+
+//        Array
+//        (
+//            [return_code] => SUCCESS
+//            [return_msg] => OK
+//    [appid] => wxda970fdddb6914c6
+//    [mch_id] => 1527642191
+//    [nonce_str] => QqGUwM4Mu4mKF3ry
+//    [sign] => 8AB98605F938F02C3A1819FC76C05658
+//    [result_code] => SUCCESS
+//    [openid] => o5MtAw40KOeGC0c5jlU5pxUeoS-k
+//    [is_subscribe] => Y
+//    [trade_type] => JSAPI
+//    [bank_type] => CCB_DEBIT
+//    [total_fee] => 300
+//    [fee_type] => CNY
+//    [transaction_id] => 4200000686202008294842262236
+//    [out_trade_no] => 2034704300026
+//    [attach] =>
+//    [time_end] => 20200829170303
+//    [trade_state] => SUCCESS
+//    [cash_fee] => 300
+//    [trade_state_desc] => 支付成功
+//    [cash_fee_type] => CNY
+//)
+        $message = '{"appid":"wxda970fdddb6914c6","bank_type":"CCB_DEBIT","cash_fee":"300","fee_type":"CNY","is_subscribe":"Y","mch_id":"1527642191","nonce_str":"5f4a246c4a9a5","openid":"o5MtAw40KOeGC0c5jlU5pxUeoS-k","out_trade_no":"2034708900027","result_code":"SUCCESS","return_code":"SUCCESS","sign":"CF921FD99B1FCF7E438BB64B7E3D5034","time_end":"20200829174848","total_fee":"300","trade_type":"JSAPI","transaction_id":"4200000690202008298065873726"}';
+        $message = json_decode($message,true);
+        $queryMessage = '{"return_code":"SUCCESS","return_msg":"OK","appid":"wxda970fdddb6914c6","mch_id":"1527642191","nonce_str":"QqGUwM4Mu4mKF3ry","sign":"8AB98605F938F02C3A1819FC76C05658","result_code":"SUCCESS","openid":"o5MtAw40KOeGC0c5jlU5pxUeoS-k","is_subscribe":"Y","trade_type":"JSAPI","bank_type":"CCB_DEBIT","total_fee":"300","fee_type":"CNY","transaction_id":"4200000686202008294842262236","out_trade_no":"2034704300026","attach":null,"time_end":"20200829170303","trade_state":"SUCCESS","cash_fee":"300","trade_state_desc":"支付成功","cash_fee_type":"CNY"}';
+        $queryMessage = json_decode($queryMessage,true);
+        $result = CTAPIDeliveryAddrBusiness::payWXNotify($request, $this, $message, $queryMessage, 1);
+        pr($result);
+        die();
+
+
+        // 生成订单号
+        // 重新发起一笔支付要使用原订单号，避免重复支付；已支付过或已调用关单、撤销（请见后文的API列表）的订单号不能重新发起支付。--支付未成功的订单号，可以重新发起支付
+        $orderNum = CTAPIActivityCodeBusiness::createSn($request, $this , 1);
+        pr($orderNum);
         $session_openid_key = 'openid';
         Log::info('微信日志-index',['首页!' . $session_openid_key]);
         SessionCustom::set($session_openid_key, 'aabbcc111', 60 * 30);
