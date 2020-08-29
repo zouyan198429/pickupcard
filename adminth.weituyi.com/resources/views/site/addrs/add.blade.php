@@ -224,7 +224,7 @@
 
 <script type="text/javascript">
     var SAVE_URL = "{{ url('api/site/addrs/ajax_save') }}";// ajax保存记录地址
-    var LIST_URL = "{{url('site/addrs/payOK')}}";//  "{{url('site/index')}}";// "{{url('http://www.sxmenglv.com/')}}";//保存成功后跳转到的地址
+    var LIST_URL = "{{url('site/addrs/payOK')}}/";//  "{{url('site/index')}}";// "{{url('http://www.sxmenglv.com/')}}";//保存成功后跳转到的地址
 
     {{--var SELECT_LATLNG_URL = "{{url('site/qqMaps/latLngSelect')}}";//选择经纬度的地址--}}
 
@@ -235,6 +235,6 @@
     const CITY_ID = "-1";// 市默认值
     const AREA_ID = "-1";// 区默认值
 
-    {{--var REDIS_KEY = "{{ $redisKey or '' }}";--}}
+    var REDIS_KEY = "{{ $redisKey or '' }}";
 </script>
-<script src="{{ asset('/js/site/lanmu/addrs_edit.js') }}"  type="text/javascript"></script>
+<script src="{{ asset('/js/site/lanmu/addrs_edit.js') }}?2"  type="text/javascript"></script>

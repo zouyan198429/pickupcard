@@ -512,7 +512,7 @@ Route::get('site/product/{product_id}', 'Site\ProductController@index');// 产�
 
 // 收货地址
 Route::get('site/addrs/add/{redisKey}', 'Site\AddrsController@add');// 添加
-Route::get('site/addrs/payOK', 'Site\AddrsController@payOK');// 支付成功
+Route::get('site/addrs/payOK/{redisKey}', 'Site\AddrsController@payOK');// 支付成功
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~有支付~~~~~~~~~~~~~~~~~结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

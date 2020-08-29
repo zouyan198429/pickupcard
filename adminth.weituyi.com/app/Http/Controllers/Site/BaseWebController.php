@@ -16,7 +16,7 @@ class BaseWebController extends BaseController
     public static $VIEW_PATH = 'site';// 视图文件夹目录名称
     public static $VIEW_NAME = '';// 视图栏目文件夹目录名称
     public static $LOGIN_ADMIN_TYPE = 8;// 当前登录的用户类型1平台2企业4管理员8个人
-    public static $ALLOW_BROWSER_OPEN = true;// 调试用开关，true:所有浏览器都能开； false:微信内
+    public static $ALLOW_BROWSER_OPEN = false;// 调试用开关，true:所有浏览器都能开； false:微信内
 
 
     public $code_id = null;

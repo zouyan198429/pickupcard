@@ -223,8 +223,11 @@ class AddrsController extends BaseWebController
      * @return mixed
      * @author zouyan(305463219@qq.com)
      */
-    public function payOK(Request $request)
+    public function payOK(Request $request, $redisKey = '')
     {
+        $this->judgeWeixinVisit();// 判断是否微信内浏览器
+        if(empty($redisKey)) throws('请先提交密码');
+        $request->merge(['redisKey' => $redisKey]);
         $this->InitParams($request);
         $reDataArr = $this->reDataArr;
         $code_id = $this->code_id;
