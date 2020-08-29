@@ -21,6 +21,13 @@ class CTAPIDeliveryAddrBusiness extends BasicPublicCTAPIBusiness
 //        '4' => '已收货',
     ];
 
+    // 付款状态1无需付款2待支付4支付失败8已付款
+    public static $payStatusArr = [
+        '1' => '无需付款',
+        '2' => '待支付',
+        '4' => '支付失败',
+        '8' => '已付款',
+    ];
     /**
      * 获得列表数据--所有数据
      *
@@ -236,6 +243,15 @@ class CTAPIDeliveryAddrBusiness extends BasicPublicCTAPIBusiness
             }
             $headArr = ['code'=>'提货码', 'activity_name'=>'所属活动', 'product_name'=>'所提商品', 'created_at'=>'提货时间', 'real_name'=>'收货人',
                 'tel'=>'收货电话', 'addrDetail'=>'收货地址', 'province_name'=>'省', 'city_name'=>'市', 'area_name'=>'县', 'addr'=>'地址', 'status_text'=>'状态'];
+
+            $view_path = $controller::$VIEW_PATH ?? '';
+            if( in_array($view_path, ['company', 'manage', 'site']) ){
+                $headArr = array_merge($headArr, [
+                    'tag_price'=>'吊牌价' ,'price'=>'商品价' ,'freight_price'=>'快递费' ,'insured_price'=>'保价费' ,'order_no'=>'订单号',
+                    'pay_no'=>'支付单号[第三方]' ,'pay_status_text'=>'付款状态' ,'pay_price'=>'支付费用' ,'order_time'=>'下单时间' ,'pay_time'=>'付款时间',
+                    'send_time'=>'发货时间' ,'finish_time'=>'完成时间'
+                ]);
+            }
             ImportExport::export('','提货记录',$data_list,1, $headArr, 0, ['sheet_title' => '提货记录']);
             die;
         }

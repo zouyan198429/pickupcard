@@ -36,6 +36,12 @@
             <option value="{{ $k }}"  @if(isset($defaultStatus) && $defaultStatus == $k) selected @endif >{{ $txt }}</option>
           @endforeach
         </select>
+          <select class="wmini" name="pay_status" style="width: 70px;">
+              <option value="">请选择付款状态</option>
+              @foreach ($payStatus as $k=>$txt)
+                  <option value="{{ $k }}"  @if(isset($defaultPayStatus) && $defaultPayStatus == $k) selected @endif >{{ $txt }}</option>
+              @endforeach
+          </select>
         <select class="wnormal" name="province_id" style="width: 80px;">
           <option value="">请选择省</option>
           @foreach ($province_kv as $k=>$txt)
@@ -85,14 +91,17 @@
 <!--           <span class="lbl">全选</span>
  -->        </label>
       </th>
-      <th>提货码</th>
-      <th>所属活动</th>
-      <th>所提商品</th>
-      <th>提货时间</th>
-      <th>收货人</th>
-      <th>收货电话</th>
-      <th>收货地址</th>
-      <th>当前状态</th>
+        <th>提货码<hr/>所属活动</th>
+        <th>所提商品<hr/></th>
+        <th>吊牌价<hr/>商品价</th>
+        <th>快递费<hr/>保价费</th>
+        <th>收货人<hr/>收货电话</th>
+        <th>提货时间<hr/>收货地址</th>
+        <th>订单号<hr/>支付单号[第三方]</th>
+        <th>付款状态<hr/>支付费用</th>
+        <th>下单时间<hr/>付款时间</th>
+        <th>发货时间<hr/>完成时间</th>
+        <th>当前状态</th>
       <th>操作</th>
     </tr>
     </thead>
@@ -145,6 +154,6 @@
 
   </script>
   <script src="{{asset('js/common/list.js')}}"></script>
-  <script src="{{ asset('js/company/lanmu/addrs.js') }}"  type="text/javascript"></script>
+  <script src="{{ asset('js/company/lanmu/addrs.js') }}?1"  type="text/javascript"></script>
 </body>
 </html>
