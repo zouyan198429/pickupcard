@@ -498,10 +498,10 @@ Route::get('company/addrs/import_template', 'Company\AddrsController@import_temp
 
 // 首页
 
-Route::get('site', 'Site\IndexController@index');// 首页
-Route::get('site/index', 'Site\IndexController@index');// 首页
-Route::get('site/search/{code_id}/{code}', 'Site\IndexController@product');// 第一页，显示商品页
-Route::get('site/login/{code_id}/{code}', 'Site\IndexController@login');// 查询页 登录--输入卡密
+Route::get('site', 'Site\IndexController@index');// 首页-ok
+Route::get('site/index', 'Site\IndexController@index');// 首页-ok
+Route::get('site/search/{code_id}/{code}', 'Site\IndexController@product');// 第一页，显示商品页-ok
+Route::get('site/login/{code_id}/{code}', 'Site\IndexController@login');// 查询页 登录--输入卡密-ok
 Route::get('site/test', 'Site\IndexController@test');// 测试
 
 // 产品相关的
@@ -511,7 +511,7 @@ Route::get('site/product/{product_id}', 'Site\ProductController@index');// 产�
 //Route::get('site/product4', 'Site\ProductController@product4');// 产品4
 
 // 收货地址
-Route::get('site/addrs/add', 'Site\AddrsController@add');// 添加
+Route::get('site/addrs/add/{redisKey}', 'Site\AddrsController@add');// 添加
 Route::get('site/addrs/payOK', 'Site\AddrsController@payOK');// 支付成功
 
 

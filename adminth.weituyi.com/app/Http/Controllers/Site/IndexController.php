@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Site;
 
 use App\Business\Controller\API\RunBuy\CTAPIActivityBusiness;
 use App\Business\Controller\API\RunBuy\CTAPIActivityCodeBusiness;
+use App\Business\Controller\API\RunBuy\CTAPIStaffBusiness;
+use App\Services\Cookie\CookieOperate;
 use App\Services\Request\CommonRequest;
+use App\Services\SessionCustom\SessionCustom;
 use App\Services\Tool;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -22,7 +25,37 @@ class IndexController extends BaseWebController
      */
     public function test(Request $request)
     {
+        $session_openid_key = 'openid';
+        Log::info('微信日志-index',['首页!' . $session_openid_key]);
+        SessionCustom::set($session_openid_key, 'aabbcc111', 60 * 30);
+        $kkk = SessionCustom::get($session_openid_key);
+        // $kkk = CookieOperate::get($session_openid_key);
+        Log::info('微信日志-index',['首页!' . $kkk]);
+        echo '<a href="' . url('site') .'">aaaaaabbbb</a>';
+        pr($kkk);
 
+//        ini_set('session.use_strict_mode', 0);//关闭严格模式
+//        ini_set('session.use_cookies', 0);//禁止通过cookie传递session id
+//        //获取open id比较简单，就不再赘述了……
+//        //微信公众号scywzh，假设 $openId 为从微信服务器得到的用户 open id.
+//        $openId = '123';
+//        $sessionId = md5($openId);
+//        session_id($sessionId);
+//        session_start();
+//        $session_do_url_key = 'aaa';
+//        $doUrl = 'ccc';
+////            SessionCustom::set($session_do_url_key, $doUrl, 600);
+//            $kkk = SessionCustom::get($session_do_url_key);
+//            pr($kkk);
+
+        $key = 'aaa';
+        CookieOperate::set($key, 'bbccdd', 60);
+        $cookie = CookieOperate::get($key);
+        echo $cookie;
+        echo '<hr/>';
+        CookieOperate::del($key);
+        $cookie = CookieOperate::get($key);
+        dd($cookie);
         $preKey = Tool::getProjectKey(1, ':', ':');
         pr($preKey);
         $user = Tool::getRedis( 'wechat_user', 2);
@@ -61,6 +94,15 @@ class IndexController extends BaseWebController
      */
     public function index(Request $request)
     {
+        $session_openid_key = 'openid';
+        Log::info('微信日志-index',['首页!' . $session_openid_key]);
+//        SessionCustom::set($session_openid_key, 'aabbcc', 60 * 30);
+        echo 'index:';
+        $kkk = SessionCustom::get($session_openid_key);
+        // $kkk = CookieOperate::get($session_openid_key);
+        Log::info('微信日志-index',['首页!' . $kkk]);
+        pr($kkk);
+
         $reDataArr = $this->reDataArr;
         // 获得当前不效的提货活动
 //        $reDataArr['activity_kv'] = CTAPIActivityBusiness::getListKV($request, $this, 1);
@@ -103,6 +145,9 @@ class IndexController extends BaseWebController
      */
     public function product(Request $request, $code_id = 0, $code = '')
     {
+
+        $this->judgeWeixinVisit();// 判断是否微信内浏览器
+
         $reDataArr = $this->reDataArr;
         // $code_id = CommonRequest::getInt($request, 'code_id');
         // 获得兑换码信息
@@ -143,6 +188,8 @@ class IndexController extends BaseWebController
      */
     public function login(Request $request, $code_id = 0, $code = '')
     {
+        $this->judgeWeixinVisit();// 判断是否微信内浏览器
+
         $reDataArr = $this->reDataArr;
         // $code_id = CommonRequest::getInt($request, 'code_id');
         // 获得兑换码信息
@@ -184,6 +231,7 @@ class IndexController extends BaseWebController
      */
     public function ajax_login(Request $request)
     {
+        $this->judgeWeixinVisit();// 判断是否微信内浏览器
         // $this->InitParams($request);
         // $company_id = $this->company_id;
 
@@ -217,9 +265,11 @@ class IndexController extends BaseWebController
     public function logout(Request $request)
     {
         // $this->InitParams($request);
-        CTAPIActivityCodeBusiness::loginOut($request, $this);
+        // CTAPIActivityCodeBusiness::loginOut($request, $this);
+        CTAPIStaffBusiness::loginOut($request, $this);
         $reDataArr = $this->reDataArr;
-        return redirect('web/search');
+//        return redirect('site/search');
+        return redirect('site');
     }
 
 }

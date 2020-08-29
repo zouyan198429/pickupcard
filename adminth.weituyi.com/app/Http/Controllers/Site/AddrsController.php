@@ -21,9 +21,17 @@ class AddrsController extends BaseWebController
      * @return mixed
      * @author zouyan(305463219@qq.com)
      */
-    public function add(Request $request)
+    public function add(Request $request, $redisKey = '')
     {
+        $this->judgeWeixinVisit();// 判断是否微信内浏览器
+        if(empty($redisKey)) throws('请先提交密码');
+        $request->merge(['redisKey' => $redisKey]);
         $this->InitParams($request);
+
+        // 判断是否登录，需要登录了
+        $openid = $this->autoSiteGetOpenid($request, $redisKey);//判断是否在微信内及是否已经获得用户微信openid[登录]
+        if(!is_string($openid)) return $openid;// 需要重新登录--微信登录
+
         $reDataArr = $this->reDataArr;
         $code_id = $this->code_id;
         // 获得兑换码信息
@@ -49,6 +57,8 @@ class AddrsController extends BaseWebController
         // 状态
         $reDataArr['status'] =  CTAPIDeliveryAddrBusiness::$statusArr;
         $reDataArr['defaultStatus'] = -1;// 默认状态
+
+        $reDataArr['redisKey'] =  $redisKey;
         return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.add', $reDataArr);
     }
 
