@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Business\Controller\API\RunBuy\CTAPIStaffBusiness;
 use App\Http\Controllers\WorksController;
 use App\Services\Request\CommonRequest;
+use App\Services\Tool;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -46,6 +47,30 @@ class IndexController extends BasicController
         $reDataArr = $this->reDataArr;
         return view('' . static::$VIEW_PATH . '.index', $reDataArr);
     }
+
+    /**
+     * ajax获得模型表的缓存时间；没有缓存时间-则返回当前时间
+     *
+     * @param Request $request
+     * @return mixed
+     * @author zouyan(305463219@qq.com)
+     */
+//    public function ajax_getTableUpdateTime(Request $request){
+//        return $this->exeDoPublicFun($request, 0, 4,'', true, '', [], function (&$reDataArr) use ($request){
+//            $module_name = CommonRequest::get($request, 'module_name');// QualityControl\CTAPIStaff
+//            if(empty($module_name)) throws('参数【module_name】不能为空！');
+//
+//            $objClass = 'App\\Business\\Controller\API\\' . $module_name  . 'Business';// 'App\Business\Controller\API\QualityControl\CTAPIStaffBusiness';
+//            if (! class_exists($objClass )) {
+//                throws('参数[module_name]类不存在！');
+//            }
+//            // 空或 string(29) "2020-09-04 15:00:03!!!9840900"  [true, 4]
+//            $tableUpdateTime = $objClass::exeMethodCT($request, $this, '', 'getTableUpdateTimeCache', [], 1, 1);
+//            if(!empty($tableUpdateTime)) list($tableUpdateTime, $cacheMsecint) = array_values(Tool::getTimeMsec($tableUpdateTime));
+//            if(empty($tableUpdateTime)) $tableUpdateTime = date('Y-m-d H:i:s');
+//            return ajaxDataArr(1, $tableUpdateTime, '');
+//        });
+//    }
 
     /**
      * 登陆

@@ -33,6 +33,7 @@ Route::post('admin/upload/ajax_del', 'Admin\UploadController@ajax_del');// 根�
 Route::any('admin/ajax_login', 'Admin\IndexController@ajax_login');// 登陆
 Route::post('admin/ajax_password_save', 'Admin\IndexController@ajax_password_save');// 修改密码
 Route::any('admin/ajax_info_save', 'Admin\IndexController@ajax_info_save');// 修改设置
+//Route::any('admin/ajax_getTableUpdateTime', 'Admin\IndexController@ajax_getTableUpdateTime');// 获得模块表的最新更新时间
 
 //后台--管理员
 Route::any('admin/staff/ajax_alist', 'Admin\StaffController@ajax_alist');//ajax获得列表数据

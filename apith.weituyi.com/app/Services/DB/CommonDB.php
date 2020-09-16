@@ -66,7 +66,12 @@ class CommonDB
                 case 'distinct': // 空字符
                     // distinct 方法允许你强制查询返回不重复的结果集
                     // $users = DB::table('users')->distinct()->get();
-                    $tbObj = $tbObj->distinct();
+                    // 或指定具体的字段 ->distinct('id')  参数$param为 字段名称
+                    if(!empty($param)){
+                        $tbObj = $tbObj->distinct($param);
+                    }else{
+                        $tbObj = $tbObj->distinct();
+                    }
                 case 'where': //使用如下的二维数组.注意，如果是=,第二个参数可以不需要
                     /*[
                             ['status', '=', '1'],

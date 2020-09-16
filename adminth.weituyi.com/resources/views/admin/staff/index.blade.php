@@ -99,7 +99,7 @@
           <input type="checkbox"  class="ace check_all"  value="" onclick="action.seledAll(this)"/>
 <!--           <span class="lbl">全选</span>
  -->        </label>
-      </th> 
+      </th>
       <th>用户名</th>
       <th>真实姓名</th>
       {{--<th>类型</th>--}}
@@ -158,6 +158,11 @@
       const PROVINCE_ID = "{{ $info['province_id'] or -1}}";// 省默认值
       const CITY_ID = "{{ $info['city_id'] or -1 }}";// 市默认值
       const AREA_ID = "{{ $info['area_id'] or -1 }}";// 区默认值
+
+      // 列表数据每隔指定时间就去执行一次刷新【如果表有更新时】--定时执行
+      var IFRAME_TAG_KEY = "";// "QualityControl\\CTAPIStaff";// 获得模型表更新时间的关键标签，可为空：不获取
+      var IFRAME_TAG_TIMEOUT = 60000;// 获得模型表更新时间运行间隔 1000:1秒 ；可以不要此变量：默认一分钟
+
 
   </script>
   <script src="{{asset('js/common/list.js')}}"></script>
