@@ -21,12 +21,16 @@ use Carbon\Carbon;
 
 class SessionCustom{
    // session_save_path('E:/ttt');
-    public static $redisDatabase = 10;// 缓存数据的Redis 数据库编号
+    public static $redisHost = 'localhost';
+    public static $redisPort = 6379;
+    public static $redisAuth = '';// 密码
+    public static $redisDatabase = 0;// 缓存数据的Redis 数据库编号
     // Session数据在服务器端储存的时间，如果超过这个时间，那么Session数据就自动删除！
     // 一晚上没关电脑浏览器，第二天上午还能正常继期-----所以继期时间
     // 要大于  下午5点下班（24-17） + 第二天上午全上午（ 12-0） =  7 + 12 = 19  ,
     //  那就登录状态缓存有效期设为  20小时吧
     public static $gcMaxlifetime = 60 * 60 * 20;
+
 
     /**
      * 获得Session数据在服务器端储存的时间，如果超过这个时间，那么Session数据就自动删除！
@@ -39,17 +43,29 @@ class SessionCustom{
 
     /**
      * 初始化session
+     * $redisConfig = [
+     *   'host' => 'localhost',// 主机 ：无下标【使用属性指定的】
+     *   'port' => 6379,// 端口 ：无下标【使用属性指定的】
+     *   'auth' => '',// 密码：无下标【使用属性指定的】
+     *   'database' => 2,//  无下标：-1【使用属性指定的】； （整数）：选择不同的数据库。 < 0 时：使用配置，配置没有再使用默认指定的
+     * ];
      */
-    public static function sesseionStart(){
+    public static function sesseionStart($redisConfig = []){
         // 已经开启过会话，则直接返回
         if (session_id()) return ;
+        $redisHost = $redisConfig['host'] ?? '';
+        $redisPort = $redisConfig['port'] ?? '';
+        $redisAuth = $redisConfig['auth'] ?? '';
+        $redisDatabase = $redisConfig['database'] ?? -1;
 
-        $redisHost = config('public.redis.default.host', 'localhost'); // '127.0.0.1';//
-        $redisPort = config('public.redis.default.port', 6379);
+        if(empty($redisHost)) $redisHost = config('public.redis.default.host', static::$redisHost);// 'localhost'); // '127.0.0.1';//
+        if(empty($redisPort)) $redisPort = config('public.redis.default.port', static::$redisPort);// 6379);
         // php session 存储到redis里(转)
         if( strlen($redisHost) > 0 && strlen($redisPort) > 0){
-            $redisAuth =  config('public.redis.default.password', '');
-            $redisDatabase =  config('public.sessionRedisDatabase', static::$redisDatabase);
+            if(empty($redisAuth)) $redisAuth =  config('public.redis.default.password', static::$redisAuth);// '');
+            if(!is_numeric($redisDatabase) || $redisDatabase < 0){
+                $redisDatabase =  config('public.sessionRedisDatabase', static::$redisDatabase);
+            }
 
             $savePath = 'tcp://' . $redisHost . ':' . $redisPort;// "tcp://127.0.0.1:6379"
             /* 其他参数 https://www.xstnet.com/article-108.html
@@ -62,7 +78,7 @@ class SessionCustom{
                 database（整数）：选择不同的数据库。
              */
             $redisParams = [];
-            array_push($redisParams, 'database=' . $redisDatabase);
+            if(is_numeric($redisDatabase) && $redisDatabase > 0) array_push($redisParams, 'database=' . $redisDatabase);
             if(strlen($redisAuth) > 0) array_push($redisParams, 'auth=' . $redisAuth); //$redisParams['auth'] = $redisAuth;
 
             if(count($redisParams) > 0)  $savePath .= '?' . implode('&', $redisParams);// tcp://127.0.0.1:6379?auth=authpwd
@@ -83,9 +99,15 @@ class SessionCustom{
      * @param Int    $expire 超时时间(秒) 默认 10分钟 session中具体某个下标的缓存时间，
      *                 <= 0 时 默认使用 SessionCustom::getGcMaxlifetime();的值
      *                如果要与session一样的有效期，请使用  SessionCustom::getGcMaxlifetime();
+     * $redisConfig = [
+     *   'host' => 'localhost',// 主机 ：无下标【使用属性指定的】
+     *   'port' => 6379,// 端口 ：无下标【使用属性指定的】
+     *   'auth' => '',// 密码：无下标【使用属性指定的】
+     *   'database' => 2,//  无下标：-1【使用属性指定的】； （整数）：选择不同的数据库。 < 0 时：使用配置，配置没有再使用默认指定的
+     * ];
      * @return string session的 id
      */
-    public static function set($name, $data, $expire = 600){
+    public static function set($name, $data, $expire = 600, $redisConfig = []){
         if(!is_numeric($expire) || $expire <= 0) $expire = static::getGcMaxlifetime();// 默认值
         $session_data = array();
         $session_data['data'] = $data;
@@ -93,7 +115,7 @@ class SessionCustom{
         $expireTime = Carbon::now()->addSeconds($expire)->toDateTimeString();// 最后的有效期  格式  2020-06-02 15:48:49
         $session_data['expire'] = $expire;// 有效期 (秒)   time() + $expire;
         $session_data['endTime'] = $expireTime;// 到期时间点 格式  2020-06-02 15:48:49
-        static::sesseionStart();
+        static::sesseionStart($redisConfig);
         // 写入会话
         $_SESSION[$name] = $session_data;
         //写入会话后关闭上一个会话文件的写入
@@ -120,10 +142,16 @@ class SessionCustom{
      * @param  String $name  session name
      * @param  boolean $isExtendExpire  是否自动续有效期
      * @param mixed $extendExpireFun 自动续期后执行的操作--一些操作 的闭包函数  function($data){} ;// 参数 data 为缓存的数据
+     * $redisConfig = [
+     *   'host' => 'localhost',// 主机 ：无下标【使用属性指定的】
+     *   'port' => 6379,// 端口 ：无下标【使用属性指定的】
+     *   'auth' => '',// 密码：无下标【使用属性指定的】
+     *   'database' => 2,//  无下标：-1【使用属性指定的】； （整数）：选择不同的数据库。 < 0 时：使用配置，配置没有再使用默认指定的
+     * ];
      * @return Mixed false:失败
      */
-    public static function get($name, $isExtendExpire = false, $extendExpireFun = null){
-         static::sesseionStart();
+    public static function get($name, $isExtendExpire = false, $extendExpireFun = null, $redisConfig = []){
+         static::sesseionStart($redisConfig);
         if(isset($_SESSION[$name])){
             $currentTime = Carbon::now();// date('Y-m-d H:i:s');//当前时间 2020-06-02 15:48:49
             $endTime = $_SESSION[$name]['endTime'] ?? $currentTime;// 最后的有效期  格式  2020-06-02 15:48:49
@@ -139,7 +167,7 @@ class SessionCustom{
                     $expire = $_SESSION[$name]['expire'] ?? static::getGcMaxlifetime();
                     // 还剩三分之一内的有效时间就自动续期
                     if(ceil($expire / 3) >= $diffSeconds){
-                        static::set($name, $data, $expire);// 自动续期
+                        static::set($name, $data, $expire, $redisConfig);// 自动续期
                         // 自动续期后执行的操作--一些操作
                         if(is_callable($extendExpireFun)){
                             $extendExpireFun($data);
@@ -148,7 +176,7 @@ class SessionCustom{
                 }
                 return $data;
             }else{
-                static::clear($name);
+                static::clear($name, $redisConfig);
             }
         }
         return false;
@@ -157,9 +185,15 @@ class SessionCustom{
     /**
      * 清除session
      * @param  String  $name  session name
+     * $redisConfig = [
+     *   'host' => 'localhost',// 主机 ：无下标【使用属性指定的】
+     *   'port' => 6379,// 端口 ：无下标【使用属性指定的】
+     *   'auth' => '',// 密码：无下标【使用属性指定的】
+     *   'database' => 2,//  无下标：-1【使用属性指定的】； （整数）：选择不同的数据库。 < 0 时：使用配置，配置没有再使用默认指定的
+     * ];
      */
-    public static function clear($name){
-        static::sesseionStart();
+    public static function clear($name, $redisConfig = []){
+        static::sesseionStart($redisConfig);
         if(isset($_SESSION[$name])) unset($_SESSION[$name]);
     }
 }
