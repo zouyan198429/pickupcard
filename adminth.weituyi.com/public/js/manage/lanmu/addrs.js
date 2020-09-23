@@ -249,6 +249,7 @@ function other_operate_ajax(operate_type, id){
     document.write("                  <span class=\"lbl\"><\/span>");
     document.write("                <\/label>");
     document.write("            <\/td>");
+    document.write("            <td><%=item.seller_name%><\/td>");
     // document.write("            <td><%=item.site_name%><hr/><%=item.partner_name%><\/td>");
     // document.write("            <td><%=item.seller_name%><hr/><%=item.shop_name%><\/td>");
     document.write("            <td><%=item.code%><hr/><%=item.activity_info.activity_name%><\/td>");

@@ -79,4 +79,12 @@ class Activity extends BasePublicModel
     {
         return $this->belongsTo('App\Models\RunBuy\ProductHistory', 'product_id_history', 'id');
     }
+
+    /**
+     * 获取商家--一维
+     */
+    public function staffInfo()
+    {
+        return $this->belongsTo('App\Models\RunBuy\Staff', 'seller_id', 'id');
+    }
 }

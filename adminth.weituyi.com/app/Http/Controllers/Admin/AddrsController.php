@@ -260,7 +260,7 @@ class AddrsController extends BasicController
             , 'city', 'cityHistory', 'area', 'areaHistory'
            // , 'oprateStaff', 'oprateStaffHistory'
             , 'productInfo', 'productHistoryInfo'
-            , 'activityInfo', 'codeInfo']);// , 'cityPartner', 'seller' , 'shop'
+            , 'activityInfo', 'codeInfo', 'staffInfo']);// , 'cityPartner', 'seller' , 'shop'
     }
 
     /**

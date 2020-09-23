@@ -91,6 +91,7 @@
 <!--           <span class="lbl">全选</span>
  -->        </label>
       </th>
+        <th>所属商家</th>
         <th>提货码<hr/>所属活动</th>
         <th>所提商品<hr/></th>
         <th>吊牌价<hr/>商品价</th>
@@ -159,6 +160,6 @@
 
   </script>
   <script src="{{asset('js/common/list.js')}}"></script>
-  <script src="{{ asset('js/manage/lanmu/addrs.js') }}?1"  type="text/javascript"></script>
+  <script src="{{ asset('js/manage/lanmu/addrs.js') }}?2"  type="text/javascript"></script>
 </body>
 </html>

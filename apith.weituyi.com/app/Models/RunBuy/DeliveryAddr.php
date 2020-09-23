@@ -79,4 +79,12 @@ class DeliveryAddr extends BasePublicModel
     {
         return $this->belongsTo('App\Models\RunBuy\ActivityCode', 'code_id', 'id')->withDefault();
     }
+
+    /**
+     * 获取商家--一维
+     */
+    public function staffInfo()
+    {
+        return $this->belongsTo('App\Models\RunBuy\Staff', 'seller_id', 'id');
+    }
 }

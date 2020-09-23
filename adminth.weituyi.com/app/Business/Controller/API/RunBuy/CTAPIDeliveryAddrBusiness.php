@@ -166,6 +166,10 @@ class CTAPIDeliveryAddrBusiness extends BasicPublicCTAPIBusiness
         // 格式化数据
         $data_list = $result['data_list'] ?? [];
         foreach($data_list as $k => $v){
+            // 所属商家
+            $data_list[$k]['seller_name'] = $v['staff_info']['seller_name'] ?? '';
+            if(isset($data_list[$k]['staff_info'])) unset($data_list[$k]['staff_info']);
+
             // 省
             $temProvinceName = $v['province']['city_name'] ?? '';
             // $temProvinceId = $v['province']['id'] ?? 0;
@@ -283,6 +287,10 @@ class CTAPIDeliveryAddrBusiness extends BasicPublicCTAPIBusiness
 //            'id' => $company_id,
 //        ];
 //        static::judgePowerByObj($request, $controller, $info, $judgeData );
+
+        // 所属商家
+        $info['seller_name'] = $info['staff_info']['seller_name'] ?? '';
+        if(isset($info['staff_info'])) unset($info['staff_info']);
 
         // 省
         $temProvinceName = $info['province']['city_name'] ?? '';

@@ -176,7 +176,7 @@ class ActivityController extends BasicController
         // 企业后台 有企业id的记录，查询或其它操作时，返回要加入request中的企业id参数，参与查询
         $this->appendSellerIdParams($mergeParams);
         CTAPIActivityBusiness::mergeRequest($request, $this, $mergeParams);
-        return  CTAPIActivityBusiness::getList($request, $this, 2 + 4, [], ['productInfo', 'productHistoryInfo', 'oprateStaff', 'oprateStaffHistory', 'siteResources']);
+        return  CTAPIActivityBusiness::getList($request, $this, 2 + 4, [], ['productInfo', 'productHistoryInfo', 'oprateStaff', 'oprateStaffHistory', 'siteResources', 'staffInfo']);
     }
 
     /**

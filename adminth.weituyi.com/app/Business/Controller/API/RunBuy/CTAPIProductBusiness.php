@@ -112,6 +112,11 @@ class CTAPIProductBusiness extends BasicPublicCTAPIBusiness
             $data_list[$k]['real_name'] = $real_name;
             if(isset($data_list[$k]['oprate_staff'])) unset($data_list[$k]['oprate_staff']);
             if(isset($data_list[$k]['oprate_staff_history'])) unset($data_list[$k]['oprate_staff_history']);
+
+            // 所属商家
+            $data_list[$k]['seller_name'] = $v['staff_info']['seller_name'] ?? '';
+            if(isset($data_list[$k]['staff_info'])) unset($data_list[$k]['staff_info']);
+
         }
         $result['data_list'] = $data_list;
         // 导出功能
@@ -147,6 +152,10 @@ class CTAPIProductBusiness extends BasicPublicCTAPIBusiness
 //            'id' => $company_id,
 //        ];
 //        static::judgePowerByObj($request, $controller, $info, $judgeData );
+
+        // 所属商家
+        $info['seller_name'] = $info['staff_info']['seller_name'] ?? '';
+        if(isset($info['staff_info'])) unset($info['staff_info']);
 
         // 添加人
         $real_name = $info['oprate_staff']['real_name'] ?? '';

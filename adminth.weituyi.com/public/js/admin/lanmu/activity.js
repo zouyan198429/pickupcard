@@ -68,6 +68,7 @@ var otheraction = {
     // document.write("                <\/label>");
     // document.write("            <\/td>");
     // document.write("            <td><%=item.id%><\/td>");
+    document.write("            <td><%=item.seller_name%><\/td>");
     document.write("            <td><%=item.activity_name%><\/td>");
     document.write("            <td><%=item.begin_time%>-<%=item.end_time%><\/td>");
     document.write("            <td><%=item.product_name%><\/td>");

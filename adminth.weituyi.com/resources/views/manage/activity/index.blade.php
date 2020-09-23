@@ -19,9 +19,9 @@
   <div class="mmhead" id="mywork">
 
     @include('common.pageParams')
-    <div class="tabbox" >
-      <a href="javascript:void(0);" class="on" onclick="action.iframeModify(0)">添加提货活动</a>
-    </div>
+{{--    <div class="tabbox" >--}}
+{{--      <a href="javascript:void(0);" class="on" onclick="action.iframeModify(0)">添加提货活动</a>--}}
+{{--    </div>--}}
     <form onsubmit="return false;" class="form-horizontal" role="form" method="post" id="search_frm" action="#">
       <div class="msearch fr">
 
@@ -72,6 +72,7 @@
         {{--</label>--}}
       {{--</th>--}}
       {{--<th>ID</th>--}}
+        <th>所属商家</th>
         <th>提货活动名称<hr/>兑换商品</th>
         <th>活动日期<hr/>活动提示</th>
         <th>图片</th>
@@ -142,6 +143,6 @@
 {{--<script src="{{asset('js/baguetteBox.js/highlight.min.js')}}" async></script>--}}
 
 <script src="{{asset('js/common/list.js')}}"></script>
-  <script src="{{ asset('js/manage/lanmu/activity.js') }}?1"  type="text/javascript"></script>
+  <script src="{{ asset('js/manage/lanmu/activity.js') }}?2"  type="text/javascript"></script>
 </body>
 </html>

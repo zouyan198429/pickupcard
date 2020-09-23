@@ -214,5 +214,27 @@ class Staff extends BasePublicModel
 //        return $this->hasMany('App\Models\RunBuy\WalletRecord', 'staff_id', 'id');
 //    }
 
+    /**
+     * 获取商品-二维
+     */
+    public function product()
+    {
+        return $this->hasMany('App\Models\RunBuy\Product', 'seller_id', 'id');
+    }
 
+    /**
+     * 获取活动-二维
+     */
+    public function activity()
+    {
+        return $this->hasMany('App\Models\RunBuy\Activity', 'seller_id', 'id');
+    }
+
+    /**
+     * 获取活动提货信息-二维
+     */
+    public function deliveryAddr()
+    {
+        return $this->hasMany('App\Models\RunBuy\DeliveryAddr', 'seller_id', 'id');
+    }
 }

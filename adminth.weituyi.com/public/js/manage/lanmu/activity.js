@@ -68,6 +68,7 @@ var otheraction = {
     // document.write("                <\/label>");
     // document.write("            <\/td>");
     // document.write("            <td><%=item.id%><\/td>");
+    document.write("            <td><%=item.seller_name%><\/td>");
     document.write("            <td><%=item.activity_name%><hr/><%=item.product_name%><\/td>");
     document.write("            <td><%=item.begin_time%>-<%=item.end_time%><hr/><%=item.activity_tips%><\/td>");
     document.write("            <td><%for(var j = 0; j<resource_list.length;j++){");

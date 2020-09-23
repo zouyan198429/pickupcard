@@ -43,4 +43,12 @@ class Product extends BasePublicModel
     {
         return $this->hasMany('App\Models\RunBuy\DeliveryAddr', 'product_id', 'id');
     }
+
+    /**
+     * 获取商家--一维
+     */
+    public function staffInfo()
+    {
+        return $this->belongsTo('App\Models\RunBuy\Staff', 'seller_id', 'id');
+    }
 }

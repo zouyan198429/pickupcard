@@ -151,6 +151,10 @@ class CTAPIActivityBusiness extends BasicPublicCTAPIBusiness
 //            $data_list[$k]['pre_code'] = $v['product_info']['pre_code'] ?? '';// 编码前缀
             // $data_list[$k]['product_id'] = $v['product_info']['id'] ?? 0;
 
+            // 所属商家
+            $data_list[$k]['seller_name'] = $v['staff_info']['seller_name'] ?? '';
+            if(isset($data_list[$k]['staff_info'])) unset($data_list[$k]['staff_info']);
+
             $tem_product_name = $v['product_info']['product_name'] ?? '';
             if(empty($tem_product_name)) $tem_product_name = $v['product_history_info']['product_name'] ?? '';
             $tem_pre_code = $v['product_info']['pre_code'] ?? '';// 编码前缀
@@ -216,6 +220,10 @@ class CTAPIActivityBusiness extends BasicPublicCTAPIBusiness
 //            'id' => $company_id,
 //        ];
 //        static::judgePowerByObj($request, $controller, $info, $judgeData );
+        // 所属商家
+        $info['seller_name'] = $info['staff_info']['seller_name'] ?? '';
+        if(isset($info['staff_info'])) unset($info['staff_info']);
+
         // 所属商品
         $product_name = $info['product_info']['product_name'] ?? '';
         if(empty($product_name)) $product_name = $info['product_history_info']['product_name'] ?? '';

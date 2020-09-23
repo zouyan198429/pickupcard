@@ -93,7 +93,7 @@ Route::post('admin/city/ajax_get_ids', 'Admin\CityController@ajax_get_ids');// �
 Route::any('admin/city/ajax_selected', 'Admin\CityController@ajax_selected');//ajax选择中记录/更新记录
 
 //商品
-Route::post('admin/products/ajax_alist', 'Admin\ProductController@ajax_alist');//ajax获得列表数据
+Route::any('admin/products/ajax_alist', 'Admin\ProductController@ajax_alist');//ajax获得列表数据
 Route::post('admin/products/ajax_del', 'Admin\ProductController@ajax_del');// 删除
 Route::post('admin/products/ajax_save', 'Admin\ProductController@ajax_save');// 新加/修改
 Route::post('admin/products/ajax_get_child', 'Admin\ProductController@ajax_get_child');// 根据部门id,小组id获得子类员工数组[kv一维数组]
@@ -106,7 +106,7 @@ Route::post('admin/products/ajax_get_ids', 'Admin\ProductController@ajax_get_ids
 
 
 //提货活动
-Route::post('admin/activity/ajax_alist', 'Admin\ActivityController@ajax_alist');//ajax获得列表数据
+Route::any('admin/activity/ajax_alist', 'Admin\ActivityController@ajax_alist');//ajax获得列表数据
 Route::post('admin/activity/ajax_del', 'Admin\ActivityController@ajax_del');// 删除
 Route::any('admin/activity/ajax_save', 'Admin\ActivityController@ajax_save');// 新加/修改
 Route::post('admin/activity/ajax_get_child', 'Admin\ActivityController@ajax_get_child');// 根据部门id,小组id获得子类员工数组[kv一维数组]
