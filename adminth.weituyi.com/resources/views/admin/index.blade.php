@@ -143,11 +143,11 @@
                         <a lay-href="{{ url('admin/seller') }}">商家列表</a>
                     </dd>
                 </dl>
-                <dl class="layui-nav-child">
-                    <dd>
-                        <a lay-href="{{ url('seller/employee') }}">员工列表</a>
-                    </dd>
-                </dl>
+{{--                <dl class="layui-nav-child">--}}
+{{--                    <dd>--}}
+{{--                        <a lay-href="{{ url('seller/employee') }}">员工列表</a>--}}
+{{--                    </dd>--}}
+{{--                </dl>--}}
                 <dl class="layui-nav-child">
                     <dd>
                         <a lay-href="{{ url('admin/user') }}">用户列表</a>
