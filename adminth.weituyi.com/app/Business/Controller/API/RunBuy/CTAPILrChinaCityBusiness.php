@@ -19,7 +19,7 @@ class CTAPILrChinaCityBusiness extends BasicPublicCTAPIBusiness
      *
      * @param Request $request 请求信息
      * @param Controller $controller 控制对象
-     * @param int $oprateBit 操作类型位 1:获得所有的; 2 分页获取[同时有1和2，2优先]；4 返回分页html翻页代码
+     * @param int $oprateBit 操作类型位 1:获得所有的; 2 分页获取[同时有1和2，2优先]；4 返回分页html翻页代码 8 返回分页html翻页代码--a链接形式seo用
      * @param string $queryParams 条件数组/json字符
      * @param mixed $relations 关系
      * @param array $extParams 其它扩展参数，

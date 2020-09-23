@@ -16,7 +16,7 @@ class BaseWebController extends BaseController
     public static $VIEW_PATH = 'site';// 视图文件夹目录名称
     public static $VIEW_NAME = '';// 视图栏目文件夹目录名称
     public static $LOGIN_ADMIN_TYPE = 8;// 当前登录的用户类型1平台2企业4管理员8个人
-    public static $ALLOW_BROWSER_OPEN = false;// 调试用开关，true:所有浏览器都能开； false:微信内
+    public static $ALLOW_BROWSER_OPEN = false;// 微信内支付：调试用开关，true:所有浏览器都能开； false:只有微信内浏览器
 
 
     public $code_id = null;
@@ -119,6 +119,8 @@ class BaseWebController extends BaseController
         */
     }
 
+    //~~~~~~~~~~~~~~~微信内浏览器支付~~获得用户openid~登录~~~~~开始~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     // 判断是否在微信内访问
     public function judgeWeixinVisit(){
         if(!static::$ALLOW_BROWSER_OPEN && !Tool::isWeixinVisit()){
@@ -182,6 +184,8 @@ class BaseWebController extends BaseController
         return $openid;
     }
 
+    // 具体的使用请参考提货卡的Site/WeChatController.php--回调及相关路由
+
     // 获得用户的微信id[没有时，去请求微信]
     // 用卡密登陆过后的 缓存键 $cache_pre --唯一
     // 具体参数说明请查看 autoGetOpenid方法
@@ -192,4 +196,7 @@ class BaseWebController extends BaseController
         $session_do_url_key = 'wechat_back_url';
         return $this->autoGetOpenid($request, $cache_pre, $scopes, $callback, $initWechatAppKey, $session_openid_key, $session_do_url_key);
     }
+
+    //~~~~~~~~~~~~~~~微信内浏览器支付~~获得用户openid~登录~~~~~结束~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 }

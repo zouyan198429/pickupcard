@@ -20,6 +20,207 @@ function layuiGoIframe(href, text){
     parent.layui.index.openTabsPage(href, text); //这里要注意的是 parent 的层级关系
 }
 
+// 获得ajax请求的headers
+// in_headers 传入的headers
+// type_num 类型 1 admin后台-- 后面扩展用
+function get_ajax_headers(in_headers, type_num){
+    in_headers = in_headers || {};
+    type_num = type_num || 1;
+    // 加入指定的 Accept
+    let temVal = ADMIN_AJAX_HEADERS_ACCEPT;
+    if(isHasAttr(in_headers, "Accept")){// 存在
+        let accept = in_headers.Accept;
+
+        if(isEmpeyVal(accept)){// 为空
+            in_headers.Accept = temVal;
+        }else{// 不为空
+            in_headers.Accept = accept  + ';' + temVal;
+        }
+    }else{// 不存在
+        in_headers.Accept = temVal;
+    }
+
+    return in_headers;
+}
+
+// 根据设置，自动刷新列表数据【每隔一定时间执行一次】
+// 参数
+// record_page_url  一般就是当前页面/为空时： window.location.href
+// tag_key  获得模型表更新时间的关键标签，可为空：不获取
+// timeout  获得模型表更新时间运行间隔 1000:1秒 ；可以不要此变量：默认一分钟
+// 使用页面需要这两个参数
+// var IFRAME_TAG_KEY = "QualityControl\\CTAPIStaff";// 获得模型表更新时间的关键标签，可为空：不获取
+// var IFRAME_TAG_TIMEOUT = 60000;// 获得模型表更新时间运行间隔 1000:1秒 ；可以不要此变量：默认一分钟
+// var SUBMIT_FORM = true;//防止多次点击提交 true:可进行提交操作；false:有其它操作正在进行，不可以操作
+function autoRefeshList(record_page_url, tag_key, timeout) {
+    // let tag_key = IFRAME_TAG_KEY || '';
+    if( tag_key !== ''){
+        // 自动更新数据
+        var autoIframeTagObj = new Object();
+        //var record_page_url = window.location.href;
+        record_page_url = record_page_url || window.location.href;
+        autoIframeTagObj.refeshList = function(){
+            let submiting = SUBMIT_FORM;// true:可进行提交操作；false:有其它操作正在进行，不可以操作
+            if(typeof(submiting) != 'boolean'){
+                submiting =  true;
+            }
+            console.log('submiting=true-可进行提交操作==真实值为：', submiting);
+            if(submiting && window.parent.autoRefeshList(record_page_url, tag_key)){
+                console.log('刷新列表数据');
+                //刷新当前列表页面-自己页面操作时[适合更新操作-不更新总数]
+                list_fun_name = LIST_FUNCTION_NAME || 'reset_list';
+                eval( '' + list_fun_name + '(' + true +', ' + true +', ' + false +', 2)');
+            }
+        };
+        // let timeout = IFRAME_TAG_TIMEOUT || 60000;// 默认一分钟
+        timeout = timeout || 60000;// 默认一分钟
+        setInterval(autoIframeTagObj.refeshList,timeout);
+    }
+}
+
+// 翻页跳转方法
+// objThis 点击的当前按钮对象
+// pageType 翻页的类型 1：ajax翻页 2 a 链接翻页--适合前端seo
+function btn_go(objThis, pageType){
+    let obj = $(objThis);
+    var page = parseInt(obj.parent().find('.pagenum').val());
+    var reg2 = /^\d+$/;// /^\d+(\.\d{0,})?$/
+    if(!reg2.test(page) || page<=0){
+        err_alert("请输入正确的页码");
+        //var nr_html = "请输入正确的页码";
+        //baidutemplate_init_modal(body_data_id+'alert_Modal',0+1+2+4+8,'提示信息',nr_html,'','','');
+        return false;
+    }
+    var totalpage = parseInt(obj.attr("totalpage"));
+    if (!page || isNaN(page) || page<=0) { page = 1; }
+    if(page > totalpage) { page = totalpage; }
+    switch(pageType){
+        case 1:
+            if($('#page').length>=1){
+                $('#page').val(page);
+            }
+            // 根据页数据更新数据
+            // reset_list(true, ajax_async, false, 2);
+            console.log(LIST_FUNCTION_NAME);
+            eval( LIST_FUNCTION_NAME + '(' + true +', false, false, 2)');
+            // ajaxPageList(
+            //     dynamic_id,baidu_template_page,ajax_url,true,frm_ids,
+            //     false,baidu_template,body_data_id,baidu_template_loding,baidu_template_empty,
+            //     page_id,pagesize,total_id,ajax_async
+            // );
+            break;
+        case 2:
+            var url_model = obj.parent().parent().find('input[name=url_model]').val();
+            console.log('url_model=',url_model);
+            var page_tag = obj.parent().parent().find('input[name=page_tag]').val();
+            console.log('page_tag=',page_tag);
+            // 地址替换为指定页
+            go(url_model.replace(page_tag, page));
+            break;
+        default:
+            break;
+    }
+}
+
+// -----------json对象--属性相关的操作---------------------
+//是否有对象属性 ；有属性：true ;无属性:false  undefined/null:返回true -- 对 数组同样试用
+// obj 要判断的对象
+// attr 属性名称
+function isHasAttr(obj, attr) {
+    //判断是否有该键值
+    if (obj && obj.hasOwnProperty(attr)) {
+        //如果有返回true
+        return true;
+    }
+    return false;
+}
+
+//是否含有对象属性对应的值 [具体值，不能是对象] true:有；false：无   undefined/null:返回true
+// obj 要判断的对象
+// attr 属性名称
+// value 要判断的属性值  ''  或其它值    ；不能判断对象 如： {}
+function isHasAttrVal(obj, attr, value) {
+    //判断是否有该键值对应的值
+    if (obj && obj.hasOwnProperty(attr) && obj[attr] == value) {
+        //如果有返回true
+        return true;
+    }
+    return false;
+}
+
+// 判断是否为空  不存在 或 '' 或 {} 或 [] 或 null 或 undefined true:为空, false:不为空  ；数字0：不判断为空,返回false
+function isEmpeyVal(val){
+    console.log('------typeof--------', typeof val);
+    //  JSON.stringify(val) == "{}"
+    if (typeof val == "object") {// 对象
+        for (let key in val) {
+            return false;
+        }
+        // }else if(typeof val == "array") { // 没有此名称
+        //     if(val.length > 0) return false;
+    } else if (typeof val == "number") {
+        return false;
+    } else if (typeof val == "undefined") {
+        return true;
+    } else {
+        if (val != '') return false;
+    }
+    return true;
+}
+
+// 判断是值是否是 不存在 或 '' 或 {} 或 [] 或 null 或 undefined true:为空, false:不为空  ；数字0：不判断为空,返回false
+// obj 要判断的对象
+// attr 属性名称
+function isEmptyAttr(obj, attr) {
+    //判断是否有该键值对应的值
+    if (obj && obj.hasOwnProperty(attr)) {
+        let val = obj[attr];
+        return isEmpeyVal(val);
+    }
+    return true;
+}
+
+// 获得属性值
+// obj 要判断的对象
+// attr 属性名称
+// emptyReDefautl 为空或{}时，是否用默认值  true:判断空 ; false:不用判断空
+// defaultVal 不存在属性时，默认值
+function getAttrVal(obj, attr, emptyReDefautl, defaultVal) {
+    if (obj && obj.hasOwnProperty(attr)) {// 有属性
+        let val = obj[attr];
+        if (!emptyReDefautl) return val;
+        if (isEmptyAttr(obj, attr)) return defaultVal;
+        return val;
+    }
+    return defaultVal;
+}
+
+// 通过新对象{} 来 对源对象追加或覆盖属性
+// obj 源对象  {} 是引用传参，对象值会同时追或覆盖--直接用，不用去取返回的对象
+// appendObj 新对象  追加或覆盖属性
+//     {
+//         duration:0,
+//         currentTime:0,
+//         paused:0,
+//         buffered:0,
+//     }
+// isCover 如果属性已存在，是否覆盖 true: 覆盖--[默认]， false: 不覆盖-原值不变
+function objAppendProps(obj, appendObj, isCover) {
+    if(isCover !== false){
+        isCover = isCover || true;
+    }
+    if(typeof obj === "object"){
+        for(var prop_key in appendObj) {
+            // console.log('prop_key:' + prop_key, isHasAttr(obj, prop_key));
+            if(isHasAttr(obj, prop_key) && !isCover){
+                continue;
+            }
+            obj[prop_key] = appendObj[prop_key];
+        }
+    }
+    return obj;
+}
+
 /* 格式化金额 */
 function price_format(price){
     if(typeof(PRICE_FORMAT) == 'undefined'){

@@ -374,9 +374,126 @@ function showPage($totalpg, $pg = 1, $record = 0,$showpage = 9,$show_num = 0)
         $page .= '&nbsp;&nbsp;<span class="pagespan2" ><input class="form-control pagenum" id="page_num" name="page_num" type="text" value="" onkeyup="this.value=this.value.replace(/[^0-9]/g, \'\');" style="width:50px;">';
         $page .= '&nbsp;&nbsp;<button class="btn btn-primary btn-page btn-xs page_go" type="button"  totalpage="' . $totalpg . '"> 跳转 </button></span>';
     }
-    if ($totalpg > 1 && ( ($show_num & 2) ==2 ) ) {//2输入页码跳转[按钮]通过btn_go()方法实现翻页
+    if ($totalpg > 1 && ( ($show_num & 2) ==2 ) ) {//2输入页码跳转[按钮]通过btn_go()方法实现翻页；第一个参数：当前对象；第二个参数数字:代表类型[可能会用其它同类方法]
         $page .= '&nbsp;&nbsp;<span class="pagespan2"><input class="form-control pagenum" id="page_num" name="page_num" type="text" value=""  onkeyup="this.value=this.value.replace(/[^0-9]/g, \'\');" style="width:50px;">';
-        $page .= '&nbsp;&nbsp;<button class="btn btn-primary btn-page btn-xs" type="button" onclick="btn_go()"> 跳转 </button></span>';
+        $page .= '&nbsp;&nbsp;<button class="btn btn-primary btn-page btn-xs" type="button" onclick="btn_go(this, 1)"  totalpage="' . $totalpg . '" > 跳转 </button></span>';
+    }
+    return $totalpg >= 1 ? $page : '';
+}
+
+
+/**
+ * 分页函数--直接链接地址--主要给前端页面用seo
+ * author baihaijiang
+ * date 2015-06-29
+ * @param string $url_model 链接地址模板 http://www.***.com/list/{page} 主要是这个page 替换为具体的页数
+ * @param string $page_tag  链接地址模板 $url_model 中的页数标签 默认 {page}
+ * @param int $totalpg 总页数
+ * @param $pg 当前页数
+ * @param $record 总数量
+ * @param $showpage 显示页码数量
+ * @param $show_num 显示其它功能[与操作]
+ * 1输入页码跳转[按钮]通过 calss page_go 实现翻页
+ * 2输入页码跳转[按钮]通过btn_go()方法实现翻页
+ */
+function showPageLink($url_model, $page_tag = '{page}', $totalpg = 0, $pg = 1, $record = 0,$showpage = 9,$show_num = 0)
+{
+
+    $pre = $pg > 1 ? $pg - 1 : $pg;
+
+    $nex = $pg < $totalpg ? $pg + 1 : $totalpg;
+
+    //$differ = 4;         //差页码值
+    //$showpage = 8;       //显示页码数
+
+
+    $page = '';
+
+    if($totalpg <= 1){
+        return $page;
+    }
+    $page .= "<input type='hidden' name='url_model' value='" . $url_model . "' />";
+    $page .= "<input type='hidden' name='page_tag' value='" . $page_tag . "' />";
+    $page .= "<li><a href='javascript:;' id='totalpage' totalpage='" . $totalpg . "' >总数:" . $record . "个 / " . $totalpg . "页</a></li>";
+    //第一页
+    $first_page_class = "";
+    if ($pg == 1) {
+        $first_page_class = ' class="disabled"';
+    }
+    $page .= '<li '. $first_page_class.'>';
+    $page .= '<a href="' . str_replace($page_tag, 1, $url_model) . '" pg="1" aria-label="首页">';
+    $page .= '<span aria-hidden="true">首页</span>';
+    $page .= '</a></li>';
+
+    $page .= '<li '. $first_page_class .'>';
+    $page .= '<a href="' . str_replace($page_tag, $pre, $url_model) . '" pg="' . $pre . '" aria-label="前页">';
+    $page .= '<span aria-hidden="true">前页</span>';
+    $page .= '</a></li>';
+
+    //if ($totalpg < ($showpage + $differ)) {
+    if ($totalpg <= $showpage) {//总页数小于要显示的8页数,显示所有页码[总页数小于/等于要显示的页数，从头开始]
+        $s = 1;
+        $e = $totalpg;
+    } else {//[总页数大于要显示的页数，从尾开始]
+        $pg_back = ceil(($showpage-1)/2);//后面显示页数
+        if($pg+$pg_back > $totalpg){
+            $pg_back = $totalpg - $pg;//后面显示页数
+        }
+        $pg_pre = $showpage - $pg_back -1;//前面显示页数
+
+        $s = $pg - $pg_pre;
+        $e = $pg + $pg_back;
+        if($s <=0){//纠正
+            $s = 1;
+            $e = $showpage;
+        }
+        /*
+        if ($pg >= $showpage) {//当前页数,大于显示8页
+            //if (($pg + 4) < $totalpg) {//当前页数+4页,小于总页数 if (($pg + 4) < $totalpg) {
+            //    $s = ($pg - 2);
+            //    $e = ($pg + 2);
+            //} else {//当前页数+4页,大于/等于总页数
+            //    $s = ($pg - $showpage) + 2;
+            //    $e = ($pg + $differ) < $totalpg ? ($pg + $differ) : $totalpg;
+            //}
+        } else {//当前页数,小于显示8页
+            $s = 1;
+            $e = $showpage;
+        }
+         *
+         */
+    }
+
+    for ($i = $s; $i <= $e; $i++) {
+        if ($pg == $i) {
+            $page .= '<li class="active"><a herf="' . str_replace($page_tag, $i, $url_model) . '" pg="' . $i . '">' . $i . '</a></li>';
+        } else {
+            $page .= '<li><a href="' . str_replace($page_tag, $i, $url_model) . '" pg="' . $i . '">' . $i . '</a></li>';
+        }
+    }
+    //后一页
+    $last_page_class = "";
+    if ($pg == $totalpg) {
+        $last_page_class = ' class="disabled"';
+    }
+
+    $page .= '<li ' . $last_page_class .'>';
+    $page .= '<a aria-label="后页" href="' . str_replace($page_tag, $nex, $url_model) . '" pg="' . $nex . '">';
+    $page .= '<span aria-hidden="true">后页</span>';
+    $page .= '</a></li>';
+
+    $page .= '<li ' . $last_page_class .'>';
+    $page .= '<a aria-label="末页" href="' . str_replace($page_tag, $totalpg, $url_model) . '" pg="' . $totalpg . '">';
+    $page .= '<span aria-hidden="true">末页</span>';
+    $page .= '</a></li>';
+
+    if ($totalpg >= 1 && ( ($show_num & 1) ==1 ) ) {//1输入页码跳转[按钮]通过 calss page_go 实现翻页
+        $page .= '&nbsp;&nbsp;<span class="pagespan2" ><input class="form-control pagenum" id="page_num" name="page_num" type="text" value="" onkeyup="this.value=this.value.replace(/[^0-9]/g, \'\');" style="width:50px;">';
+        $page .= '&nbsp;&nbsp;<button class="btn btn-primary btn-page btn-xs page_go" type="button"  totalpage="' . $totalpg . '" > 跳转 </button></span>';
+    }
+    if ($totalpg >= 1 && ( ($show_num & 2) ==2 ) ) {//2输入页码跳转[按钮]通过btn_go()方法实现翻页；第一个参数：当前对象；第二个参数数字:代表类型[可能会用其它同类方法]
+        $page .= '&nbsp;&nbsp;<span class="pagespan2"><input class="form-control pagenum" id="page_num" name="page_num" type="text" value=""  onkeyup="this.value=this.value.replace(/[^0-9]/g, \'\');" style="width:50px;">';
+        $page .= '&nbsp;&nbsp;<button class="btn btn-primary btn-page btn-xs" type="button" onclick="btn_go(this, 2)"  totalpage="' . $totalpg . '" > 跳转 </button></span>';
     }
     return $totalpg >= 1 ? $page : '';
 }

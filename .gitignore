@@ -19,6 +19,7 @@ imgdata
 /adminth.weituyi.com/resources/views/piwik.blade.php
 /adminth.weituyi.com/app/Exceptions/ExportException.php
 /adminth.weituyi.com/public/dist/lib/kindeditor/php/upload_json.php
+/adminth.weituyi.com/public/dist/lib/kindeditor/php/SessionCustom.php
 
 /apith.weituyi.com/.idea
 /apith.weituyi.com/public/resource

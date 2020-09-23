@@ -97,10 +97,19 @@ class CommonRequest
         // 总记录数,优化方案：传0传重新获取总数，如果传了，则不会再获取，而是用传的，减软数据库压力
         $total = self::getInt($request, 'total');
         if ( (! is_numeric($total)) || $total<0 ){ $total = 0; }
+        // 追加两个参数 - 需要时才用
+        // 分页函数--直接链接地址--主要给前端页面用seo
+        // 链接地址模板 http://www.***.com/list/{page} 主要是这个page 替换为具体的页数
+        $url_model = CommonRequest::get($request, 'url_model');
+        // 链接地址模板 $url_model 中的页数标签 默认 {page}
+        $page_tag = CommonRequest::get($request, 'page_tag');
+        if($page_tag == '') $page_tag = '{page}';
         return [
             'page' => $page,
             'pagesize' => $pagesize,
             'total' => $total,
+            'url_model' => $url_model,// 追加两个参数 - 需要时才用
+            'page_tag' => $page_tag,
         ];
     }
 

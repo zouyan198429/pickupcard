@@ -58,7 +58,7 @@ class BaseAPIBusiness
      * @param string $model_name 模型名称
      * @param string $queryParams 条件数组/json字符
      * @param string $relations 关系数组/json字符
-     * @param int $oprateBit 操作类型位 1:获得所有的; 2 分页获取[同时有1和2，2优先]；4 返回分页html翻页代码
+     * @param int $oprateBit 操作类型位 1:获得所有的; 2 分页获取[同时有1和2，2优先]；4 返回分页html翻页代码 8 返回分页html翻页代码--a链接形式seo用
      * @param int $notLog 是否需要登陆 0需要1不需要
      * @return  array 列表数据
         $result = [
@@ -78,7 +78,7 @@ class BaseAPIBusiness
         // $pageParams = CommonRequest::getPageParams($request);
         // 关键字
 
-        list($page, $pagesize, $total) = array_values($pageParams);
+        list($page, $pagesize, $total, $url_model, $page_tag) = array_values($pageParams);
         /*
         $queryParams = [
             'where' => [
@@ -160,6 +160,13 @@ class BaseAPIBusiness
         ];
         if(  ($oprateBit & 4) == 4 ){
             $result['pageInfo'] = showPage($totalPage,$page,$total,12,1);
+        }
+        if(  ($oprateBit & 8) == 8 ){// 分页函数--直接链接地址--主要给前端页面用seo
+            // 加上总数量参数
+            if ( $total > 0 && strpos($url_model, 'total=') === false) { // 没有
+                $url_model .= ((strpos($url_model, '?') === false) ? '?' : '&') . 'total=' . $total;
+            }
+            $result['pageInfoLink'] = showPageLink($url_model, $page_tag, $totalPage, $page, $total,12,2);
         }
         return $result;
 

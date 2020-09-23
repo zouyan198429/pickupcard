@@ -18,7 +18,7 @@ class CTAPIProductBusiness extends BasicPublicCTAPIBusiness
      *
      * @param Request $request 请求信息
      * @param Controller $controller 控制对象
-     * @param int $oprateBit 操作类型位 1:获得所有的; 2 分页获取[同时有1和2，2优先]；4 返回分页html翻页代码
+     * @param int $oprateBit 操作类型位 1:获得所有的; 2 分页获取[同时有1和2，2优先]；4 返回分页html翻页代码 8 返回分页html翻页代码--a链接形式seo用
      * @param string $queryParams 条件数组/json字符
      * @param mixed $relations 关系
      * @param array $extParams 其它扩展参数，
@@ -81,6 +81,7 @@ class CTAPIProductBusiness extends BasicPublicCTAPIBusiness
             $field = CommonRequest::get($request, 'field');
             $keyWord = CommonRequest::get($request, 'keyword');
             if (!empty($field) && !empty($keyWord)) {
+                if(!isset($queryParams['where'])) $queryParams['where'] = [];
                 array_push($queryParams['where'], [$field, 'like', '%' . $keyWord . '%']);
             }
 
@@ -447,7 +448,7 @@ class CTAPIProductBusiness extends BasicPublicCTAPIBusiness
      * @param Request $request 请求信息
      * @param Controller $controller 控制对象
      * @param int $pid 当前父id
-     * @param int $oprateBit 操作类型位 1:获得所有的; 2 分页获取[同时有1和2，2优先]；4 返回分页html翻页代码
+     * @param int $oprateBit 操作类型位 1:获得所有的; 2 分页获取[同时有1和2，2优先]；4 返回分页html翻页代码 8 返回分页html翻页代码--a链接形式seo用
      * @param int $notLog 是否需要登陆 0需要1不需要
      * @return  array 列表数据[一维的键=>值数组]
      * @author zouyan(305463219@qq.com)
@@ -463,7 +464,7 @@ class CTAPIProductBusiness extends BasicPublicCTAPIBusiness
      * @param Request $request 请求信息
      * @param Controller $controller 控制对象
      * @param int $pid 当前父id
-     * @param int $oprateBit 操作类型位 1:获得所有的; 2 分页获取[同时有1和2，2优先]；4 返回分页html翻页代码
+     * @param int $oprateBit 操作类型位 1:获得所有的; 2 分页获取[同时有1和2，2优先]；4 返回分页html翻页代码 8 返回分页html翻页代码--a链接形式seo用
      * @param int $notLog 是否需要登陆 0需要1不需要
      * @return  array 列表数据
      * @author zouyan(305463219@qq.com)

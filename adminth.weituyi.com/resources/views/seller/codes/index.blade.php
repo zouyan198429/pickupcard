@@ -126,6 +126,11 @@
       var CLOSE_ALL_URL = "{{ url('api/seller/codes/ajax_close_all') }}";//关闭所有[根据活动id]
       var CLOSE_URL = "{{ url('api/seller/codes/ajax_close') }}";//单个或批量关闭地址
       var CURRENT_ACTIVITY_ID = "{{ $activity_id or 0 }}";// 当前操作的活动id
+
+      // 列表数据每隔指定时间就去执行一次刷新【如果表有更新时】--定时执行
+      var IFRAME_TAG_KEY = "";// "QualityControl\\CTAPIStaff";// 获得模型表更新时间的关键标签，可为空：不获取
+      var IFRAME_TAG_TIMEOUT = 60000;// 获得模型表更新时间运行间隔 1000:1秒 ；可以不要此变量：默认一分钟
+
   </script>
   <script src="{{asset('js/common/list.js')}}"></script>
   <script src="{{ asset('js/seller/lanmu/codes.js') }}"  type="text/javascript"></script>

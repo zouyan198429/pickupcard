@@ -223,9 +223,23 @@
     </div>
   </div>
 
+  <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+  <script src="{{asset('static/js/custom/common.js')}}"></script>
+
   <script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.js')}}"></script>
   {{--<script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.all.js')}}"></script>--}}
 
+  <script>
+      // 顶上切换的-每一个标签：latest_time 最新判断时间 ; tag_key 标签的key--
+      // 左则的 ： tag_key 标签的key
+      var RECORD_URL = '';// 当前标签的url
+      var RECORD_TAG_KEY = '';// 当前标签的key
+      var EXPIRE_TIME = 60;// 过期时长【单位秒】
+      var SELED_CLASS = 'layui-this';// 切换时，选中状态的类名称
+      // 请求模块表更新时间的接口;参数如：module_name=QualityControl\CTAPIStaff；如果为空：则不请求接口
+      var GET_TABLE_UPDATE_TIME_URL = "";// { { url('api/admin/ajax_getTableUpdateTime') }}";
+  </script>
+  <script src="{{asset('static/js/custom/layuiTagAutoRefesh.js')}}"></script>
   <script>
   layui.config({
     base: '/layui-admin-v1.2.1/src/layuiadmin/' //静态资源所在路径

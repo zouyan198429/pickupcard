@@ -8,13 +8,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/css/layui.css?8')}}" media="all">
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/admin.css')}}" media="all">
-  
+
   <script>
   /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
   </script>
 </head>
 <body class="layui-layout-body">
-  
+
   <div id="LAY_app">
     <div class="layui-layout layui-layout-admin">
       <div class="layui-header">
@@ -42,7 +42,7 @@
           {{----}}
         </ul>
         <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-          
+
           {{--<li class="layui-nav-item" lay-unselect>--}}
             {{--<a lay-href="{{ url('layui/app/message/index') }}" layadmin-event="message" lay-text="消息中心">--}}
               {{--<i class="layui-icon layui-icon-notice"></i>  --}}
@@ -79,7 +79,7 @@
               <dd  style="text-align: center;"><a href="{{ url('admin/logout') }}">退出</a></dd>
             </dl>
           </li>
-          
+
           {{--<li class="layui-nav-item layui-hide-xs" lay-unselect>--}}
             {{--<a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>--}}
           {{--</li>--}}
@@ -88,7 +88,7 @@
           </li>
         </ul>
       </div>
-      
+
       <!-- 侧边菜单 -->
       <div class="layui-side layui-side-menu">
         <div class="layui-side-scroll">
@@ -96,7 +96,7 @@
           <div class="layui-logo" lay-href="{{ url('/help/index.html') }}">
             <span>蒙驴驴乳-大后台</span>
           </div>
-          
+
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
             {{--<li data-name="home" class="layui-nav-item layui-nav-itemed">--}}
               {{--<a href="javascript:;" lay-tips="主页" lay-direction="2">--}}
@@ -116,13 +116,13 @@
                 {{--</dd>--}}
               {{--</dl>--}}
             {{--</li>--}}
-            
+
             <li data-name="user" class="layui-nav-item">
               <a href="javascript:;" lay-tips="城市管理" lay-direction="2">
                 <i class="layui-icon layui-icon-component"></i>
                 <cite>会员管理</cite>
               </a>
-              <dl class="layui-nav-child">                
+              <dl class="layui-nav-child">
                 <dd>
                   <a lay-href="{{ url('admin/cityPartner') }}">城市加盟商</a>
                 </dd>
@@ -131,7 +131,7 @@
                 <dd>
                   <a lay-href="{{ url('admin/seller') }}">商家</a>
                 </dd>
-              </dl>             
+              </dl>
               <dl class="layui-nav-child">
                 <dd>
                   <a lay-href="{{ url('admin/shop') }}">店铺管理</a>
@@ -156,7 +156,7 @@
                 {{--<dd>--}}
                 {{--<a lay-href="{{ url('layui/user/administrators/list') }}">商品规格</a>--}}
                 {{--</dd>--}}
-                
+
               </dl>
             </li>
             <li data-name="user" class="layui-nav-item">
@@ -171,7 +171,7 @@
                 <cite>统计</cite>
               </a>
               <dl class="layui-nav-child">
-                <dd class="layui-nav-itemed"> 
+                <dd class="layui-nav-itemed">
                       <a lay-href="{{ url('admin/order/countOrders') }}">完成订单统计</a>
                 </dd>
                 {{--<dd class="layui-nav-itemed">--}}
@@ -190,7 +190,7 @@
                 <cite>用户数据</cite>
               </a>
               <dl class="layui-nav-child">
-                <dd class="layui-nav-itemed"> 
+                <dd class="layui-nav-itemed">
                   <a lay-href="{{ url('admin/commonAddr') }}">常用地址</a>
                 </dd>
               </dl>
@@ -218,7 +218,7 @@
                 </dd>
                 <dd>
                   <a lay-href="{{ url('admin/staffUser') }}">用户</a>
-                </dd> 
+                </dd>
               </dl>
             </li>
             <li data-name="set" class="layui-nav-item">
@@ -281,8 +281,8 @@
           </ul>
         </div>
       </div>
-      
-      
+
+
       <!-- 主体内容 -->
       <div class="layui-body" id="LAY_app_body">
         <div class="layadmin-tabsbody-item layui-show">
@@ -290,15 +290,29 @@
           <iframe src="{{ url('/help/index.html') }}" frameborder="0" class="layadmin-iframe"></iframe>
         </div>
       </div>
-      
+
       <!-- 辅助元素，一般用于移动设备下遮罩 -->
       <div class="layadmin-body-shade" layadmin-event="shade"></div>
     </div>
   </div>
 
+  <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+  <script src="{{asset('static/js/custom/common.js')}}"></script>
+
   <script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.js')}}"></script>
   {{--<script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.all.js')}}"></script>--}}
 
+  <script>
+      // 顶上切换的-每一个标签：latest_time 最新判断时间 ; tag_key 标签的key--
+      // 左则的 ： tag_key 标签的key
+      var RECORD_URL = '';// 当前标签的url
+      var RECORD_TAG_KEY = '';// 当前标签的key
+      var EXPIRE_TIME = 60;// 过期时长【单位秒】
+      var SELED_CLASS = 'layui-this';// 切换时，选中状态的类名称
+      // 请求模块表更新时间的接口;参数如：module_name=QualityControl\CTAPIStaff；如果为空：则不请求接口
+      var GET_TABLE_UPDATE_TIME_URL = "";// { { url('api/admin/ajax_getTableUpdateTime') }}";
+  </script>
+  <script src="{{asset('static/js/custom/layuiTagAutoRefesh.js')}}"></script>
   <script>
   layui.config({
     base: '/layui-admin-v1.2.1/src/layuiadmin/' //静态资源所在路径
@@ -313,7 +327,7 @@
   (function() {
     var hm = document.createElement("script");
     hm.src = "https://hm.baidu.com/hm.js?d214947968792b839fd669a4decaaffc";
-    var s = document.getElementsByTagName("script")[0]; 
+    var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
   </script>
