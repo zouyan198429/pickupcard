@@ -87,7 +87,7 @@ class AddrsController extends BaseWebController
         $codeInfo = $this->user_info;
         $code_id = $codeInfo['id'];
         // 获得兑换码信息
-        $codeNewInfo = CTAPIActivityCodeBusiness::getInfoData($request, $this, $code_id, ['activity_id'],  ['activityInfo'], 1);
+        $codeNewInfo = CTAPIActivityCodeBusiness::getInfoData($request, $this, $code_id, ['activity_id', 'seller_id'],  ['activityInfo'], 1);
         $activity_info = $codeNewInfo['activity_info'] ?? [];// 活动
         $activity_tips = $activity_info['activity_tips'] ?? '操作成功!！';
 

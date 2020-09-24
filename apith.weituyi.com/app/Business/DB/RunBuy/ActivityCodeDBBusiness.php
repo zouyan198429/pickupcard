@@ -30,12 +30,29 @@ class ActivityCodeDBBusiness extends BasePublicDBBusiness
         if(is_string($id)) $id = explode(',', $id);// 是字符，则转为数组
         $id = array_values(array_unique($id));
         $retIds = $id;
+        if(empty($id)) return $retIds;
         // 一维数组，则转为二维数组
         // Tool::isMultiArr($id, true);
         $operateData = [];
+        // 获得所有的记录
+        $queryParams = [
+//            'where' => [
+//                ['begin_time', '<=', $nowDate],
+//                ['end_time', '>=', $nowDate],
+//                ['status', '=', 1],
+//            ],
+            'whereIn' => [
+                'id' => $id,
+            ],
+            'select' => ['id', 'status'],
+            //   'orderBy' => [ 'id'=>'desc'],//'sort_num'=>'desc',
+        ];
+        $idStatusKV = static::getKeyVals(['key' => 'id', 'val' => 'status'], [], $queryParams);
         foreach($id as $primary_id){
+            if(!isset($idStatusKV[$primary_id]) || $idStatusKV[$primary_id] != 1) continue;
             array_push($operateData, ['id' => $primary_id]);
         }
+        if(empty($operateData)) return $retIds;
         $saveData = [
             'activity_id' => $activity_id,
             'open_status' => $open_status
@@ -81,7 +98,7 @@ class ActivityCodeDBBusiness extends BasePublicDBBusiness
                     'where' => [
                          ['activity_id', $activity_id],
                         // ['staff_id', $operate_staff_id],
-                        // ['status', 1],
+                         ['status', 1],
 //                        ['status_business', 1],
                         // ['status_business', '!=', 1],
                     ],

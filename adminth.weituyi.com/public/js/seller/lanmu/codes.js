@@ -222,12 +222,12 @@ function other_operate_ajax(operate_type, id){
     document.write("            <td><%=item.status_text%><\/td>");
     // document.write("            <td><%=item.sort_num%><\/td>");
     document.write("            <td>");
-    document.write("                <%if( item.open_status == 1){%>");
+    document.write("                <%if( item.open_status == 1 && item.status == 1 ){%>");
     document.write("                <a href=\"javascript:void(0);\" class=\"btn btn-mini btn-info\" onclick=\"otheraction.open(<%=item.id%>)\">");
     document.write("                    <i class=\"ace-icon bigger-60\"> 开启<\/i>");
     document.write("                <\/a>");
     document.write("                <%}%>");
-    document.write("                <%if(  item.open_status == 2){%>");
+    document.write("                <%if(  item.open_status == 2 && item.status == 1){%>");
     document.write("                <a href=\"javascript:void(0);\" class=\"btn btn-mini btn-info\" onclick=\"otheraction.close(<%=item.id%>)\">");
     document.write("                    <i class=\"ace-icon bigger-60\"> 关闭<\/i>");
     document.write("                <\/a>");
