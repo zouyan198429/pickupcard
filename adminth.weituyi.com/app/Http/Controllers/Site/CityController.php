@@ -18,7 +18,7 @@ class CityController extends BaseWebController
      * @author zouyan(305463219@qq.com)
      */
     public function ajax_get_child(Request $request){
-        $this->InitParams($request);
+        // $this->InitParams($request);
         $parent_id = CommonRequest::getInt($request, 'parent_id');
         // 获得一级城市信息一维数组[$k=>$v]
         $childKV = CTAPICityBusiness::getCityByPid($request, $this, $parent_id, 1);

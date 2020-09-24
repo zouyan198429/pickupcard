@@ -109,6 +109,42 @@ class StaffController extends BasicController
 
 
     /**
+     * 注册
+     *
+     * @param Request $request
+     * @return mixed
+     * @author zouyan(305463219@qq.com)
+     */
+    public function reg(Request $request)
+    {
+         $id = 0;
+        // $this->InitParams($request);
+        $reDataArr = $this->reDataArr;
+        $info = [
+            'id'=>$id,
+            'admin_type' => 0,
+        ];
+        $operate = "添加";
+
+//        if ($id > 0) { // 获得详情数据
+//            $operate = "修改";
+//            $info = CTAPIStaffBusiness::getInfoData($request, $this, $id, [], '');
+//            if(empty($info)) throws('记录不存在');
+//            if($info['admin_type'] != static::$ADMIN_TYPE) throws('用户类型不一致');
+//            if(in_array(static::$ADMIN_TYPE, [4,8])) $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
+//        }
+        $reDataArr['adminType'] =  CTAPIStaffBusiness::$adminType;
+        $reDataArr['defaultAdminType'] = $info['admin_type'] ?? -1;// 列表页默认状态
+        // $reDataArr = array_merge($reDataArr, $resultDatas);
+        $reDataArr['info'] = $info;
+        $reDataArr['operate'] = $operate;
+        $reDataArr['province_kv'] = CTAPICityBusiness::getCityByPid($request, $this,  0, 1);
+//        $reDataArr['province_kv'] = CTAPIStaffBusiness::getChildListKeyVal($request, $this, 0, 1 + 0, 0);
+//        $reDataArr['province_id'] = 0;
+        return view('' . static::$VIEW_PATH. '.' . static::$VIEW_NAME. '.reg', $reDataArr);
+    }
+
+    /**
      * ajax保存数据
      *
      * @param int $id
@@ -190,6 +226,91 @@ class StaffController extends BasicController
             if(in_array(static::$ADMIN_TYPE, [4,8])) $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
         }
         $resultDatas = CTAPIStaffBusiness::replaceById($request, $this, $saveData, $id, true);
+        return ajaxDataArr(1, $resultDatas, '');
+    }
+
+    /**
+     * ajax保存数据--注册-还没有登录
+     *
+     * @param int $id
+     * @return Response
+     * @author zouyan(305463219@qq.com)
+     */
+    public function ajax_reg(Request $request)
+    {
+        // $this->InitParams($request);
+        $id = 0;// CommonRequest::getInt($request, 'id');
+        // CommonRequest::judgeEmptyParams($request, 'id', $id);
+//        $work_num = CommonRequest::get($request, 'work_num');
+//        $department_id = CommonRequest::getInt($request, 'department_id');
+//        $group_id = CommonRequest::getInt($request, 'group_id');
+//        $position_id = CommonRequest::getInt($request, 'position_id');
+        $real_name = CommonRequest::get($request, 'real_name');
+        $sex = CommonRequest::getInt($request, 'sex');
+        $account_status = 0;// CommonRequest::getInt($request, 'account_status');
+        $mobile = CommonRequest::get($request, 'mobile');
+        $tel = CommonRequest::get($request, 'tel');
+        $qq_number = CommonRequest::get($request, 'qq_number');
+        $province_id = CommonRequest::getInt($request, 'province_id');
+        $city_id = CommonRequest::getInt($request, 'city_id');
+        $area_id = CommonRequest::getInt($request, 'area_id');
+        $addr = CommonRequest::get($request, 'addr');
+        $latitude = CommonRequest::get($request, 'latitude');
+        $longitude = CommonRequest::get($request, 'longitude');
+        $admin_username = CommonRequest::get($request, 'admin_username');
+        $admin_password = CommonRequest::get($request, 'admin_password');
+        $sure_password = CommonRequest::get($request, 'sure_password');
+
+        $saveData = [
+            'admin_type' => static::$ADMIN_TYPE,
+//            'work_num' => $work_num,
+//            'department_id' => $department_id,
+//            'group_id' => $group_id,
+//            'position_id' => $position_id,
+            'real_name' => $real_name,
+            'sex' => $sex,
+            'gender' => $sex,
+            'account_status' => $account_status,
+            'mobile' => $mobile,
+            'tel' => $tel,
+            'qq_number' => $qq_number,
+            'province_id' => $province_id,
+            'city_id' => $city_id,
+            'area_id' => $area_id,
+            'addr' => $addr,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'admin_username' => $admin_username,
+        ];
+//        // 企业 的 个人--只能读自己的人员信息
+//        if($this->user_info['admin_type'] == 2 && in_array(static::$ADMIN_TYPE, [4,8])){
+//            $saveData['seller_id'] = $this->company_id;
+//        }
+        // 企业会有企业名称
+        if(static::$ADMIN_TYPE == 2) {
+            $saveData['seller_name'] = CommonRequest::get($request, 'seller_name');
+        }
+
+        if($admin_password != '' || $sure_password != ''){
+            if ($admin_password != $sure_password){
+                return ajaxDataArr(0, null, '密码和确定密码不一致！');
+            }
+            $saveData['admin_password'] = $admin_password;
+        }
+
+        if($id <= 0) {// 新加;要加入的特别字段
+            $addNewData = [
+                // 'account_password' => $account_password,
+            ];
+            if(in_array(static::$ADMIN_TYPE, [4,8])) $this->appSellerId($addNewData); // 有企业id的记录，添加时，加入所属企业id
+            $saveData = array_merge($saveData, $addNewData);
+        }else{
+//            $info = CTAPIStaffBusiness::getInfoData($request, $this, $id, [], '');
+//            if(empty($info)) throws('记录不存在');
+//            if($info['admin_type'] != static::$ADMIN_TYPE) throws('用户类型不一致');
+//            if(in_array(static::$ADMIN_TYPE, [4,8])) $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
+        }
+        $resultDatas = CTAPIStaffBusiness::replaceById($request, $this, $saveData, $id, true, 1);
         return ajaxDataArr(1, $resultDatas, '');
     }
 

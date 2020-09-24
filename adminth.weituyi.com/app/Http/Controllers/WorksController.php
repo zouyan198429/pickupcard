@@ -206,7 +206,7 @@ class WorksController extends BaseController
     // 根据登录的类型，获得商家id
     public function getSellerIdByAdminType($field_name = 'seller_id'){
         $seller_id = 0;
-        if(static::$LOGIN_ADMIN_TYPE == 2)  $seller_id = $this->user_id;
+        if(static::$LOGIN_ADMIN_TYPE == 2)  $seller_id = $this->user_id ?? 0;
         if(static::$LOGIN_ADMIN_TYPE == 4)  $seller_id = $this->user_info[$field_name] ?? 0;
         // if(static::$LOGIN_ADMIN_TYPE == 8)  $seller_id = $this->user_info['seller_id'] ?? 0;
         return $seller_id;

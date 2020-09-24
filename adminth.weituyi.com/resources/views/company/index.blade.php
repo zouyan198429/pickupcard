@@ -115,14 +115,20 @@
                   <a lay-href="{{ url('company/activity') }}">提货卡管理</a>
                 </dd>
 {{--                  @endif--}}
-                <dd >
-                  <a lay-href="{{ url('company/addrs') }}">提货列表</a>
-                </dd>
-                  <dd >
-                      <a lay-href="{{ url('company/addrs_wait_send') }}">未发货列表</a>
-                  </dd>
-                  <dd >
-                      <a lay-href="{{ url('company/addrs_sended') }}">已发货列表</a>
+
+                  <dd class="layui-nav-itemed">
+                      <a href="javascript:;">提货管理</a>
+                      <dl class="layui-nav-child">
+                          <dd >
+                              <a lay-href="{{ url('company/addrs') }}">提货列表</a>
+                          </dd>
+                          <dd >
+                              <a lay-href="{{ url('company/addrs_wait_send') }}">未发货列表</a>
+                          </dd>
+                          <dd >
+                              <a lay-href="{{ url('company/addrs_sended') }}">已发货列表</a>
+                          </dd>
+                      </dl>
                   </dd>
               </dl>
             </li>
@@ -163,14 +169,14 @@
               </a>
               <dl class="layui-nav-child">
 {{--                  @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)--}}
-                <dd class="layui-nav-itemed">
-                  <a href="javascript:;">系统设置</a>
-                  <dl class="layui-nav-child">
-                    <dd>
-                      <a lay-href="{{ url('company/city') }}">城市管理</a>
-                    </dd>
-                  </dl>
-                </dd>
+{{--                <dd class="layui-nav-itemed">--}}
+{{--                  <a href="javascript:;">系统设置</a>--}}
+{{--                  <dl class="layui-nav-child">--}}
+{{--                    <dd>--}}
+{{--                      <a lay-href="{{ url('company/city') }}">城市管理</a>--}}
+{{--                    </dd>--}}
+{{--                  </dl>--}}
+{{--                </dd>--}}
 {{--                  @endif--}}
                 <dd class="layui-nav-itemed">
                   <a href="javascript:;">我的设置</a>

@@ -159,6 +159,8 @@ Route::any('seller/ajax_login', 'Seller\IndexController@ajax_login');// 登陆
 Route::post('seller/ajax_password_save', 'Seller\IndexController@ajax_password_save');// 修改密码
 Route::any('seller/ajax_info_save', 'Seller\IndexController@ajax_info_save');// 修改设置
 
+Route::any('seller/ajax_reg', 'Seller\SellerController@ajax_reg');// 注册
+
 //后台--管理员
 Route::any('seller/staff/ajax_alist', 'Seller\StaffController@ajax_alist');//ajax获得列表数据
 Route::post('seller/staff/ajax_del', 'Seller\StaffController@ajax_del');// 删除
@@ -433,6 +435,8 @@ Route::post('company/upload/ajax_del', 'Company\UploadController@ajax_del');// �
 Route::any('company/ajax_login', 'Company\IndexController@ajax_login');// 登陆
 Route::post('company/ajax_password_save', 'Company\IndexController@ajax_password_save');// 修改密码
 Route::any('company/ajax_info_save', 'Company\IndexController@ajax_info_save');// 修改设置
+
+Route::any('company/ajax_reg', 'Company\SellerController@ajax_reg');// 注册
 
 //后台--管理员
 Route::any('company/staff/ajax_alist', 'Company\StaffController@ajax_alist');//ajax获得列表数据

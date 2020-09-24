@@ -203,6 +203,7 @@ Route::get('admin/seller/add/{id}', 'Admin\SellerController@add');// 添加
 Route::get('admin/seller/export', 'Admin\SellerController@export');// 导出
 Route::get('admin/seller/import_template', 'Admin\SellerController@import_template');// 导入模版
 
+
 // 后台--管理员
 Route::get('admin/employee', 'Admin\EmployeeController@index');// 列表
 //Route::get('admin/employee/add/{id}', 'Admin\EmployeeController@add');// 添加
@@ -263,6 +264,9 @@ Route::get('seller/login', 'Seller\IndexController@login');//login.html 登录
 Route::get('seller/logout', 'Seller\IndexController@logout');// 注销
 Route::get('seller/password', 'Seller\IndexController@password');//psdmodify.html 个人信息-修改密码
 Route::get('seller/info', 'Seller\IndexController@info');//myinfo.html 个人信息--显示
+
+Route::get('seller/card_list', 'Seller\IndexController@card_list');// 卡商城
+Route::get('seller/reg', 'Seller\SellerController@reg');// 注册
 
 // 后台--企业
 Route::get('seller/seller', 'Seller\SellerController@index');// 列表
@@ -432,6 +436,8 @@ Route::get('company/login', 'Company\IndexController@login');//login.html 登录
 Route::get('company/logout', 'Company\IndexController@logout');// 注销
 Route::get('company/password', 'Company\IndexController@password');//psdmodify.html 个人信息-修改密码
 Route::get('company/info', 'Company\IndexController@info');//myinfo.html 个人信息--显示
+
+Route::get('company/reg', 'Company\SellerController@reg');// 注册
 
 // 后台--企业
 Route::get('company/seller', 'Company\SellerController@index');// 列表

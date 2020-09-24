@@ -48,6 +48,20 @@ class IndexController extends BasicController
     }
 
     /**
+     * 卡商城
+     *
+     * @param Request $request
+     * @return mixed
+     * @author zouyan(305463219@qq.com)
+     */
+    public function card_list(Request $request)
+    {
+        $this->InitParams($request);
+        $reDataArr = $this->reDataArr;
+        return view('' . static::$VIEW_PATH . '.card_list', $reDataArr);
+    }
+
+    /**
      * 登陆
      *
      * @param Request $request

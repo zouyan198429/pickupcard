@@ -65,16 +65,15 @@
         <div class="layui-form-item">
           <button class="layui-btn layui-btn-fluid"  id="submitBtn" >登 入</button>
         </div>
-        {{--
         <div class="layui-trans layui-form-item layadmin-user-login-other">
-          <label>社交账号登入</label>
-          <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
-          <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
-          <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
+{{--            --}}
+{{--          <label>社交账号登入</label>--}}
+{{--          <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>--}}
+{{--          <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>--}}
+{{--          <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>--}}
 
-          <a href="{{ url('layui/user/reg') }}" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
+          <a href="{{ url('seller/reg') }}" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
         </div>
-        --}}
       </div>
       </form>
     </div>
