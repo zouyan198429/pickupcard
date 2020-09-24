@@ -99,47 +99,41 @@
 
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
 
+              <li data-name="set" class="layui-nav-item">
+                  <a lay-href="{{ url('seller/products') }}" lay-tips="商品管理" lay-direction="1">
+                      <i class="layui-icon layui-icon-app"></i>
+                      <cite>商品管理</cite>
+                  </a>
+              </li>
+              <li data-name="set" class="layui-nav-item">
+                  <a lay-href="{{ url('seller/activity') }}"  lay-tips="卡密管理" lay-direction="2">
+                      <i class="layui-icon layui-icon-tabs"></i>
+                      <cite>卡密管理</cite>
+                  </a>
+              </li>
+              <li data-name="home" class="layui-nav-item layui-nav-item">
+                  <a href="javascript:;" lay-tips="提货卡管理" lay-direction="3">
+                      <i class="layui-icon layui-icon-templeate-1"></i>
+                      <cite>提货管理</cite>
+                  </a>
+                  <dl class="layui-nav-child">
 
-
-            <li data-name="home" class="layui-nav-item layui-nav-item">
-              <a href="javascript:;" lay-tips="提货卡管理" lay-direction="2">
-                <i class="layui-icon layui-icon-home"></i>
-                <cite>提货卡管理</cite>
-              </a>
-              <dl class="layui-nav-child">
-{{--                  @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)--}}
-                  <dd>
-                      <a lay-href="{{ url('seller/card_list') }}">卡商城[购卡]</a>
-                  </dd>
-                <dd>
-                   <a lay-href="{{ url('seller/products') }}">商品管理</a>
-                </dd>
-                <dd>
-                  <a lay-href="{{ url('seller/activity') }}">提货卡管理</a>
-                </dd>
-{{--                  @endif--}}
-
-                  <dd class="layui-nav-itemed">
-                      <a href="javascript:;">提货管理</a>
-                      <dl class="layui-nav-child">
-                          <dd >
-                              <a lay-href="{{ url('seller/addrs') }}">提货列表</a>
-                          </dd>
-                          <dd >
-                              <a lay-href="{{ url('seller/addrs_wait_send') }}">未发货列表</a>
-                          </dd>
-                          <dd >
-                              <a lay-href="{{ url('seller/addrs_sended') }}">已发货列表</a>
-                          </dd>
-                      </dl>
-                  </dd>
-              </dl>
-            </li>
+                      <dd >
+                          <a lay-href="{{ url('seller/addrs') }}">提货列表</a>
+                      </dd>
+                      <dd >
+                          <a lay-href="{{ url('seller/addrs_wait_send') }}">未发货列表</a>
+                      </dd>
+                      <dd >
+                          <a lay-href="{{ url('seller/addrs_sended') }}">已发货列表</a>
+                      </dd>
+                  </dl>
+              </li>
 
 {{--              @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)--}}
               @if(false)
             <li data-name="user" class="layui-nav-item">
-              <a href="javascript:;" lay-tips="用户" lay-direction="2">
+              <a href="javascript:;" lay-tips="用户" lay-direction="4">
                 <i class="layui-icon layui-icon-user"></i>
                 <cite>管理员管理</cite>
               </a>
@@ -165,6 +159,12 @@
 {{--                </dl>--}}
             </li>
               @endif
+              <li data-name="set" class="layui-nav-item">
+                  <a lay-href="{{ url('seller/card_list') }}"  lay-tips="卡商城" lay-direction="2">
+                      <i class="layui-icon layui-icon-carousel"></i>
+                      <cite>卡商城</cite>
+                  </a>
+              </li>
             <li data-name="set" class="layui-nav-item">
               <a href="javascript:;" lay-tips="设置" lay-direction="2">
                 <i class="layui-icon layui-icon-set"></i>
@@ -181,13 +181,9 @@
 {{--                  </dl>--}}
 {{--                </dd>--}}
 {{--                  @endif--}}
-                <dd class="layui-nav-itemed">
-                  <a href="javascript:;">我的设置</a>
-                  <dl class="layui-nav-child">
-                    <dd><a lay-href="{{ url('seller/info') }}">基本资料</a></dd>
-                    <dd><a lay-href="{{ url('seller/password') }}">修改密码</a></dd>
-                  </dl>
-                </dd>
+                    <dd  class="layui-nav-itemed"><a lay-href="{{ url('seller/info') }}">基本资料</a></dd>
+                    <dd class="layui-nav-itemed"><a lay-href="{{ url('seller/password') }}">修改密码</a></dd>
+
               </dl>
             </li>
           </ul>
