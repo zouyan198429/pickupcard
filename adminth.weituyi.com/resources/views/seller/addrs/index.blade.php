@@ -12,16 +12,11 @@
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/css/layui.css')}}" media="all">
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/admin.css')}}" media="all">
 </head>
-<body>
-
-{{--<div id="crumb"><i class="fa fa-reorder fa-fw" aria-hidden="true"></i> 我的同事</div>--}}
+<body> 
 <div class="mm">
   <div class="mmhead" id="mywork">
 
-    @include('common.pageParams')
-    {{--<div class="tabbox" >--}}
-      {{--<a href="javascript:void(0);" class="on" onclick="action.iframeModify(0)">添加提货记录</a>--}}
-    {{--</div>--}}
+    @include('common.pageParams') 
     <form onsubmit="return false;" class="form-horizontal" role="form" method="post" id="search_frm" action="#">
       <div class="msearch fr" style="width:700px;">
           <select class="wmini" name="product_id" style="width: 100px;">
@@ -48,12 +43,7 @@
         <select class="wnormal" name="area_id" style="width: 80px;">
           <option value="">请选择区县</option>
         </select>
-        {{--<select class="wmini" name="province_id" style="width: 55px;">--}}
-          {{--<option value="">全部</option>--}}
-          {{--@foreach ($adminType as $k=>$txt)--}}
-            {{--<option value="{{ $k }}"  @if(isset($defaultAdminType) && $defaultAdminType == $k) selected @endif >{{ $txt }}</option>--}}
-          {{--@endforeach--}}
-        {{--</select>--}}
+ 
         <select style="width:80px; height:28px;" name="field">
           <option value="code">提货码</option>
           <option value="real_name">收货人</option>
@@ -65,25 +55,34 @@
       </div>
     </form>
   </div>
-  <div class="table-header">
-{{--    { {--<button class="btn btn-danger  btn-xs batch_del"  onclick="action.batchDel(this)">批量删除</button>--} }--}}
+  <div class="table-header"> 
     <button class="btn btn-success  btn-xs export_excel"  onclick="action.batchExportExcel(this)" >导出[按条件]</button>
     <button class="btn btn-success  btn-xs export_excel"  onclick="action.exportExcel(this)" >导出[勾选]</button>
       <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.batchExportExcel(this)" >导出即发货[按条件]</button>
       <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.exportExcel(this)" >导出即发货[勾选]</button>
-      <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.sendSelected(this)" >发货[勾选]</button>
-{{--    <button class="btn btn-success  btn-xs import_excel"  onclick="action.importExcelTemplate(this)">导入模版[EXCEL]</button>--}}
-{{--    <button class="btn btn-success  btn-xs import_excel"  onclick="action.importExcel(this)">导入城市</button>--}}
-{{--    <div style="display:none;" ><input type="file" class="import_file img_input"></div>{ {--导入file对象--} }--}}
+      <button class="btn btn-success  btn-xs export_excel"  onclick="otheraction.sendSelected(this)" >发货[勾选]</button> 
   </div>
   <table lay-even class="layui-table"  lay-size="lg"  id="dynamic-table"  class="table2">
+	  <colgroup>
+	  		  <col width="40">
+			  <col width="100">
+	  		  <col >
+	  		  <col >  
+	  		  <col width="180">
+	  		  <col width="120">
+	  		  <col width="150">
+	  		  <col >
+			  <col > 
+			  <col > 
+			  <col > 
+			  <col > 
+	  	</colgroup> 
     <thead>
     <tr>
       <th>
         <label class="pos-rel">
           <input type="checkbox"  class="ace check_all"  value="" onclick="action.seledAll(this)"/>
-<!--           <span class="lbl">全选</span>
- -->        </label>
+       </label>
       </th>
       <th>提货码</th>
       <th>所属活动</th>
@@ -108,8 +107,7 @@
 </div>
 
   <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
-  <script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.all.js')}}"></script>
-  {{--<script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.js')}}"></script>--}}
+  <script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.all.js')}}"></script> 
   @include('public.dynamic_list_foot')
 
   <script type="text/javascript">

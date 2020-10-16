@@ -12,9 +12,7 @@
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/css/layui.css')}}" media="all">
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/admin.css')}}" media="all">
 </head>
-<body>
-
-{{--<div id="crumb"><i class="fa fa-reorder fa-fw" aria-hidden="true"></i> 我的同事</div>--}}
+<body> 
 <div class="mm">
   <div class="mmhead" id="mywork">
 
@@ -23,14 +21,7 @@
       <a href="javascript:void(0);" class="on" onclick="action.iframeModify(0)">添加商品</a>
     </div>
     <form onsubmit="return false;" class="form-horizontal" role="form" method="post" id="search_frm" action="#">
-      <div class="msearch fr">
-
-        {{--<select class="wmini" name="province_id">--}}
-          {{--<option value="">全部</option>--}}
-          {{--@foreach ($province_kv as $k=>$txt)--}}
-            {{--<option value="{{ $k }}"  @if(isset($province_id) && $province_id == $k) selected @endif >{{ $txt }}</option>--}}
-          {{--@endforeach--}}
-        {{--</select>--}}
+      <div class="msearch fr"> 
         <select style="width:80px; height:28px;" name="field">
           <option value="product_name">商品名称</option>
           <option value="pre_code">编码前缀</option>
@@ -40,17 +31,17 @@
       </div>
     </form>
   </div>
-  {{--
-  <div class="table-header">
-    { {--<button class="btn btn-danger  btn-xs batch_del"  onclick="action.batchDel(this)">批量删除</button>--} }
-    <button class="btn btn-success  btn-xs export_excel"  onclick="action.batchExportExcel(this)" >导出[按条件]</button>
-    <button class="btn btn-success  btn-xs export_excel"  onclick="action.exportExcel(this)" >导出[勾选]</button>
-    <button class="btn btn-success  btn-xs import_excel"  onclick="action.importExcelTemplate(this)">导入模版[EXCEL]</button>
-    <button class="btn btn-success  btn-xs import_excel"  onclick="action.importExcel(this)">导入城市</button>
-    <div style="display:none;" ><input type="file" class="import_file img_input"></div>{ {--导入file对象--} }
-  </div>
---}}
+ 
   <table lay-even class="layui-table"  lay-size="lg"  id="dynamic-table"  class="table2">
+	<colgroup>
+		  <col width="60">
+		  <col width="60">
+		  <col width="">  
+		  <col width="100">
+		  <col width="120">
+		  <col width="160">
+		  <col width="140">
+	</colgroup> 
     <thead>
     <tr>
       <th>
@@ -60,8 +51,7 @@
         </label>
       </th>
       <th>ID</th>
-      <th>商品名称</th>
-      <th>编码前缀</th>
+      <th>商品名称</th> 
       <th>排序[降序]</th>
       <th>添加人</th>
       <th>添加日期</th>
@@ -112,6 +102,6 @@
 
   </script>
   <script src="{{asset('js/common/list.js')}}"></script>
-  <script src="{{ asset('js/seller/lanmu/products.js') }}"  type="text/javascript"></script>
+  <script src="{{ asset('js/seller/lanmu/products.js?8') }}"  type="text/javascript"></script>
 </body>
 </html>

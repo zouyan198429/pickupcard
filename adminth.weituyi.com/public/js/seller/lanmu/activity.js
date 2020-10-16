@@ -75,7 +75,7 @@ var otheraction = {
     document.write("            <td><%=item.product_name%><\/td>");
     document.write("            <td><%=item.pre_code%><\/td>");
     document.write("            <td><%=item.begin_num%><\/td>");
-    document.write("            <td><%=item.code_len%>位<\/td>");
+    //document.write("            <td><%=item.code_len%>位<\/td>");
     document.write("            <td><%=item.total_num%><\/td>");
     document.write("            <td><%=item.used_num%><\/td>");
     document.write("            <td><%for(var j = 0; j<resource_list.length;j++){");
@@ -85,7 +85,7 @@ var otheraction = {
     document.write("                <img  src=\"<%=jitem.resource_url%>\"  style=\"width:60px;\">");
     document.write("              </a>");
     document.write("            <%}%><\/td>");
-    document.write("            <td><%=item.activity_tips%><\/td>");
+    //document.write("            <td><%=item.activity_tips%><\/td>");
     document.write("            <td><%=item.status_text%><\/td>");
     // document.write("            <td><%=item.sort_num%><\/td>");
     document.write("            <td>");

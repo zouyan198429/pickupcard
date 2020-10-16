@@ -102,7 +102,7 @@ function reset_list_self(is_read_page, ajax_async, reset_total, do_num){
     // document.write("            <td><%=item.site_name%><hr/><%=item.partner_name%><\/td>");
     // document.write("            <td><%=item.seller_name%><hr/><%=item.shop_name%><\/td>");
     document.write("            <td><%=item.seller_name%>");
-    document.write("            <td><%=item.admin_username%>");
+    // document.write("            <td><%=item.admin_username%>");
     document.write("            <td><%=item.real_name%><\/td>");
     // document.write("            <td><%=item.admin_type_text%>");
     document.write("            <td><%=item.sex_text%><\/td>");
@@ -110,7 +110,7 @@ function reset_list_self(is_read_page, ajax_async, reset_total, do_num){
     document.write("            <td><%=item.mobile%><\/td>");
     // document.write("            <td><%=item.qq_number%><hr/><%=item.province_name%><%=item.city_name%><%=item.area_name%><%=item.addr%><\/td>");
     document.write("            <td><%=item.qq_number%><\/td>");
-    document.write("            <td><%=item.province_name%><%=item.city_name%><%=item.area_name%><%=item.addr%><\/td>");
+    // document.write("            <td><%=item.province_name%><%=item.city_name%><%=item.area_name%><%=item.addr%><\/td>");
     // document.write("            <hr/><%=item.longitude%><br/><%=item.latitude%>");
     document.write("            <td><%=item.issuper_text%>");
     document.write("            <td><%=item.account_status_text%><\/td>");

@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>注册 - layuiAdmin</title>
+  <title>商户注册</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -12,69 +10,105 @@
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/css/layui.css')}}" media="all">
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/admin.css')}}" media="all">
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/login.css')}}" media="all">
+  <style>
+	 body,html {
+		 background-color: #4866FA;
+		 position: relative;
+	 }
+	 
+	 .layadmin-user-login {
+		 padding-top:0px;
+	 }
+	 .layadmin-user-login-main {
+		 width: 780px;
+		 margin:0 auto;
+		 background: #fff;
+		 border-radius: 12px;
+		 padding-top:30px;
+	 }
+	 .layadmin-user-login-other { 
+	 }
+	 .layadmin-user-login-other a {
+		 color: #fff;
+	 }
+  </style>
 </head>
 <body>
-
-
-  <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+ <div class="layui-trans layui-form-item layadmin-user-login-other"> 
+          <a href="{{ url('seller/login') }}" class="layadmin-user-jump-change ">用已有帐号登入</a> 
+	</div>
+  <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" >
     <div class="layadmin-user-login-main">
       <div class="layadmin-user-login-box layadmin-user-login-header">
-        <h2>提货卡管理系统</h2>
-{{--        <p>注册</p>--}}
+        <h2>礼品卡/券营销系统</h2>
+		<p>商家注册</p>
       </div>
+	  
+	  <hr>
       <div class="layadmin-user-login-box layadmin-user-login-body">
 
           <form class="am-form am-form-horizontal" method="post"  id="addForm">
               <input type="hidden" name="id" value="{{ $info['id'] or 0 }}"/>
               <table class="table1">
-                  {{--<tr>--}}
-                  {{--<th>类型<span class="must">*</span></th>--}}
-                  {{--<td>--}}
-                  {{--<select class="wnormal" name="admin_type">--}}
-                  {{--<option value="">请选择类型</option>--}}
-                  {{--@foreach ($adminType as $k=>$txt)--}}
-                  {{--<option value="{{ $k }}"  @if(isset($defaultAdminType) && $defaultAdminType == $k) selected @endif >{{ $txt }}</option>--}}
-                  {{--@endforeach--}}
-                  {{--</select>--}}
-                  {{--</td>--}}
-                  {{--</tr>--}}
+				  <tr>
+				      <th><span class="must">*</span>用户名</th>
+				      <td>
+				          <input type="text" class="inp wnormal"  name="admin_username"   style="width:360px;"  value="{{ $info['admin_username'] or '' }}" placeholder="请输入用户名"/>
+				      </td>
+				  </tr>
+				  <tr>
+				      <th><span class="must">*</span>登录密码</th>
+				      <td>
+				          <input type="password"  class="inp wnormal"   style="width:360px;"   name="admin_password" placeholder="登录密码" />
+				      </td>
+				  </tr>
+				  <tr>
+				      <th><span class="must">*</span>确认密码</th>
+				      <td>
+				          <input type="password" class="inp wnormal"    style="width:360px;"    name="sure_password"  placeholder="确认密码"/>
+				      </td>
+				  </tr>
                   <tr>
-                      <th>商家名称<span class="must">*</span></th>
+					  <td></td>
+					  <td></td>
+				  </tr>
+                  <tr>
+                      <th><span class="must">*</span>商家名称</th>
                       <td>
-                          <input type="text" class="inp wnormal"  name="seller_name" value="{{ $info['seller_name'] or '' }}" placeholder="请输入商家名称"/>
+                          <input type="text" class="inp wnormal"  name="seller_name"  style="width:360px;"  value="{{ $info['seller_name'] or '' }}" placeholder="请输入商家名称"/>
                       </td>
                   </tr>
                   <tr>
-                      <th>姓名<span class="must">*</span></th>
+                      <th><span class="must">*</span>您的姓名</th>
                       <td>
-                          <input type="text" class="inp wnormal"  name="real_name" value="{{ $info['real_name'] or '' }}" placeholder="请输入姓名"/>
+                          <input type="text" class="inp wnormal"  name="real_name"  style="width:360px;"  value="{{ $info['real_name'] or '' }}" placeholder="请输入姓名"/>
                       </td>
                   </tr>
                   <tr>
-                      <th>性别<span class="must">*</span></th>
+                      <th><span class="must">*</span>性别</th>
                       <td  class="layui-input-block">
                           <label><input type="radio" name="sex" value="1" @if (isset($info['sex']) && $info['sex'] == 1 ) checked @endif>男</label>&nbsp;&nbsp;&nbsp;&nbsp;
                           <label><input type="radio" name="sex" value="2" @if (isset($info['sex']) && $info['sex'] == 2 ) checked @endif>女</label>
                       </td>
                   </tr>
                   <tr>
-                      <th>手机<span class="must">*</span></th>
+                      <th><span class="must">*</span>手机</th>
                       <td>
-                          <input type="text" class="inp wnormal"  name="mobile" value="{{ $info['mobile'] or '' }}" placeholder="请输入手机"  onkeyup="isnum(this) " onafterpaste="isnum(this)"  />
+                          <input type="text" class="inp wnormal"  name="mobile"  style="width:360px;"  value="{{ $info['mobile'] or '' }}" placeholder="请输入手机"  onkeyup="isnum(this) " onafterpaste="isnum(this)"  />
                       </td>
                   </tr>
-                  <tr>
+                 <!-- <tr>
                       <th>座机电话</th>
                       <td>
-                          <input type="text" class="inp wnormal"  name="tel" value="{{ $info['tel'] or '' }}" placeholder="请输入座机电话"  />
+                          <input type="text" class="inp wnormal"  name="tel"  style="width:360px;"  value="{{ $info['tel'] or '' }}" placeholder="请输入座机电话"  />
                       </td>
                   </tr>
                   <tr>
-                      <th>QQ\email\微信</th>
+                      <th>微信</th>
                       <td>
-                          <input type="text" class="inp wnormal"  name="qq_number" value="{{ $info['qq_number'] or '' }}" placeholder="请输入QQ\email\微信" />
+                          <input type="text" class="inp wnormal"  name="qq_number"  style="width:360px;"  value="{{ $info['qq_number'] or '' }}" placeholder="请输入微信" />
                       </td>
-                  </tr>
+                  </tr> -->
                   <tr>
                       <th>地址<span class="must"></span></th>
                       <td>
@@ -92,7 +126,7 @@
                               <option value="">请选择区县</option>
                           </select>
                           <br/><br/>
-                          <input type="text" class="inp wnormal"  style="width:600px;" name="addr" value="{{ $info['addr'] or '' }}" placeholder="请输入详细地址"  />
+                          <input type="text" class="inp wnormal"  style="width:360px;" name="addr" value="{{ $info['addr'] or '' }}" placeholder="请输入详细地址"  />
                       </td>
                   </tr>
                   <tr style="display: none;">
@@ -104,54 +138,19 @@
                           <button  type="button"  class="btn btn-danger  btn-xs ace-icon fa fa-plus-circle bigger-60"  onclick="otheraction.selectLatLng(this)">选择经纬度</button>
                       </td>
                   </tr>
-                  <tr>
-                      <th>用户名<span class="must">*</span></th>
-                      <td>
-                          <input type="text" class="inp wnormal"  name="admin_username" value="{{ $info['admin_username'] or '' }}" placeholder="请输入用户名"/>
-                      </td>
-                  </tr>
-                  <tr>
-                      <th>登录密码<span class="must">*</span></th>
-                      <td>
-                          <input type="password"  class="inp wnormal"   name="admin_password" placeholder="登录密码" />
-                      </td>
-                  </tr>
-                  <tr>
-                      <th>确认密码<span class="must">*</span></th>
-                      <td>
-                          <input type="password" class="inp wnormal"     name="sure_password"  placeholder="确认密码"/>
-                      </td>
-                  </tr>
+                
                   <tr>
                       <th> </th>
-                      <td><button class="btn btn-l wnormal"  id="submitBtn" >提交</button></td>
+                      <td><button class="layui-btn layui-btn-fluid"  id="submitBtn" style="width:360px;" >提交</button></td>
                   </tr>
 
               </table>
           </form>
 
-        <div class="layui-trans layui-form-item layadmin-user-login-other">
-{{--          <label>社交账号注册</label>--}}
-{{--          <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>--}}
-{{--          <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>--}}
-{{--          <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>--}}
-
-          <a href="{{ url('seller/login') }}" class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
-          <a href="{{ url('seller/login') }}" class="layadmin-user-jump-change layadmin-link layui-hide-sm layui-show-xs-inline-block">登入</a>
-        </div>
+       
       </div>
     </div>
-
-{{--    <div class="layui-trans layadmin-user-login-footer">--}}
-
-{{--      <p>© 2018 <a href="http://www.layui.com/" target="_blank">layui.com</a></p>--}}
-{{--      <p>--}}
-{{--        <span><a href="http://www.layui.com/admin/#get" target="_blank">获取授权</a></span>--}}
-{{--        <span><a href="http://www.layui.com/admin/pro/" target="_blank">在线演示</a></span>--}}
-{{--        <span><a href="http://www.layui.com/admin/" target="_blank">前往官网</a></span>--}}
-{{--      </p>--}}
-{{--    </div>--}}
-
+  
   </div>
 
   <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>

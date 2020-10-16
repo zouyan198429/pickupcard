@@ -24,44 +24,20 @@
             <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
               <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
             </a>
-          </li>
-          {{--<li class="layui-nav-item layui-hide-xs" lay-unselect>--}}
-            {{--<a href="http://www.layui.com/admin/" target="_blank" title="前台">--}}
-              {{--<i class="layui-icon layui-icon-website"></i>--}}
-            {{--</a>--}}
-          {{--</li>--}}
+          </li> 
           <li class="layui-nav-item" lay-unselect>
             <a href="javascript:;" layadmin-event="refresh" title="刷新">
               <i class="layui-icon layui-icon-refresh-3"></i>
             </a>
           </li>
-          {{----}}
-          {{--<li class="layui-nav-item layui-hide-xs" lay-unselect>--}}
-            {{--<input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="{{ url('layui/template/search') }}?keywords=">--}}
-          {{--</li>--}}
-          {{----}}
         </ul>
         <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
 
-          {{--<li class="layui-nav-item" lay-unselect>--}}
-            {{--<a lay-href="{{ url('layui/app/message/index') }}" layadmin-event="message" lay-text="消息中心">--}}
-              {{--<i class="layui-icon layui-icon-notice"></i>  --}}
-              {{----}}
-              {{--<!-- 如果有新消息，则显示小圆点 -->--}}
-              {{--<span class="layui-badge-dot"></span>--}}
-            {{--</a>--}}
-          {{--</li>--}}
           <li class="layui-nav-item layui-hide-xs" lay-unselect>
             <a href="javascript:;" layadmin-event="theme">
               <i class="layui-icon layui-icon-theme"></i>
             </a>
-          </li>
-
-          {{--<li class="layui-nav-item layui-hide-xs" lay-unselect>--}}
-            {{--<a href="javascript:;" layadmin-event="note">--}}
-              {{--<i class="layui-icon layui-icon-note"></i>--}}
-            {{--</a>--}}
-          {{--</li>--}}
+          </li> 
 
           <li class="layui-nav-item layui-hide-xs" lay-unselect>
             <a href="javascript:;" layadmin-event="fullscreen">
@@ -78,11 +54,7 @@
               <hr>
               <dd  style="text-align: center;"><a href="{{ url('company/logout') }}">退出</a></dd>
             </dl>
-          </li>
-
-          {{--<li class="layui-nav-item layui-hide-xs" lay-unselect>--}}
-            {{--<a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>--}}
-          {{--</li>--}}
+          </li> 
           <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
             <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
           </li>
@@ -98,24 +70,18 @@
           </div>
 
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
-
-
-
             <li data-name="home" class="layui-nav-item layui-nav-item">
               <a href="javascript:;" lay-tips="提货卡管理" lay-direction="2">
                 <i class="layui-icon layui-icon-home"></i>
                 <cite>提货卡管理</cite>
               </a>
-              <dl class="layui-nav-child">
-{{--                  @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)--}}
+              <dl class="layui-nav-child"> 
                 <dd>
                    <a lay-href="{{ url('company/products') }}">商品管理</a>
                 </dd>
                 <dd>
                   <a lay-href="{{ url('company/activity') }}">提货卡管理</a>
-                </dd>
-{{--                  @endif--}}
-
+                </dd> 
                   <dd class="layui-nav-itemed">
                       <a href="javascript:;">提货管理</a>
                       <dl class="layui-nav-child">
@@ -131,35 +97,17 @@
                       </dl>
                   </dd>
               </dl>
-            </li>
-
-{{--              @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)--}}
+            </li> 
               @if(false)
             <li data-name="user" class="layui-nav-item">
               <a href="javascript:;" lay-tips="用户" lay-direction="2">
                 <i class="layui-icon layui-icon-user"></i>
                 <cite>管理员管理</cite>
-              </a>
-{{--              <dl class="layui-nav-child">--}}
-{{--                <dd>--}}
-{{--                  <a lay-href="{{ url('company/staff') }}">管理员列表</a>--}}
-{{--                </dd>--}}
-{{--              </dl>--}}
-{{--                <dl class="layui-nav-child">--}}
-{{--                    <dd>--}}
-{{--                        <a lay-href="{{ url('company/seller') }}">管理员列表</a>--}}
-{{--                    </dd>--}}
-{{--                </dl>--}}
+              </a> 
                 <dl class="layui-nav-child">
                     <dd>
                         <a lay-href="{{ url('company/employee') }}">管理员列表</a>
-                    </dd>
-                </dl>
-{{--                <dl class="layui-nav-child">--}}
-{{--                    <dd>--}}
-{{--                        <a lay-href="{{ url('company/user') }}">用户列表</a>--}}
-{{--                    </dd>--}}
-{{--                </dl>--}}
+                    </dd> 
             </li>
               @endif
             <li data-name="set" class="layui-nav-item">
@@ -168,17 +116,7 @@
                 <cite>设置</cite>
               </a>
               <dl class="layui-nav-child">
-{{--                  @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)--}}
-{{--                <dd class="layui-nav-itemed">--}}
-{{--                  <a href="javascript:;">系统设置</a>--}}
-{{--                  <dl class="layui-nav-child">--}}
-{{--                    <dd>--}}
-{{--                      <a lay-href="{{ url('company/city') }}">城市管理</a>--}}
-{{--                    </dd>--}}
-{{--                  </dl>--}}
-{{--                </dd>--}}
-{{--                  @endif--}}
-                <dd class="layui-nav-itemed">
+                 <dd class="layui-nav-itemed">
                   <a href="javascript:;">我的设置</a>
                   <dl class="layui-nav-child">
                     <dd><a lay-href="{{ url('company/info') }}">基本资料</a></dd>

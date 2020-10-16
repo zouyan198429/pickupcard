@@ -13,25 +13,15 @@
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/admin.css')}}" media="all">
 </head>
 <body>
-
-{{--<div id="crumb"><i class="fa fa-reorder fa-fw" aria-hidden="true"></i> 我的同事</div>--}}
 <div class="mm">
   <div class="mmhead" id="mywork">
 
     @include('common.pageParams')
     <div class="tabbox" >
-      <a href="javascript:void(0);" class="on" onclick="action.iframeModify(0)">添加提货活动</a>
+      <a href="javascript:void(0);" class="on" onclick="action.iframeModify(0)">批量生成卡券</a>
     </div>
     <form onsubmit="return false;" class="form-horizontal" role="form" method="post" id="search_frm" action="#">
-      <div class="msearch fr">
-
-        {{--<select class="wmini" name="province_id">--}}
-          {{--<option value="">全部</option>--}}
-          {{--@foreach ($province_kv as $k=>$txt)--}}
-            {{--<option value="{{ $k }}"  @if(isset($province_id) && $province_id == $k) selected @endif >{{ $txt }}</option>--}}
-          {{--@endforeach--}}
-        {{--</select>--}}
-
+      <div class="msearch fr"> 
         <select class="wmini" name="product_id" style="width: 100px;">
           <option value="">请选择商品</option>
           @foreach ($product_kv as $k=>$txt)
@@ -45,47 +35,26 @@
           @endforeach
         </select>
         <select style="width:80px; height:28px;" name="field">
-          <option value="activity_name">提货活动名称</option>
+          <option value="activity_name">活动名称</option>
         </select>
         <input type="text" value=""    name="keyword"  placeholder="请输入关键字"/>
         <button class="btn btn-normal search_frm">搜索</button>
       </div>
     </form>
   </div>
-  {{--
-  <div class="table-header">
-    { {--<button class="btn btn-danger  btn-xs batch_del"  onclick="action.batchDel(this)">批量删除</button>--} }
-    <button class="btn btn-success  btn-xs export_excel"  onclick="action.batchExportExcel(this)" >导出[按条件]</button>
-    <button class="btn btn-success  btn-xs export_excel"  onclick="action.exportExcel(this)" >导出[勾选]</button>
-    <button class="btn btn-success  btn-xs import_excel"  onclick="action.importExcelTemplate(this)">导入模版[EXCEL]</button>
-    <button class="btn btn-success  btn-xs import_excel"  onclick="action.importExcel(this)">导入城市</button>
-    <div style="display:none;" ><input type="file" class="import_file img_input"></div>{ {--导入file对象--} }
-  </div>
---}}
+ 
   <table lay-even class="layui-table"  lay-size="lg"  id="dynamic-table"  class="table2">
     <thead>
-    <tr>
-      {{--<th>--}}
-        {{--<label class="pos-rel">--}}
-          {{--<input type="checkbox"  class="ace check_all"  value="" onclick="action.seledAll(this)"/>--}}
-          {{--<!-- <span class="lbl">全选</span> -->--}}
-        {{--</label>--}}
-      {{--</th>--}}
-      {{--<th>ID</th>--}}
-      <th>提货活动名称</th>
+    <tr> 
+      <th>活动名称</th>
       <th>活动日期</th>
       <th>兑换商品</th>
       <th>编码前缀</th>
-      <th>起始编码</th>
-      <th>兑换码长度</th>
+      <th>起始编码</th> 
       <th>提货卡总量</th>
       <th>已兑换数量</th>
-      <th>图片</th>
-      <th>活动提示</th>
-      <th>状态</th>
-      {{--<th>排序[降序]</th>--}}
-      {{--<th>添加人</th>--}}
-      {{--<th>添加日期</th>--}}
+      <th>图片</th> 
+      <th>状态</th> 
       <th>操作</th>
     </tr>
     </thead>
@@ -101,8 +70,7 @@
 </div>
 
   <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
-  <script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.all.js')}}"></script>
-  {{--<script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.js')}}"></script>--}}
+  <script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.all.js')}}"></script> 
   @include('public.dynamic_list_foot')
 
   <script type="text/javascript">
@@ -139,6 +107,6 @@
 {{--<script src="{{asset('js/baguetteBox.js/highlight.min.js')}}" async></script>--}}
 
 <script src="{{asset('js/common/list.js')}}"></script>
-  <script src="{{ asset('js/seller/lanmu/activity.js') }}?1"  type="text/javascript"></script>
+  <script src="{{ asset('js/seller/lanmu/activity.js?8') }}"  type="text/javascript"></script>
 </body>
 </html>

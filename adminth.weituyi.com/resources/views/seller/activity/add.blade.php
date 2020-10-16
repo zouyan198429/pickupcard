@@ -14,33 +14,12 @@
     <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/css/layui.css')}}" media="all">
     <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/admin.css')}}" media="all">
 </head>
-<body>
-
-{{--<div id="crumb"><i class="fa fa-reorder fa-fw" aria-hidden="true"></i> {{ $operate or '' }}员工</div>--}}
-<div class="mm">
-    {{--<div class="alert alert-warning alert-dismissable">--}}
-        {{--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>--}}
-        {{--<p>一次最多上传1张图片。</p>--}}
-    {{--</div>--}}
+<body> 
+<div class="mm"> 
     <form class="am-form am-form-horizontal" method="post"  id="addForm">
         <input type="hidden" name="id" value="{{ $info['id'] or 0 }}"/>
         <table class="table1">
-            <tr>
-                <th>所属商品<span class="must">*</span></th>
-                <td>
-
-                    <select class="wmini" name="product_id" style="width: 200px;">
-                        <option value="">请选择商品</option>
-                        @foreach ($product_kv as $k=>$txt)
-                            <option value="{{ $k }}"  @if(isset($defaultProduct) && $defaultProduct == $k) selected @endif >{{ $txt }}</option>
-                        @endforeach
-                    </select>
-                    {{--@foreach ($product_kv as $k=>$txt)--}}
-                        {{--<label><input type="radio"  name="product_id"  value="{{ $k }}"  @if(isset($defaultProduct) && $defaultProduct == $k) checked="checked"  @endif />{{ $txt }} </label>--}}
-                    {{----}}
-                    {{--@endforeach--}}
-                </td>
-            </tr>
+           
             <tr>
                 <th>活动标题<span class="must">*</span></th>
                 <td>
@@ -55,6 +34,22 @@
                     <input type="text"  name="end_time" class="end_time" id="end_time"  value="{{ $info['end_time'] or '' }}"  placeholder="结束日期" style="width:100px;"  readonly/>
                 </td>
             </tr>
+			<tr>
+			    <th>选择商品<span class="must">*</span></th>
+			    <td>
+			
+			        <select class="wmini" name="product_id" style="width: 200px;">
+			            <option value="">请选择商品</option>
+			            @foreach ($product_kv as $k=>$txt)
+			                <option value="{{ $k }}"  @if(isset($defaultProduct) && $defaultProduct == $k) selected @endif >{{ $txt }}</option>
+			            @endforeach
+			        </select>
+			        {{--@foreach ($product_kv as $k=>$txt)--}}
+			            {{--<label><input type="radio"  name="product_id"  value="{{ $k }}"  @if(isset($defaultProduct) && $defaultProduct == $k) checked="checked"  @endif />{{ $txt }} </label>--}}
+			        {{----}}
+			        {{--@endforeach--}}
+			    </td>
+			</tr>
             <tr>
                 <th>起始编号<span class="must">*</span></th>
                 <td>
@@ -75,20 +70,14 @@
                 </td>
             </tr>
             <tr>
-                <th>生成兑换码时默认状态<span class="must">*</span></th>
+                <th>卡密默认状态<span class="must">*</span></th>
                 <td>
                     @foreach ($defaultOpenStatus as $k=>$txt)
                     <label><input type="radio"  name="default_open_status"  value="{{ $k }}"  @if(isset($defaultDefaultOpenStatus) && $defaultDefaultOpenStatus == $k) checked="checked"  @endif />{{ $txt }} </label>
 
                     @endforeach
                 </td>
-            </tr>
-            {{--<tr>--}}
-                {{--<th>排序[降序]<span class="must">*</span></th>--}}
-                {{--<td>--}}
-                    {{--<input type="text" class="inp wnormal"  name="sort_num" value="{{ $info['sort_num'] or '' }}" placeholder="请输入排序"  onkeyup="isnum(this) " onafterpaste="isnum(this)"  />--}}
-                {{--</td>--}}
-            {{--</tr>--}}
+            </tr> 
 
             <tr>
                 <th>活动主图</th>
@@ -109,7 +98,6 @@
                         </div>
                     </div>
                     最多上传1张图片。
-
                 </td>
             </tr>
             <tr>

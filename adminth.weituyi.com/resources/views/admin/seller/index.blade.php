@@ -79,18 +79,16 @@
   <table lay-even class="layui-table"  lay-size="lg"  id="dynamic-table"  class="table2">
      <colgroup>
             <col width="30">
+            <col width=""> 
+            <col width="120">
             <col width="90">
+            <col width="120">
+            <col width="120">
+            <col width="120">
             <col width="100">
-            <col width="120">
-            <col width="120">
-            <col width="120">
-            <col width="120">
-            <col width="120">
-            <col width="150">
-            <col width="160">
-            <col width="120">
-            <col width="90">
-            <col width="120">
+            <col width="100">
+            <col width="180">
+            <col width="180"> 
             <col>
       </colgroup>
     <thead>
@@ -101,16 +99,13 @@
 <!--           <span class="lbl">全选</span>
  -->        </label>
       </th>
-       <th>商家名称</th>
-      <th>用户名</th>
-      <th>真实姓名</th>
-      {{--<th>类型</th>--}}
+       <th>商家名称</th> 
+      <th>真实姓名</th> 
       <th>性别</th>
       <th>电话</th>
       <th>手机</th>
-      <th>QQ\email\微信</th>
-      <th>地址</th>
-      <th>是否超级帐户</th>
+      <th>QQ\email\微信</th> 
+      <th>帐户类型</th>
       <th>状态</th>
       <th>最近登陆</th>
       <th>操作</th>
@@ -168,6 +163,6 @@
 
   </script>
   <script src="{{asset('js/common/list.js')}}"></script>
-  <script src="{{ asset('js/admin/lanmu/seller.js') }}"  type="text/javascript"></script>
+  <script src="{{ asset('js/admin/lanmu/seller.js?3') }}"  type="text/javascript"></script>
 </body>
 </html>

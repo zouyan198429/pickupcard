@@ -44,7 +44,7 @@ function reset_list_self(is_read_page, ajax_async, reset_total, do_num){
     document.write("            <\/td>");
     document.write("            <td><%=item.id%><\/td>");
     document.write("            <td><%=item.product_name%><\/td>");
-    document.write("            <td><%=item.pre_code%><\/td>");
+   // document.write("            <td><%=item.pre_code%><\/td>");
     document.write("            <td><%=item.sort_num%><\/td>");
     document.write("            <td><%=item.real_name%><\/td>");
     document.write("            <td><%=item.created_at%><\/td>");

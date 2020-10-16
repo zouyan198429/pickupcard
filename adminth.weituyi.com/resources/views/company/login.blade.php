@@ -21,7 +21,7 @@
   }
   </style>
 </head>
-<body>
+<body style="background: #f1f1f1;">
 
   <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
 

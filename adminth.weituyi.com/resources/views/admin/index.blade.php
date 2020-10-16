@@ -25,44 +25,18 @@
               <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
             </a>
           </li>
-          {{--<li class="layui-nav-item layui-hide-xs" lay-unselect>--}}
-            {{--<a href="http://www.layui.com/admin/" target="_blank" title="前台">--}}
-              {{--<i class="layui-icon layui-icon-website"></i>--}}
-            {{--</a>--}}
-          {{--</li>--}}
           <li class="layui-nav-item" lay-unselect>
             <a href="javascript:;" layadmin-event="refresh" title="刷新">
               <i class="layui-icon layui-icon-refresh-3"></i>
             </a>
-          </li>
-          {{----}}
-          {{--<li class="layui-nav-item layui-hide-xs" lay-unselect>--}}
-            {{--<input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="{{ url('layui/template/search') }}?keywords=">--}}
-          {{--</li>--}}
-          {{----}}
+          </li> 
         </ul>
-        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-
-          {{--<li class="layui-nav-item" lay-unselect>--}}
-            {{--<a lay-href="{{ url('layui/app/message/index') }}" layadmin-event="message" lay-text="消息中心">--}}
-              {{--<i class="layui-icon layui-icon-notice"></i>  --}}
-              {{----}}
-              {{--<!-- 如果有新消息，则显示小圆点 -->--}}
-              {{--<span class="layui-badge-dot"></span>--}}
-            {{--</a>--}}
-          {{--</li>--}}
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right"> 
           <li class="layui-nav-item layui-hide-xs" lay-unselect>
             <a href="javascript:;" layadmin-event="theme">
               <i class="layui-icon layui-icon-theme"></i>
             </a>
           </li>
-
-          {{--<li class="layui-nav-item layui-hide-xs" lay-unselect>--}}
-            {{--<a href="javascript:;" layadmin-event="note">--}}
-              {{--<i class="layui-icon layui-icon-note"></i>--}}
-            {{--</a>--}}
-          {{--</li>--}}
-
           <li class="layui-nav-item layui-hide-xs" lay-unselect>
             <a href="javascript:;" layadmin-event="fullscreen">
               <i class="layui-icon layui-icon-screen-full"></i>
@@ -79,10 +53,6 @@
               <dd  style="text-align: center;"><a href="{{ url('admin/logout') }}">退出</a></dd>
             </dl>
           </li>
-
-          {{--<li class="layui-nav-item layui-hide-xs" lay-unselect>--}}
-            {{--<a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>--}}
-          {{--</li>--}}
           <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
             <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
           </li>
@@ -95,82 +65,63 @@
           {{--<div class="layui-logo" lay-href="{{ url('layui/home/console') }}">--}}
           <div class="layui-logo" lay-href="{{ url('/help/index.html') }}">
             <span>运营数据中心</span>
-          </div>
-
+          </div>  
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
-
-
-
-            <li data-name="home" class="layui-nav-item layui-nav-item">
-              <a href="javascript:;" lay-tips="提货卡管理" lay-direction="2">
+			<li data-name="set" class="layui-nav-item">
+				<a lay-href="{{ url('admin/seller') }}"  lay-tips="商家列表" lay-direction="1">
+					<i class="layui-icon layui-icon-tabs"></i>
+					<cite>商家列表</cite>
+				</a>
+			</li> 
+			<li data-name="set" class="layui-nav-item">
+				<a lay-href="{{ url('admin/user') }}"  lay-tips="用户列表" lay-direction="2">
+					<i class="layui-icon layui-icon-tabs"></i>
+					<cite>用户列表</cite>
+				</a>
+			</li> 
+			 
+			<li data-name="set" class="layui-nav-item">
+			      <a lay-href="{{ url('admin/products') }}"  lay-tips="商品管理" lay-direction="3">
+			          <i class="layui-icon layui-icon-tabs"></i>
+			          <cite>商品管理</cite>
+			      </a>
+			</li> 
+			<li data-name="set" class="layui-nav-item">
+			      <a lay-href="{{ url('admin/activity') }}"  lay-tips="提货卡管理" lay-direction="4">
+			          <i class="layui-icon layui-icon-tabs"></i>
+			          <cite>提货卡管理</cite>
+			      </a>
+			</li>  
+			<li data-name="home" class="layui-nav-item layui-nav-item">
+              <a href="javascript:;" lay-tips="提货卡管理" lay-direction="5">
                 <i class="layui-icon layui-icon-home"></i>
-                <cite>提货卡管理</cite>
+                <cite>发货管理</cite>
               </a>
-              <dl class="layui-nav-child">
-{{--                  @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)--}}
-                <dd>
-                   <a lay-href="{{ url('admin/products') }}">商品管理</a>
-                </dd>
-                <dd>
-                  <a lay-href="{{ url('admin/activity') }}">提货卡管理</a>
-                </dd>
-{{--                  @endif--}}
-                <dd >
-                  <a lay-href="{{ url('admin/addrs') }}">提货列表</a>
-                </dd>
-                  <dd >
-                      <a lay-href="{{ url('admin/addrs_wait_send') }}">未发货列表</a>
-                  </dd>
-                  <dd >
-                      <a lay-href="{{ url('admin/addrs_sended') }}">已发货列表</a>
-                  </dd>
+              <dl class="layui-nav-child">                
+				<dd>
+					<a lay-href="{{ url('admin/addrs') }}">提货列表</a>
+				</dd>
+				<dd>
+					<a lay-href="{{ url('admin/addrs_wait_send') }}">未发货列表</a>
+				</dd>
+				<dd>
+					<a lay-href="{{ url('admin/addrs_sended') }}">已发货列表</a>
+				</dd>
               </dl>
-            </li>
-
-{{--              @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)--}}
-            <li data-name="user" class="layui-nav-item">
-              <a href="javascript:;" lay-tips="用户" lay-direction="2">
-                <i class="layui-icon layui-icon-user"></i>
-                <cite>管理员管理</cite>
-              </a>
-              <dl class="layui-nav-child">
-                <dd>
-                  <a lay-href="{{ url('admin/staff') }}">管理员列表</a>
-                </dd>
-              </dl>
-                <dl class="layui-nav-child">
-                    <dd>
-                        <a lay-href="{{ url('admin/seller') }}">商家列表</a>
-                    </dd>
-                </dl>
-{{--                <dl class="layui-nav-child">--}}
-{{--                    <dd>--}}
-{{--                        <a lay-href="{{ url('seller/employee') }}">员工列表</a>--}}
-{{--                    </dd>--}}
-{{--                </dl>--}}
-                <dl class="layui-nav-child">
-                    <dd>
-                        <a lay-href="{{ url('admin/user') }}">用户列表</a>
-                    </dd>
-                </dl>
-            </li>
-{{--              @endif--}}
+            </li> 
+           
             <li data-name="set" class="layui-nav-item">
-              <a href="javascript:;" lay-tips="设置" lay-direction="2">
+              <a href="javascript:;" lay-tips="设置" lay-direction="6">
                 <i class="layui-icon layui-icon-set"></i>
                 <cite>设置</cite>
               </a>
-              <dl class="layui-nav-child">
-{{--                  @if(isset($baseArr['staff_id']) && $baseArr['staff_id'] == 1)--}}
-                <dd class="layui-nav-itemed">
-                  <a href="javascript:;">系统设置</a>
-                  <dl class="layui-nav-child">
-                    <dd>
-                      <a lay-href="{{ url('admin/city') }}">城市管理</a>
-                    </dd>
-                  </dl>
-                </dd>
-{{--                  @endif--}}
+              <dl class="layui-nav-child">  
+                <dd>
+                    <a lay-href="{{ url('admin/city') }}">城市管理</a>
+                </dd> 
+				<dd>
+				    <a lay-href="{{ url('admin/staff') }}">管理员列表</a>
+				</dd> 
                 <dd class="layui-nav-itemed">
                   <a href="javascript:;">我的设置</a>
                   <dl class="layui-nav-child">
@@ -225,9 +176,7 @@
   <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
   <script src="{{asset('static/js/custom/common.js')}}"></script>
 
-  <script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.js')}}"></script>
-  {{--<script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.all.js')}}"></script>--}}
-
+  <script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.js')}}"></script> 
   <script>
       // 顶上切换的-每一个标签：latest_time 最新判断时间 ; tag_key 标签的key--
       // 左则的 ： tag_key 标签的key
@@ -245,19 +194,7 @@
   }).extend({
     index: 'lib/index' //主入口模块
   }).use('index');
-  </script>
-  {{--
-  <!-- 百度统计 -->
-  <script>
-  var _hmt = _hmt || [];
-  (function() {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?d214947968792b839fd669a4decaaffc";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-  })();
-  </script>
-  --}}
+  </script>  
 </body>
 </html>
 

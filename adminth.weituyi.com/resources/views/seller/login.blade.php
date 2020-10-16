@@ -4,7 +4,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>登入 - layuiAdmin</title>
+  <title>登录提货卡商户管理后台</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -12,12 +12,15 @@
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/admin.css')}}" media="all">
   <link rel="stylesheet" href="{{asset('layui-admin-v1.2.1/src/layuiadmin/style/login.css')}}" media="all">
   <style>
+	  body {
+		  background-color: #4866FA;
+	  }
   .layadmin-user-login-main {
-    background: #fff;
-    box-shadow: 0 0 16px #ddd;
-    border-radius: 4px;
-    padding: 50px;
-    width: 475px;
+    background: #fff url(/images/login-bg.jpg) no-repeat left top;
+    box-shadow: 0 0 12px #369;
+    border-radius: 12px;
+    padding: 50px 50px 50px 500px;
+    width: 925px;
   }
   </style>
 </head>
@@ -27,7 +30,7 @@
 
     <div class="layadmin-user-login-main"  >
       <div class="layadmin-user-login-box layadmin-user-login-header">
-        <h2>提货卡管理后台</h2>
+        <h2>登录礼品卡/券营销系统</h2>
         <p>  </p>
       </div>
       <form class="am-form" action="#"  method="post"  id="addForm">
@@ -65,14 +68,9 @@
         <div class="layui-form-item">
           <button class="layui-btn layui-btn-fluid"  id="submitBtn" >登 入</button>
         </div>
-        <div class="layui-trans layui-form-item layadmin-user-login-other">
-{{--            --}}
-{{--          <label>社交账号登入</label>--}}
-{{--          <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>--}}
-{{--          <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>--}}
-{{--          <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>--}}
+        <div class="layui-trans layui-form-item layadmin-user-login-other"> 
 
-          <a href="{{ url('seller/reg') }}" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
+          <a href="{{ url('seller/reg') }}" class="layadmin-user-jump-change layadmin-link">免费注册帐号</a>
         </div>
       </div>
       </form>
