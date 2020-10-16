@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Business\Controller\API\RunBuy\CTAPIActivityCodeBusiness;
+use App\Business\Controller\API\RunBuy\CTAPICityBusiness;
+use App\Business\Controller\API\RunBuy\CTAPIDeliveryAddrBusiness;
 use App\Http\Controllers\WorksController;
 use App\Services\Request\CommonRequest;
 use App\Services\Tool;
@@ -82,6 +84,46 @@ class CodesController extends BasicController
 //        $reDataArr['operate'] = $operate;
 //        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.add', $reDataArr);
 //    }
+
+    /**
+     * 核销弹窗页
+     *
+     * @param Request $request
+     * @param int $id
+     * @return mixed
+     * @author zouyan(305463219@qq.com)
+     */
+    public function over(Request $request,$code_id = 0)
+    {
+        $this->InitParams($request);
+        $reDataArr = $this->reDataArr;
+        $id = 0;// 地址表id
+        $info = [
+            'id'=>$id,
+        ];
+
+        $reDataArr['code_id'] = $code_id;
+        $operate = "添加";
+
+//        if ($id > 0) { // 获得详情数据
+//            $operate = "修改";
+//            $info = CTAPIDeliveryAddrBusiness::getInfoData($request, $this, $id, [], '');
+//            $this->isOwnSellerId($info);// 有企业id的记录，判断是不是当前企业
+//        }
+        // $reDataArr = array_merge($reDataArr, $resultDatas);
+        $reDataArr['info'] = $info;
+        $reDataArr['operate'] = $operate;
+        $reDataArr['province_kv'] = CTAPICityBusiness::getCityByPid($request, $this,  0);
+
+//        $reDataArr['province_kv'] = CTAPIDeliveryAddrBusiness::getChildListKeyVal($request, $this, 0, 1 + 0, 0);
+//        $reDataArr['province_id'] = 0;
+
+        // 状态
+        $reDataArr['status'] =  CTAPIDeliveryAddrBusiness::$statusArr;
+        $reDataArr['defaultStatus'] = $info['status'] ?? -1;// 默认状态
+
+        return view('' . static::$VIEW_PATH . '.' . static::$VIEW_NAME. '.over', $reDataArr);
+    }
 
 
     /**

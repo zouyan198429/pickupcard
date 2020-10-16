@@ -317,6 +317,7 @@ Route::get('seller/codes/add/{id}', 'Seller\CodesController@add');// 添加
 Route::get('seller/codes/export', 'Seller\CodesController@export');// 导出
 Route::get('seller/codes/import_template', 'Seller\CodesController@import_template');// 导入模版
 
+Route::get('seller/codes/over/{code_id}', 'Seller\CodesController@over');// 核销弹窗页
 
 // 收货地址
 Route::get('seller/addrs', 'Seller\AddrsController@index');// 列表

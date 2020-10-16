@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Business\Controller\API\RunBuy\CTAPIActivityBusiness;
+use App\Business\Controller\API\RunBuy\CTAPIActivityCodeBusiness;
 use App\Business\Controller\API\RunBuy\CTAPICityBusiness;
 use App\Business\Controller\API\RunBuy\CTAPIDeliveryAddrBusiness;
 use App\Business\Controller\API\RunBuy\CTAPIProductBusiness;
@@ -198,7 +200,6 @@ class AddrsController extends BasicController
 //        $admin_username = CommonRequest::get($request, 'admin_username');
 //        $admin_password = CommonRequest::get($request, 'admin_password');
 //        $sure_password = CommonRequest::get($request, 'sure_password');
-
         $saveData = [
 //            'admin_type' => 1,
 //            'work_num' => $work_num,
@@ -228,9 +229,35 @@ class AddrsController extends BasicController
 //            $saveData['admin_password'] = $admin_password;
 //        }
 
-        if($id <= 0) {// 新加;要加入的特别字段
+        if($id <= 0) {// 新加;要加入的特别字段 核销卡
+            $code_id = CommonRequest::getInt($request, 'code_id');
+            $codeInfo = CTAPIActivityCodeBusiness::getInfoData($request, $this, $code_id, [], '');
+            if(empty($codeInfo)) throws('兑换码记录不存在！');
+            $activity_id = $codeInfo['activity_id'];
+            $activityInfo = CTAPIActivityBusiness::getInfoData($request, $this, $activity_id, [], '');
+            if(empty($activityInfo)) throws('提货活动记录不存在！');
+
             $addNewData = [
-                // 'account_password' => $account_password,
+                 'seller_id' => $codeInfo['seller_id'], // 商家ID
+                'product_id' => $codeInfo['product_id'], // 活动商品ID
+                'product_id_history' => $codeInfo['product_id_history'], // 活动商品历史ID
+                'activity_id' => $codeInfo['activity_id'], // 提货活动ID
+                'code_id' => $code_id, // 兑换码ID
+                'code' => $codeInfo['code'], // 兑换码
+                'order_time' => $aaa, // 下单时间
+                'send_time' => $aaa, // 发货时间
+                'receive_time' => $aaa, // 收货时间
+                'finish_time' => $aaa, // 完成时间
+                'order_no' => $aaa, // 订单号
+                'user_id' => $aaa, // 用户id
+                'pay_price' => $aaa, // 支付费用
+                'pay_time' => $aaa, // 付款时间
+                'pay_status' => $aaa, // 付款状态1无需付款2待支付4支付失败8已付款
+                'pay_no' => $aaa, // 支付单号(第三方)
+                'tag_price' => $aaa, // 原价格【吊牌价-不参与付费】
+                'price' => $aaa, // 商品价【参与付费
+                'freight_price' => $aaa, // 快递费【参与付费】
+                'insured_price' => $aaa, // 保价费【参与付费】
             ];
             $this->appSellerId($addNewData); // 有企业id的记录，添加时，加入所属企业id
             $saveData = array_merge($saveData, $addNewData);
