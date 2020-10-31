@@ -25,7 +25,7 @@
 <body >
 	<div class="wrap">
 		<div class="indpic">
-			<img src="images/top.jpg" alt="">
+			<img src="{{asset('images/top.jpg')}}" alt="">
 			{{--<img src="{ { asset('web/images/p' . $product_id . '.jpg') }}" alt="">--}}
 		</div>
 		<form class="am-form" action="#"  method="post"  id="addForm">
@@ -63,9 +63,9 @@
 		<div style="height: 50px; width: 100%; clear:both;">
 
 		</div>
-  
+
   </div>
-  
+
   <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
   <script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.all.js')}}"></script>
   @include('public.dynamic_list_foot')
