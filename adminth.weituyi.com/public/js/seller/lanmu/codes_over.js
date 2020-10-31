@@ -2,14 +2,14 @@
 var SUBMIT_FORM = true;//防止多次点击提交
 
 //获取当前窗口索引
-//--- var PARENT_LAYER_INDEX = parent.layer.getFrameIndex(window.name);
+var PARENT_LAYER_INDEX = parent.layer.getFrameIndex(window.name);
 //让层自适应iframe
 ////parent.layer.iframeAuto(PARENT_LAYER_INDEX);
 // parent.layer.full(PARENT_LAYER_INDEX);// 用这个
 //关闭iframe
-// $(document).on("click",".closeIframe",function(){
-//     iframeclose(PARENT_LAYER_INDEX);
-// });
+$(document).on("click",".closeIframe",function(){
+    iframeclose(PARENT_LAYER_INDEX);
+});
 //刷新父窗口列表
 // reset_total 是否重新从数据库获取总页数 true:重新获取,false不重新获取
 function parent_only_reset_list(reset_total){
@@ -126,7 +126,7 @@ function ajax_form(){
     // }
 
     var real_name = $('input[name=real_name]').val();
-    if(!judge_validate(4,'收货人',real_name,true,'length',1,20)){
+    if(!judge_validate(4,'收货人',real_name,false,'length',1,20)){
         return false;
     }
 
@@ -152,7 +152,7 @@ function ajax_form(){
     // }
 
     var tel = $('input[name=tel]').val();
-    if(!judge_validate(4,'收货电话',tel,true,'length',1,20)){
+    if(!judge_validate(4,'收货电话',tel,false,'length',1,20)){
         return false;
     }
 
@@ -163,7 +163,7 @@ function ajax_form(){
     // }
 
     var province_id = $('select[name=province_id]').val();
-    var judge_seled = judge_validate(1,'省',province_id,true,'digit','','');
+    var judge_seled = judge_validate(1,'省',province_id,false,'digit','','');
     if(judge_seled != ''){
         layer_alert("请选择省",3,0);
         //err_alert('<font color="#000000">' + judge_seled + '</font>');
@@ -171,7 +171,7 @@ function ajax_form(){
     }
 
     var city_id = $('select[name=city_id]').val();
-    var judge_seled = judge_validate(1,'市',city_id,true,'digit','','');
+    var judge_seled = judge_validate(1,'市',city_id,false,'digit','','');
     if(judge_seled != ''){
         layer_alert("请选择市",3,0);
         //err_alert('<font color="#000000">' + judge_seled + '</font>');
@@ -187,7 +187,7 @@ function ajax_form(){
     }
 
     var addr = $('input[name=addr]').val();
-    if(!judge_validate(4,'地址',addr,true,'length',1,60)){
+    if(!judge_validate(4,'地址',addr,false,'length',1,60)){
         return false;
     }
 
@@ -227,13 +227,13 @@ function ajax_form(){
     // }
 
     // 状态
-    // var status = $('select[name=status]').val();
-    // var judge_seled = judge_validate(1,'状态',status,true,'digit','','');
-    // if(judge_seled != ''){
-    //     layer_alert("请选择状态",3,0);
-    //     //err_alert('<font color="#000000">' + judge_seled + '</font>');
-    //     return false;
-    // }
+    var status = $('select[name=status]').val();
+    var judge_seled = judge_validate(1,'状态',status,true,'digit','','');
+    if(judge_seled != ''){
+        layer_alert("请选择状态",3,0);
+        //err_alert('<font color="#000000">' + judge_seled + '</font>');
+        return false;
+    }
 
     // 验证通过
     SUBMIT_FORM = false;//标记为已经提交过
@@ -249,7 +249,6 @@ function ajax_form(){
         'success' : function(ret){
             console.log(ret);
             console.log(ret.result);
-            let result = ret.result;
             if(!ret.apistatus){//失败
                 SUBMIT_FORM = true;//标记为未提交过
                 //alert('失败');
@@ -260,16 +259,14 @@ function ajax_form(){
                 // countdown_alert("操作成功!",1,5);
                 // parent_only_reset_list(false);
                 // wait_close_popus(2,PARENT_LAYER_INDEX);
-                layer.msg(result.activity_tips, {
+                layer.msg('操作成功！', {
                     icon: 1,
                     shade: 0.3,
                     time: 3000 //2秒关闭（如果不配置，默认是3秒）
                 }, function(){
                     var reset_total = true; // 是否重新从数据库获取总页数 true:重新获取,false不重新获取
                     if(id > 0) reset_total = false;
-                    // goTop('http://www.shop.sxmenglv.com');
-                    go(LIST_URL + '/' + result.seller_id);
-                    // parent_reset_list_iframe_close(reset_total);// 刷新并关闭
+                    parent_reset_list_iframe_close(reset_total);// 刷新并关闭
                     //do something
                 });
                 // var supplier_id = ret.result['supplier_id'];

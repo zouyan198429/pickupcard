@@ -24,21 +24,21 @@
             <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
               <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
             </a>
-          </li> 
+          </li>
           <li class="layui-nav-item" lay-unselect>
             <a href="javascript:;" layadmin-event="refresh" title="刷新">
               <i class="layui-icon layui-icon-refresh-3"></i>
             </a>
-          </li> 
+          </li>
         </ul>
         <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
- 
+
           <li class="layui-nav-item layui-hide-xs" lay-unselect>
             <a href="javascript:;" layadmin-event="theme">
               <i class="layui-icon layui-icon-theme"></i>
             </a>
           </li>
- 
+
 
           <li class="layui-nav-item layui-hide-xs" lay-unselect>
             <a href="javascript:;" layadmin-event="fullscreen">
@@ -56,7 +56,7 @@
               <dd  style="text-align: center;"><a href="{{ url('seller/logout') }}">退出</a></dd>
             </dl>
           </li>
- 
+
           <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
             <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
           </li>
@@ -65,7 +65,7 @@
 
       <!-- 侧边菜单 -->
       <div class="layui-side layui-side-menu">
-        <div class="layui-side-scroll"> 
+        <div class="layui-side-scroll">
           <div class="layui-logo" lay-href="{{ url('/help/index.html') }}">
             <span>企业运营中心</span>
           </div>
@@ -105,9 +105,9 @@
 						  <dd ><a lay-href="{{ url('seller/addrs_wait_send') }}">未发货列表</a></dd>
 						  <dd ><a lay-href="{{ url('seller/addrs_sended') }}">已发货列表</a></dd>
 					  </dl>
-					</li> 
+					</li>
 					<li data-name="set" class="layui-nav-item">
-						<a href="http://web.weituyi.com/"  target="_blank"   lay-direction="6">
+						<a href="{{ $webUrl or '' }}"  target="_blank"   lay-direction="6">
 						  <i class="layui-icon layui-icon-website"></i>
 						  <cite>前台演示</cite>
 						</a>
@@ -117,16 +117,16 @@
               <a href="javascript:;" lay-tips="用户" lay-direction="4">
                 <i class="layui-icon layui-icon-user"></i>
                 <cite>管理员管理</cite>
-              </a> 
+              </a>
                 <dl class="layui-nav-child">
                     <dd>
                         <a lay-href="{{ url('seller/employee') }}">管理员列表</a>
                     </dd>
-                </dl> 
+                </dl>
             </li>
             @endif
-             
-             
+
+
           </ul>
         </div>
       </div>
@@ -172,7 +172,7 @@
   <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
   <script src="{{asset('static/js/custom/common.js')}}"></script>
 
-  <script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.js')}}"></script> 
+  <script src="{{asset('layui-admin-v1.2.1/src/layuiadmin/layui/layui.js')}}"></script>
 
   <script>
       // 顶上切换的-每一个标签：latest_time 最新判断时间 ; tag_key 标签的key--
@@ -192,7 +192,7 @@
     index: 'lib/index' //主入口模块
   }).use('index');
   </script>
-  
+
 </body>
 </html>
 

@@ -110,6 +110,28 @@ var otheraction = {
         });
         return false;
     },
+    over: function(code_id){// 核销弹窗页
+        //获得表单各name的值
+        var data = get_frm_values(SURE_FRM_IDS);// {} parent.get_frm_values(SURE_FRM_IDS)
+        console.log(OVER_URL);
+        console.log(data);
+        var url_params = get_url_param(data);// parent.get_url_param(data)
+        var weburl = OVER_URL + code_id + '?' + url_params;
+        console.log(weburl);
+        // go(SHOW_URL + id);
+        // location.href='/pms/Supplier/show?supplier_id='+id;
+        // var weburl = SHOW_URL + id;
+        // var weburl = '/pms/Supplier/show?supplier_id='+id+"&operate_type=1";
+        var tishi = "核销";// IFRAME_MODIFY_URL_TITLE;//"添加/修改供应商";
+        // var operateText = "添加";
+        // if(id > 0){
+        //     operateText = "修改";
+        // }
+        // tishi = operateText + tishi;
+        layeriframe(weburl,tishi,950,510,IFRAME_MODIFY_CLOSE_OPERATE);
+        return false;
+    },
+
 };
 
 
@@ -232,6 +254,11 @@ function other_operate_ajax(operate_type, id){
     document.write("                    <i class=\"ace-icon bigger-60\"> 关闭<\/i>");
     document.write("                <\/a>");
     document.write("                <%}%>");
+    // document.write("                <%if(  item.open_status == 2 && item.status == 1){%>");
+    // document.write("                <a href=\"javascript:void(0);\" class=\"btn btn-mini btn-info\" onclick=\"otheraction.over(<%=item.id%>)\">");
+    // document.write("                    <i class=\"ace-icon bigger-60\"> 核销<\/i>");
+    // document.write("                <\/a>");
+    // document.write("                <%}%>");
     // // document.write("                <%if( false){%>");
     // // document.write("                <a href=\"javascript:void(0);\" class=\"btn btn-mini btn-success\"  onclick=\"action.show(<%=item.id%>)\">");
     // // document.write("                    <i class=\"ace-icon fa fa-check bigger-60\"> 查看<\/i>");

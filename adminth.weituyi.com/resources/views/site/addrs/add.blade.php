@@ -106,13 +106,13 @@
 	   .layui-input-block {
 		   width: 96%;
 		   margin:10px 2%;
-	   }  
+	   }
 	.timebox2 { padding-bottom: 0.5rem;}
-	.timecounter {display:inline;color: #888 !important; font-size: 0.75rem;}  	
+	.timecounter {display:inline;color: #888 !important; font-size: 0.75rem;}
 	.timecounter span { color: #EE0000; font-size: 1.25rem; display: inline-block; border:2px solid #ddd; border-radius: 8px; width: 2rem; text-align:center; }
 
   </style>
-  
+
 </head>
 <body   >
 
@@ -132,14 +132,14 @@
     </div>
     @endif
 	<div class="box1">
-		
-		<div class="timebox2"> 目前距离活动结束还有： 
+
+		<div class="timebox2"> 目前距离活动结束还有：
 				<div class="timecounter">
 					<span id="t_d">7 </span>天
 					<span id="t_h">10 </span>时
 					<span id="t_m">24 </span>分
 					<span id="t_s">8 </span>秒
-				</div> 
+				</div>
 		</div>
 		<p>温馨提示：本商品由{{ $info['activity_theme'] or '' }}商户于2020年8月28日批量支付成功，您只需要填写收货信息，即可直接送到您家。</p>
 	</div>
@@ -253,10 +253,10 @@ function getRTime() {
 	document.getElementById("t_s").innerHTML = s + "";
 }
 setInterval(getRTime, 1000);
-</script> 
+</script>
 <script type="text/javascript">
     var SAVE_URL = "{{ url('api/site/addrs/ajax_save') }}";// ajax保存记录地址
-    var LIST_URL = "{{url('site/addrs/payOK')}}/";//  "{{url('site/index')}}";// "{{url('http://www.sxmenglv.com/')}}";//保存成功后跳转到的地址
+    var LIST_URL = "{{url('site/addrs/payOK')}}/";//  "{ {url('site/index')}}";// "{ {url('http://www.sxmenglv.com/')}}";//保存成功后跳转到的地址
 
     {{--var SELECT_LATLNG_URL = "{{url('site/qqMaps/latLngSelect')}}";//选择经纬度的地址--}}
 

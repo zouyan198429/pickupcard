@@ -26,11 +26,11 @@
 		  margin:80px auto 15px auto;
 		  width:6em;
 		  height: auto;
-		  
+
 	  }
 	  .txt1 {
 		  font-size: 24px;
-		  
+
 		  line-height: 200%;
 	  }
 	  .txt2 {
@@ -66,7 +66,7 @@
 
 <script type="text/javascript">
     // var SAVE_URL = "{{ url('api/site/addrs/ajax_save') }}";// ajax保存记录地址
-    // var LIST_URL = "{{url('site/index')}}";// "{{url('http://www.sxmenglv.com/')}}";//保存成功后跳转到的地址
+    // var LIST_URL = "{{url('site/index')}}";// "{ {url('http://www.sxmenglv.com/')}}";//保存成功后跳转到的地址
 
     var LOGIN_URL = "{{ url('site/search') }}/";///150/pro10010
     var CODE_ID = "{{ $code_id or '' }}";

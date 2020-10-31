@@ -1731,16 +1731,61 @@ class Tool
         $reList = [];
         if($type == 1) $data_list = [$data_list];
         foreach($data_list as $k => $v){
+            $resource_url = url($v['resource_url']);
             $temArr = [
                 'id' => $v['id'],
                 'resource_name' => $v['resource_name'],
-                'resource_url' => url($v['resource_url']),
+                'resource_url' => $resource_url,
                 'created_at' => $v['created_at'],
+                'column_type' => $v['column_type'] ?? 0,
+                'column_id' => $v['column_id'] ?? 0,
+                'resource_url_old' => $v['resource_url'],
+                'resource_size' => $v['resource_size'],
+                'resource_size_format' => $v['resource_size_format'],
+                'resource_file_extension' => $v['resource_ext'],
+                'resource_mime_type' => $v['resource_mime_type'],
             ];
+            $temArr = array_merge($temArr, static::formatUrlByExtension($resource_url));
             array_push($reList, $temArr);
         }
         if($type == 1) $reList = $reList[0] ?? [];
         return $reList;
+    }
+
+    /**
+     * 通过扩展名，返回文件前端访问的特殊格式
+     *
+     * @param string $resource_url 方件地址 如  http://qualitycontrol.admin.cunwo.net/resource/company/10/pdfword/2020/07/19/20200719225926e22f3d6997188bf6.docx
+     * @return array  一维数组 ['resource_file_name' => '文件名', 'resource_file_extension' => '扩展名', 'resource_url_format' => '格式化后的地址']
+     * @author zouyan(305463219@qq.com)
+     */
+    public static function formatUrlByExtension($resource_url){
+        // 获得扩展名
+        $url_file_name = basename($resource_url);// basename() 函数返回路径中的文件名部分。
+        $url_file_extension = pathinfo($url_file_name,PATHINFO_EXTENSION);
+        $resource_url_format = $resource_url;
+        switch(strtolower($url_file_extension)){
+            // PPT、Excel、Word 文件类型
+            // 不需要使用任何第三家扩展，使用 Office 官方提供的 Office Web Viewer 即可.
+            // https://view.officeapps.live.com/op/view.aspx?src={yourFileOnlinePath}
+            case 'doc':// word
+            case 'docx'://
+            case 'xls':// excel
+            case 'xlsx'://
+            case 'ppt':// ppt
+            case 'pptx'://
+                $resource_url_format = 'https://view.officeapps.live.com/op/view.aspx?src=' . $resource_url;
+                break;
+//                    case 'aa'://
+//                        break;
+            default:
+                break;
+        }
+        return [
+            'resource_file_name' => $url_file_name,// 文件名
+            'resource_file_extension' => strtolower($url_file_extension),// 扩展名
+            'resource_url_format' => $resource_url_format// 格式化后的地址
+        ];
     }
 
     /**
@@ -2258,5 +2303,39 @@ class Tool
         } else {
             return false;
         }
+    }
+
+    /**
+     * 将文件字节大小转换为格式化后的形式
+     * @param $bytes
+     * @param int $prec
+     * @return string 2.38 MB
+     */
+    public static function formatBytesSize($bytes, $prec = 2){
+        $rank = 0;
+        $size = $bytes;
+        $unit = "B";
+        while( $size > 1024){
+            $size = $size / 1024;
+            $rank++;
+        }
+        $size = round($size, $prec);
+        switch ($rank){
+            case "1":
+                $unit = "KB";
+                break;
+            case "2":
+                $unit = "MB";
+                break;
+            case "3":
+                $unit = "GB";
+                break;
+            case "4":
+                $unit = "TB";
+                break;
+            default :
+
+        }
+        return $size . " " . $unit;
     }
 }

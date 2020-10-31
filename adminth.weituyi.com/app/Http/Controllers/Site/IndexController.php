@@ -150,7 +150,7 @@ class IndexController extends BaseWebController
      * @return mixed
      * @author zouyan(305463219@qq.com)
      */
-    public function index(Request $request)
+    public function index(Request $request, $seller_id = 0)
     {
         $reDataArr = $this->reDataArr;
         // 获得当前不效的提货活动
@@ -170,6 +170,7 @@ class IndexController extends BaseWebController
 //               'whereNotBetween' => '如果有值，则替换whereNotBetween'
            ],
         ];
+        if(is_numeric($seller_id) && $seller_id > 0) $extParams['sqlParams']['where'] = array_merge($extParams['sqlParams']['where'], [['seller_id', $seller_id]]);
         $activiryArr = CTAPIActivityBusiness::getList($request, $this, 1, [], ['productInfo', 'productHistoryInfo'], $extParams, 1);
         $activiryList = $activiryArr['result']['data_list'] ?? [];
         foreach($activiryList as $k => $v){

@@ -67,7 +67,7 @@
 
 <script type="text/javascript">
     var SAVE_URL = "{{ url('api/web/addrs/ajax_save') }}";// ajax保存记录地址
-    var LIST_URL = "{{url('web/index')}}";// "{{url('http://www.sxmenglv.com/')}}";//保存成功后跳转到的地址
+    var LIST_URL = "{{url('web/index')}}";// "{ {url('http://www.sxmenglv.com/')}}";//保存成功后跳转到的地址
 
     {{--var SELECT_LATLNG_URL = "{{url('web/qqMaps/latLngSelect')}}";//选择经纬度的地址--}}
 
