@@ -44,6 +44,7 @@ class IndexController extends BasicController
     {
         $this->InitParams($request);
         $reDataArr = $this->reDataArr;
+        $reDataArr['webUrl'] = config('public.compWebURL') . 'web/index/' . $this->user_id;
         return view('' . static::$VIEW_PATH . '.index', $reDataArr);
     }
 

@@ -100,7 +100,7 @@ var action = {
         // var weburl = SHOW_URL + id;
         // var weburl = '/pms/Supplier/show?supplier_id='+id+"&operate_type=1";
         var tishi = SHOW_URL_TITLE;//"查看供应商";
-        layeriframe(weburl,tishi,950,600,SHOW_CLOSE_OPERATE);
+        layeriframe(weburl,tishi,950,510,SHOW_CLOSE_OPERATE);
         return false;
     },
     iframeModify : function(id){// 弹窗添加/修改
@@ -121,7 +121,7 @@ var action = {
             operateText = "修改";
         }
         tishi = operateText + tishi;
-        layeriframe(weburl,tishi,950,600,IFRAME_MODIFY_CLOSE_OPERATE);
+        layeriframe(weburl,tishi,950,510,IFRAME_MODIFY_CLOSE_OPERATE);
         return false;
     },
     urlshow : function(id){// url显示
@@ -142,7 +142,7 @@ var action = {
         //location.href='/pms/Supplier/modify?supplier_id='+id;
         //var weburl = '/pms/Supplier/modify?supplier_id='+id+"&operate_type=1";
         //var tishi = "修改供应商";
-        //layeriframe(weburl,tishi,950,600,0);
+        //layeriframe(weburl,tishi,950,510,0);
         return false;
     },
     del : function(id){

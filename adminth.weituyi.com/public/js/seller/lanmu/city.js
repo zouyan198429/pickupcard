@@ -94,7 +94,7 @@ var otheraction = {
             operateText = "修改";
         }
         tishi = operateText + tishi;
-        layeriframe(weburl,tishi,950,600,IFRAME_MODIFY_CLOSE_OPERATE);
+        layeriframe(weburl,tishi,950,510,IFRAME_MODIFY_CLOSE_OPERATE);
         return false;
     },
     feeScaleTime: function(obj, city_site_id, text){// 收费标准管理
@@ -117,7 +117,7 @@ var otheraction = {
             operateText = "修改";
        // }
         tishi = operateText + tishi;
-        layeriframe(weburl,tishi,950,600,IFRAME_MODIFY_CLOSE_OPERATE);
+        layeriframe(weburl,tishi,950,510,IFRAME_MODIFY_CLOSE_OPERATE);
         return false;
     },
 };

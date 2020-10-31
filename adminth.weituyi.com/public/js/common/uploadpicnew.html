@@ -1,0 +1,45 @@
+
+<!-- 加载中模板部分 开始-->
+<script type="text/template"  id="baidu_template_upload_pic">
+    <%for(var i = 0; i<data_list.length; i++){
+    var item = data_list[i];
+    var can_modify = false;
+    %>
+    <div class="resource file" id="file-<%=checkbox_name%>-<%=item.id%>" data-status="done">
+        <div class="file-progress-bar" style="width: 100%;"></div>
+        <div class="file-wrapper">
+            <div class="file-icon" style="color: rgb(112, 173, 31);">
+                <div class="card file-icon-image" style="background-image: url(data:image/jpeg;base64,/9j/4AAQSkZ/Z)">
+                    <a href="<%=item.resource_url%>"><img data-toggle="lightbox" src="<%=item.resource_url%>" style="width:auto;height:auto;max-width:100%;max-height:100%;"> </a>
+                </div>
+            </div>
+            <div class="content">
+                <div class="file-name"><%=item.resource_name%></div>
+                <div class="file-size small text-muted"><%=item.size_format%></div>
+                <label class="checkbox-inline"  style="display:none;">
+                    <input type="checkbox" value="<%=item.id%>" name="<%=checkbox_name%>" checked="checked">
+                </label>
+            </div>
+            <div class="actions">
+                <div class="file-status" data-toggle="tooltip" data-original-title="已上传" title="">
+                    <i class="icon"></i>
+                    <span class="text"></span>
+                </div>
+                <a data-toggle="tooltip" class="btn btn-link btn-download-file downResource" target="_blank" title="" download="<%=item.resource_name%>" data-original-title="下载" href="javascript:void(0);"  data-id="<%=item.id%>">
+                    <i class="icon icon-download-alt"></i>
+                </a>
+                <button type="button" data-toggle="tooltip" class="btn btn-link btn-reset-file" title="" data-original-title="重新上传">
+                    <i class="icon icon-repeat"></i>
+                </button>
+                <button type="button" data-toggle="tooltip" class="btn btn-link btn-rename-file" title="" data-original-title="重命名">
+                    <i class="icon icon-pencil"></i>
+                </button>
+                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-delete-file delResource" data-original-title="移除"  data-id="<%=item.id%>">
+                    <i class="icon icon-trash text-danger"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <%}%>
+</script>
+<!-- 加载中模板部分 结束-->

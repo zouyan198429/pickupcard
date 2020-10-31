@@ -1,3 +1,238 @@
+
+
+
+var FILE_MIME_TYPES = {
+    'pic': {
+        'files_type': 0,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':1,// 后台对应的编号，标记参考作用
+        'icon': 'file-image',// file-o  默认
+        'mime_types' :[
+            {title: '图片', extensions: 'jpg,jpeg,gif,bmp,png'},
+            {title: '图标', extensions: 'ico'}
+        ]
+    },
+    'excel': {
+        'files_type': 1,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':2,// 后台对应的编号，标记参考作用
+        'icon': 'file-excel',
+        'mime_types' :[
+            {title: 'excel文件', extensions: 'xls,xlsx'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    },
+    'pdf':{
+        'files_type': 2,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':8,// 后台对应的编号，标记参考作用
+        'icon': 'file-pdf',
+        'mime_types' :[
+            {title: 'PDF', extensions: 'pdf'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    },
+    'doc': {
+        'files_type': 3,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':16,// 后台对应的编号，标记参考作用
+        'icon': 'file-word',
+        'mime_types' :[
+            {title: 'word文件', extensions: 'doc,docx'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    },
+    'ppt': {
+        'files_type': 4,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':32,// 后台对应的编号，标记参考作用
+        'icon': 'file-powerpoint',
+        'mime_types' :[
+            {title: 'ppt文件', extensions: 'ppt,pptx'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    },
+    'htm': {
+        'files_type': 5,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':64,// 后台对应的编号，标记参考作用
+        'icon': 'globe',
+        'mime_types' :[
+            {title: 'excel文件', extensions: 'html,htm'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    },
+    'android': {
+        'files_type': 6,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':128,// 后台对应的编号，标记参考作用
+        'icon': 'android',
+        'mime_types' :[
+            {title: 'android文件', extensions: 'apk'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    },
+    'windows': {
+        'files_type': 7,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':256,// 后台对应的编号，标记参考作用
+        'icon': 'file-o',
+        'mime_types' :[
+            {title: 'windows文件', extensions: 'exe'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    },
+    'book': {
+        'files_type': 8,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':512,// 后台对应的编号，标记参考作用
+        'icon': 'book',
+        'mime_types' :[
+            {title: 'book文件', extensions: 'epub'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    },
+    'cube':{
+        'files_type': 9,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':1024,// 后台对应的编号，标记参考作用
+        'icon': 'cube',
+        'mime_types' :[
+            {title: 'cube文件', extensions: 'pkg,msi,dmg'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    } ,
+    'sketch': {
+        'files_type': 10,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':2048,// 后台对应的编号，标记参考作用
+        'icon': 'diamond',
+        'mime_types' :[
+            {title: 'diamond文件', extensions: 'sketch'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    },
+    'zip':{
+        'files_type': 11,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':4096,// 后台对应的编号，标记参考作用
+        'icon': 'file-archive',
+        'mime_types' :[
+            {title: 'zip文件', extensions: 'zip,x-rar,x-7z-compressed'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    } ,
+    'video':{
+        'files_type': 12,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':8192,// 后台对应的编号，标记参考作用
+        'icon': 'file-movie',
+        'mime_types' : [
+            {title: 'video文件', extensions: 'mp4,avi,rmvb,rm,flv,mkv,mov,qt,asf,ogg,mod,wmv,mpg,mpeg,dat,asx,wvx,mpe,mpa,vob'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    },
+    'audio':{
+        'files_type': 13,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':16384,// 后台对应的编号，标记参考作用
+        'icon': 'file-audio',
+        'mime_types' :[
+            {title: 'audio文件', extensions: 'mp3,wma,acc,ac3,ogg,rm,wav,mid,midi,mka,voc'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    } ,
+    'text':{
+        'files_type': 14,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':32768,// 后台对应的编号，标记参考作用
+        'icon': 'file-text-o',
+        'mime_types' :[
+            {title: 'text文件', extensions: 'txt,text'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    } ,
+    'code': {
+        'files_type': 15,// files_type 文件类型  0 图片文件 1 其它文件
+        'resource_type':65536,// 后台对应的编号，标记参考作用
+        'icon': 'file-code',
+        'mime_types' : [
+            {title: 'code文件', extensions: 'js,php,cs,jsx,css,less,json,java,lua,py,c,cpp,swift,h,sh,rb,yml,ini,sql,xml'}
+            // {title: '图标', extensions: 'ico'}
+        ]
+    }
+};
+
+
+//通用 业务逻辑部分
+var commonaction = {
+    // 下载文件
+    // down_file_url:下载地址 如 var DOWN_FILE_URL = "{{ url('admin/down_file') }}";
+    // resource_url 下载的文件相对public 路径 /resource/company/47/pdf/2020/10/24/202010241053524a8f99d830f58729.pdf
+    // save_file_name 下载后保存的文件名称 019 Disclosure Arrow Right.pdf  [可以不用加文件扩展名，不加会自动加上]--可以为空：用源文件的名称
+    down_file:function(down_file_url, resource_url, save_file_name){//下载网页打印机驱动
+        save_file_name = save_file_name || '';
+        var layer_index = layer.load();//layer.msg('加载中', {icon: 16});
+        //layer_alert("已打印"+print_nums+"打印第"+begin_page+"页-第"+end_page+"页;每次打"+per_page_num+"页",3);
+        var url = down_file_url + '?resource_url=' + resource_url + '&save_file_name=' + save_file_name;
+        console.log('下载文件：', url);
+        // PrintOneURL(url);
+        go(url);
+        layer.close(layer_index); //手动关闭
+    },
+    // 浏览文件
+    // $file_url  文件http路径  http://www.baidu.com/aa.txt
+    // file_name  文件名称
+    browse_file:function(file_url, file_name, widthnum, heightnum, operate_num){
+        widthnum = widthnum || 850;
+        heightnum = heightnum || 510;
+        if(typeof(operate_num) != 'number'){
+            operate_num =  0;
+        }
+        var tishi = '浏览-' + file_name;
+        layeriframe(file_url,tishi,widthnum,heightnum,operate_num);
+    },
+    // 根据上传文件的 下标配置，返回所有的 上传文件扩展名限 数组对象 FILE_MIME_TYPES 中的  mime_types 集合
+    // fileTypeKeys 下标配置   如 ['pic','pdf',...]
+    getMineTypes:function(fileTypeKeys){
+        var mimeTypes = [];
+        for (var i = 0; i < fileTypeKeys.length; i++) {
+            var typeKey = fileTypeKeys[i];
+            console.log('typeKey:', typeKey);
+            if(isHasAttr(FILE_MIME_TYPES, typeKey)){
+                let itemObj = getAttrVal(FILE_MIME_TYPES, typeKey, null, null);
+                var temMimeTypes = getAttrVal(itemObj, 'mime_types', null, null);
+                if(!isEmpeyVal(temMimeTypes)){
+                    for (var j = 0; j < temMimeTypes.length; j++) {
+                        mimeTypes.push(temMimeTypes[j]);
+                    }
+                }
+            }
+        }
+        console.log('fileTypeKeys=>', mimeTypes);
+        return mimeTypes;
+    },
+    // 根据 文件 的扩展名，获得对应的对象
+    // {
+    //         'files_type': 0,// files_type 文件类型  0 图片文件 1 其它文件
+    //         'icon': 'file-image',// file-o  默认
+    //         'mime_types' :[
+    //             {title: '图片', extensions: 'jpg,jpeg,gif,png'},
+    //             {title: '图标', extensions: 'ico'}
+    //         ]
+    //     }
+    getFileMimeTypeObjByExt:function(ext){
+        var reObj = {};
+        var seledObj = false;
+        for(var i in FILE_MIME_TYPES){
+            var mimeTypeObj = FILE_MIME_TYPES[i];
+            var temMimeTypes = getAttrVal(mimeTypeObj, 'mime_types', null, null);
+            if(!isEmpeyVal(temMimeTypes)){
+                for (var j = 0; j < temMimeTypes.length; j++) {
+                    var itemMimeTypeObj = temMimeTypes[j];
+                    var extensions = getAttrVal(itemMimeTypeObj, 'extensions', null, null);
+                    var extObj = extensions.split(",");
+                    if(extObj.indexOf(ext.toLowerCase()) >= 0) {//存在
+                        reObj = mimeTypeObj;
+                        seledObj = true;
+                        break ;
+                    }
+                }
+            }
+            if(seledObj === true){
+                break;
+            }
+        }
+        console.log('==reObj=', reObj);
+        return reObj;
+    }
+};
+
 function drop_confirm(msg, url){
     if(confirm(msg)){
         window.location = url;
@@ -219,6 +454,29 @@ function objAppendProps(obj, appendObj, isCover) {
         }
     }
     return obj;
+}
+
+// 获得对象的多层属性 如 {a:{b:{c:1,d:2}}}
+// 注意不适用于数组 [];
+// keys 需要获得的对象的属性，多层用,号分隔 a,b,c 或 a,b,d
+function getAttrByKeys(obj, keys){
+    var reVal = obj;
+    var key_array = keys.split(",");
+
+    for (var i=0 ; i< key_array.length ; i++) {
+        var temAttr = key_array[i];
+        if(isEmpeyVal(temAttr)){
+            reVal = null;
+            break;
+        }
+        if(!isHasAttr(reVal, temAttr)){
+            reVal = null;
+            break;
+        }
+        reVal = getAttrVal(reVal, temAttr, null, null);
+    }
+    console.log('reVal=', reVal);
+    return reVal;
 }
 
 /* 格式化金额 */
@@ -1394,11 +1652,11 @@ function resolve_baidu_template(template_id,json_data,html_id){
 //iframe弹出
 //iframe的url
 //iframe的宽[数字]
-//iframe的高[数字]
+//iframe的高[数字] // 建议最商设置为580-小屏笔记本才能显示下
 //tishi 标题
 //operate_num关闭时的操作0不做任何操作1刷新当前页面2刷新当前列表页面
 //sure_close_tishi 关闭窗口提示文字
-function layeriframe(weburl,tishi,heightnum,widthnum,operate_num,sure_close_tishi){
+function layeriframe(weburl,tishi,widthnum,heightnum,operate_num,sure_close_tishi){
 	 layer.open({
 		type: 2,
 		//shade: [0.5, '#000'],
@@ -1408,7 +1666,7 @@ function layeriframe(weburl,tishi,heightnum,widthnum,operate_num,sure_close_tish
 		maxmin: true,
 		//iframe: {src : weburl},
                 content: weburl,
-		area: [heightnum+'px' , widthnum+'px'],
+         area: [widthnum+'px' , heightnum+'px'],// 宽，高
                 //offset: ['0px', '0px'],
 		//close: function(index){
                 cancel: function(index){

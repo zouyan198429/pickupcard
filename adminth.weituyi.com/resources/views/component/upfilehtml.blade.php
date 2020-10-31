@@ -8,7 +8,8 @@ upload_id 上传对象的 id
 upload_url 上传对象 服务器接收地址 your/file/upload/url
 --}}
 <div class="resourceBlock">
-    <div  class="cards upload_img">
+{{--    <div  class="cards upload_img">--}}
+    <div class="cards upload_img uploader-files file-list file-list-grid file-rename-by-click">
         {{--
         <div class="col-md-4 col-sm-6 col-lg-3">
             <div class="card ">

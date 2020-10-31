@@ -268,7 +268,7 @@ function ajax_form(){
                     var reset_total = true; // 是否重新从数据库获取总页数 true:重新获取,false不重新获取
                     if(id > 0) reset_total = false;
                     // goTop('http://www.shop.sxmenglv.com');
-                    go(LIST_URL);
+                    go(LIST_URL + '/' + result.seller_id);
                     // parent_reset_list_iframe_close(reset_total);// 刷新并关闭
                     //do something
                 });

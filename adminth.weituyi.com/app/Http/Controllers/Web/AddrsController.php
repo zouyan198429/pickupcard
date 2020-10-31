@@ -72,7 +72,7 @@ class AddrsController extends BaseWebController
 //        $admin_username = CommonRequest::get($request, 'admin_username');
 //        $admin_password = CommonRequest::get($request, 'admin_password');
 //        $sure_password = CommonRequest::get($request, 'sure_password');
-
+        $seller_id = $codeInfo['seller_id'] ?? 0;
         $saveData = [
 //            'admin_type' => 1,
 //            'work_num' => $work_num,
@@ -86,7 +86,7 @@ class AddrsController extends BaseWebController
 //            'mobile' => $mobile,
             'tel' => $tel,
 //            'qq_number' => $qq_number,
-            'seller_id' => $codeInfo['seller_id'] ?? 0,
+            'seller_id' => $seller_id,// $codeInfo['seller_id'] ?? 0,
             'province_id' => $province_id,
             'city_id' => $city_id,
             'area_id' => $area_id,
@@ -110,6 +110,6 @@ class AddrsController extends BaseWebController
 //            $saveData = array_merge($saveData, $addNewData);
 //        }
         $resultDatas = CTAPIDeliveryAddrBusiness::addAddr($request, $this, $saveData, $id, $this->code_id, true);
-        return ajaxDataArr(1, ['result' => $resultDatas, 'activity_tips' => $activity_tips], '');
+        return ajaxDataArr(1, ['result' => $resultDatas, 'activity_tips' => $activity_tips, 'seller_id' => $seller_id], '');
     }
 }

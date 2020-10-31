@@ -336,6 +336,7 @@ Route::get('seller/addrs/import_template', 'Seller\AddrsController@import_templa
 
 Route::get('web', 'Web\IndexController@index');// 首页
 Route::get('web/index', 'Web\IndexController@index');// 首页
+Route::get('web/index/{seller_id}', 'Web\IndexController@index');// 首页
 Route::get('web/search/{code_id}/{code}', 'Web\IndexController@login');// 查询页 登录-- 暂时关闭一下
 Route::get('web/test', 'Web\IndexController@test');// 测试
 
@@ -507,6 +508,7 @@ Route::get('company/addrs/import_template', 'Company\AddrsController@import_temp
 
 Route::get('site', 'Site\IndexController@index');// 首页-ok
 Route::get('site/index', 'Site\IndexController@index');// 首页-ok
+Route::get('site/index/{seller_id}', 'Site\IndexController@index');// 首页
 Route::get('site/search/{code_id}/{code}', 'Site\IndexController@product');// 第一页，显示商品页-ok
 Route::get('site/login/{code_id}/{code}', 'Site\IndexController@login');// 查询页 登录--输入卡密-ok
 Route::get('site/test', 'Site\IndexController@test');// 测试

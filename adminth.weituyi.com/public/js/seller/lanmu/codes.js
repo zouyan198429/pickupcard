@@ -128,7 +128,7 @@ var otheraction = {
         //     operateText = "修改";
         // }
         // tishi = operateText + tishi;
-        layeriframe(weburl,tishi,950,600,IFRAME_MODIFY_CLOSE_OPERATE);
+        layeriframe(weburl,tishi,950,510,IFRAME_MODIFY_CLOSE_OPERATE);
         return false;
     },
 
@@ -254,11 +254,11 @@ function other_operate_ajax(operate_type, id){
     document.write("                    <i class=\"ace-icon bigger-60\"> 关闭<\/i>");
     document.write("                <\/a>");
     document.write("                <%}%>");
-    document.write("                <%if(  item.open_status == 2 && item.status == 1){%>");
-    document.write("                <a href=\"javascript:void(0);\" class=\"btn btn-mini btn-info\" onclick=\"otheraction.over(<%=item.id%>)\">");
-    document.write("                    <i class=\"ace-icon bigger-60\"> 核销<\/i>");
-    document.write("                <\/a>");
-    document.write("                <%}%>");
+    // document.write("                <%if(  item.open_status == 2 && item.status == 1){%>");
+    // document.write("                <a href=\"javascript:void(0);\" class=\"btn btn-mini btn-info\" onclick=\"otheraction.over(<%=item.id%>)\">");
+    // document.write("                    <i class=\"ace-icon bigger-60\"> 核销<\/i>");
+    // document.write("                <\/a>");
+    // document.write("                <%}%>");
     // // document.write("                <%if( false){%>");
     // // document.write("                <a href=\"javascript:void(0);\" class=\"btn btn-mini btn-success\"  onclick=\"action.show(<%=item.id%>)\">");
     // // document.write("                    <i class=\"ace-icon fa fa-check bigger-60\"> 查看<\/i>");

@@ -33,10 +33,133 @@ class CTAPIResourceBusiness extends BasicPublicCTAPIBusiness
             'name' => 'excel文件',
             'ext' => ['xlsx', 'xls'],// 扩展名
             'dir' => 'excel',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '8' => [
+            'name' => 'PDF文件',
+            'ext' => ['pdf'],// 扩展名
+            'dir' => 'pdf',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '16' => [
+            'name' => 'word文件',
+            'ext' => [ 'doc', 'docx'],// 扩展名
+            'dir' => 'word',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '4' => [// 后面不用这种方式了--放到后面是因为，放前面会优先了
+            'name' => 'PDF、word文件',
+            'ext' => ['pdf', 'doc', 'docx'],// 扩展名
+            'dir' => 'pdfword',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '32' => [
+            'name' => 'ppt文件',
+            'ext' => [ 'ppt', 'pptx'],// 扩展名
+            'dir' => 'ppt',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '64' => [
+            'name' => 'html文件',
+            'ext' => [ 'htm', 'html'],// 扩展名
+            'dir' => 'html',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '128' => [
+            'name' => 'android文件',
+            'ext' => [ 'apk'],// 扩展名
+            'dir' => 'android',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '256' => [
+            'name' => 'windows文件',
+            'ext' => [ 'exe'],// 扩展名
+            'dir' => 'windows',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '512' => [
+            'name' => 'book文件',
+            'ext' => [ 'epub'],// 扩展名
+            'dir' => 'book',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '1024' => [
+            'name' => 'cube文件',
+            'ext' => [ 'pkg', 'msi', 'dmg'],// 扩展名
+            'dir' => 'cube',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '2048' => [
+            'name' => 'diamond文件',
+            'ext' => [ 'sketch'],// 扩展名
+            'dir' => 'diamond',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '4096' => [
+            'name' => 'zip文件',
+            'ext' => [ 'zip', 'x-rar', 'x-7z-compressed'],// 扩展名
+            'dir' => 'zip',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '8192' => [
+            'name' => 'video文件',
+            'ext' => [ 'mp4', 'avi', 'rmvb', 'rm', 'flv', 'mkv', 'mov', 'qt', 'asf', 'ogg', 'mod', 'wmv', 'mpg', 'mpeg', 'dat', 'asx', 'wvx', 'mpe', 'mpa', 'vob'],// 扩展名
+            'dir' => 'video',// 文件夹名称
+            'maxSize' => 5120,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '16384' => [
+            'name' => 'audio文件',
+            'ext' => [ 'mp3', 'wma', 'acc', 'ac3', 'ogg', 'rm', 'wav', 'mid', 'midi', 'mka', 'voc'],// 扩展名
+            'dir' => 'audio',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '32768' => [
+            'name' => 'text文件',
+            'ext' => [ 'txt', 'text'],// 扩展名
+            'dir' => 'text',// 文件夹名称
+            'maxSize' => 100,// 文件最大值 单位 M
+            'other' => [],// 其它各自类型需要判断的指标
+        ],
+        '65536' => [
+            'name' => 'code文件',
+            'ext' => [ 'js', 'php', 'cs', 'jsx', 'css', 'less', 'json', 'java', 'lua', 'py', 'c', 'cpp', 'swift', 'h', 'sh', 'rb', 'yml', 'ini', 'sql', 'xml'],// 扩展名
+            'dir' => 'code',// 文件夹名称
             'maxSize' => 10,// 文件最大值 单位 M
             'other' => [],// 其它各自类型需要判断的指标
-        ]
+        ],
     ];
+
+    /**
+     * 根据扩展名，获得文件配置
+     * @param $ext
+     * @return array 可能为空数组 ； resource_type 下标为标识号
+     */
+    public static function getResourceConfig($ext){
+        $reResourceConfig = [];
+        $resourceType = static::$resource_type;
+        foreach($resourceType as $resourceNo => $resourceConfig){
+            $extArr = $resourceConfig['ext'] ?? [];
+            if(in_array($ext, $extArr)){
+                $reResourceConfig = array_merge($resourceConfig, ['resource_type' => $resourceNo]);
+                break;
+            }
+        }
+        return $reResourceConfig;
+    }
 
     /**
      * 获得列表数据--所有数据
@@ -560,7 +683,7 @@ class CTAPIResourceBusiness extends BasicPublicCTAPIBusiness
      * post参数 photo 文件；name  文件名称;note 资源说明[可为空];;;;
      * @param Request $request 请求信息
      * @param Controller $controller 控制对象
-     * @param int $resource_type 资源类型 1:图片;2:excel
+     * @param int $resource_type 资源类型 1:图片;2:excel  可以上传的文件类型编号 ，多个 用 ｜ 如 ： 1 ｜ 2 ｜ 4
      * @return  array 列表数据
      * @author zouyan(305463219@qq.com)
      */
@@ -615,6 +738,22 @@ class CTAPIResourceBusiness extends BasicPublicCTAPIBusiness
                 Log::info('上传文件日志-文件后缀',[$ext]);// 文件后缀 ["jpg"]
 
                 if(empty($ext)) $ext = $extFirst;
+
+                // 根据扩展名，重新获得文件的操作类型
+                $resourceConfig = static::getResourceConfig($ext);
+                if(empty($resourceConfig)) throws('请选择正确的文件！');
+                $resourceType = $resourceConfig['resource_type'] ?? 0;
+                // 判断上传文件的类型，是否是允许的类型
+                if(($resource_type & $resourceType) !== $resourceType){
+                    $resourceName = $resourceConfig['name'] ?? '';
+                    $resourceExt = $resourceConfig['ext'] ?? [];
+                    // $errMsg = $resourceName . '扩展名必须为[' . implode('、', $resourceExt) . ']';
+                    // throws($errMsg);
+                    throws('文件类型有误，请上传正确类型的文件');
+                }
+                // 修改文件类型为当前正确的文件类型--历史原因，只能在这里重新改值
+                $resource_type = $resourceType;
+
                 $hashname = $photo->hashName();// "geEGcIfovpc8gRSlTYREDZiW4frld0helrZKzmoA.jpeg"
                 //获取上传文件的大小
                 $size = $photo->getSize();
@@ -637,6 +776,7 @@ class CTAPIResourceBusiness extends BasicPublicCTAPIBusiness
                     'name' => $name,// 文件名称
                     'allBlockUuid' => $allBlockUuid,// 分片时，所有片的共同标识
                     'ext' => $ext,// 文件扩展名
+                    'mime_type' => $type,// 资源mime类型
                     'size' => $size,// 文件大小
                     'count' => $count,// 分片总数量 3
                     'saveData' => [// 要保存的一维数据
@@ -663,26 +803,26 @@ class CTAPIResourceBusiness extends BasicPublicCTAPIBusiness
                         // $handle = fopen($publicPath . $path_name,"rb");
                         $handle = fopen($realPath,"rb");
                         //读取临时文件 写入最终文件
-                        Tool::setRedis('tmpFilesBin', md5($path_name), fread($handle, filesize($realPath)), 60*5, 2); // 5分钟
+                        Tool::setRedis('tmpFilesBin', md5($path_name), fread($handle, filesize($realPath)), 60*20, 2); // 5分钟
                         //关闭句柄 不关闭删除文件会出现没有权限
                         fclose($handle);
                     }
 
                     // 缓存0的扩展名
                     if ($num == 0){
-                        Tool::setRedis('extend', md5($allBlockUuid), $ext, 60*5, 2); // 5分钟
+                        Tool::setRedis('extend', md5($allBlockUuid), $ext, 60*20, 2); // 5分钟
                     }
                     // 文件大小处理
                     $allSize = Tool::getRedis('size' . md5($allBlockUuid), 2);
                     if(!is_numeric($allSize)) $allSize = 0;
-                    Tool::setRedis('size', md5($allBlockUuid), $allSize + $size, 60*5, 2); // 5分钟
+                    Tool::setRedis('size', md5($allBlockUuid), $allSize + $size, 60*20, 2); // 5分钟
 
                     // 缓存分存临时文件名
                     $tmpFiles = Tool::getRedis('tmpFiles' . md5($allBlockUuid), 2);
                     if(!is_array($tmpFiles)) $tmpFiles = [];
                     array_push($tmpFiles, $path_name);
 
-                    Tool::setRedis('tmpFiles', md5($allBlockUuid), $tmpFiles, 60*5, 2); // 5分钟
+                    Tool::setRedis('tmpFiles', md5($allBlockUuid), $tmpFiles, 60*20, 2); // 5分钟
 
                     //当分片上传完时 合并
                     // if(($num + 1) == $count){
@@ -697,10 +837,14 @@ class CTAPIResourceBusiness extends BasicPublicCTAPIBusiness
                         return [
                             'id' => 0,// 资源id
                             'name' => $name,// 文件名
-                            'savPath' => $path_name,// 保存路径 /结束
+                            'savePath' => $path_name,// 保存路径 /结束
                             'saveName' => $filename,// 保存文件名称
                             'store_result' => $path_name,// storeAs
                             // 'info' => [],// 资源表记录 一维
+                            'resource_size' => $size,// 文件大小
+                            'resource_size_format' => Tool::formatBytesSize($size, 2),// 文件大小
+                            'resource_file_extension' => $ext,// 扩展名
+                            'resource_mime_type' => $type,// 资源mime类型
                         ];
                     }
                 }
@@ -764,6 +908,7 @@ class CTAPIResourceBusiness extends BasicPublicCTAPIBusiness
         $name = $fileArr['name'] ?? '';
         $allBlockUuid = $fileArr['allBlockUuid'] ?? '';
         $ext = $fileArr['ext'] ?? '';
+        $mime_type = $fileArr['mime_type'] ?? '';// 资源mime类型
         $size =  $fileArr['size'] ?? 0;
         $count =  $fileArr['count'] ?? 0;
         $saveData =  $fileArr['saveData'] ?? [];
@@ -843,6 +988,10 @@ class CTAPIResourceBusiness extends BasicPublicCTAPIBusiness
                 'resource_name' => $name,
                 'resource_type' => $resource_type,
                 'resource_url' => $savPath . $saveName,
+                'resource_size' => $size,
+                'resource_size_format' => Tool::formatBytesSize($size, 2),
+                'resource_ext' => $ext,
+                'resource_mime_type' => $mime_type,
             ]);
             Log::info('上传文件日志-保存数据',[$saveData]);
             // $reslut = CommonBusiness::createApi(self::$model_name, $saveData, $company_id);
@@ -861,10 +1010,14 @@ class CTAPIResourceBusiness extends BasicPublicCTAPIBusiness
         return [
             'id' => $id,// 资源id
             'name' => $name,// 文件名
-            'savPath' => $savPath,// 保存路径 /结束
+            'savePath' => $savPath,// 保存路径 /结束
             'saveName' => $saveName,// 保存文件名称
             'store_result' => $store_result,// storeAs
             // 'info' => $reslut,// 资源表记录 一维
+            'resource_size' => $size,// 文件大小
+            'resource_size_format' => Tool::formatBytesSize($size, 2),// 文件大小
+            'resource_file_extension' => $ext,// 扩展名
+            'resource_mime_type' => $mime_type,// 资源mime类型
         ];
     }
 
@@ -884,15 +1037,24 @@ class CTAPIResourceBusiness extends BasicPublicCTAPIBusiness
             $sucArr = [
                 'result' => 'ok',// 文件上传成功
                 'id' => $result['id'] , // 文件在服务器上的唯一标识
-                'url'=> url($result['savPath'] . $result['saveName']),//'http://example.com/file-10001.jpg',// 文件的下载地址
+                'url'=> url($result['savePath'] . $result['saveName']),//'http://example.com/file-10001.jpg',// 文件的下载地址
                 'store_result' => $result['store_result'],
                 'data_list' => [
-                    [
+                    array_merge([
                         'id' => $result['id'],
                         'resource_name' => $result['name'],
-                        'resource_url' => url($result['savPath'] . $result['saveName']),
+                        'resource_url' => url($result['savePath'] . $result['saveName']),
                         'created_at' =>  date('Y-m-d H:i:s',time()),
-                    ]
+                        'column_type' => 0,//'',
+                        'column_id' => 0,// '',
+                        'resource_url_old' => $result['savePath'] . $result['saveName'],// /resource/company/47/pdf/2020/10/24/202010241053524a8f99d830f58729.pdf
+                        'resource_size' => $result['resource_size'],
+                        'resource_size_format' => $result['resource_size_format'],
+                        'resource_file_extension' => $result['resource_file_extension'],
+                        'resource_mime_type' => $result['resource_mime_type'],
+                        // 'resource_file_name' => '',// 202010241053524a8f99d830f58729.pdf
+                        // 'resource_url_format' => '', // "http://qualitycontrol.admin.cunwo.net/resource/company/47/pdf/2020/10/24/202010241053524a8f99d830f58729.pdf"
+                    ], Tool::formatUrlByExtension(url($result['savePath'] . $result['saveName'])))
                 ],
             ];
             Log::info('上传文件日志-成功',$sucArr);
@@ -922,8 +1084,8 @@ class CTAPIResourceBusiness extends BasicPublicCTAPIBusiness
             $result = self::uploadFile($request, $controller, $resource_type);
             $sucArr = [
                 'id' => $result['id'] , // 文件在服务器上的唯一标识
-                'url'=> url($result['savPath'] . $result['saveName']),//'http://example.com/file-10001.jpg',// 文件的下载地址
-                'filePath' => $result['savPath'] . $result['saveName'],
+                'url'=> url($result['savePath'] . $result['saveName']),//'http://example.com/file-10001.jpg',// 文件的下载地址
+                'filePath' => $result['savePath'] . $result['saveName'],
                 'store_result' => $result['store_result'],
                 'resource_name' => $result['name'],
                 'created_at' =>  date('Y-m-d H:i:s',time()),
