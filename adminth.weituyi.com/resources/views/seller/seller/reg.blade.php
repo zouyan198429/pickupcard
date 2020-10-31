@@ -31,6 +31,20 @@
 	 .layadmin-user-login-other a {
 		 color: #fff;
 	 }
+	 .inp {
+		 width: 60%;
+	 }
+	 @media screen and (max-device-width: 400px) {
+		 .table1 th  {
+			 width: 30%;
+		 }
+	 		 .layadmin-user-login-main {
+				 width: 90%;
+			 }
+			 .inp {
+			 		 width: 90%;
+			 }
+	}
   </style>
 </head>
 <body>
@@ -53,19 +67,19 @@
 				  <tr>
 				      <th><span class="must">*</span>用户名</th>
 				      <td>
-				          <input type="text" class="inp wnormal"  name="admin_username"   style="width:360px;"  value="{{ $info['admin_username'] or '' }}" placeholder="请输入用户名"/>
+				          <input type="text" class="inp wnormal"  name="admin_username"    value="{{ $info['admin_username'] or '' }}" placeholder="请输入用户名"/>
 				      </td>
 				  </tr>
 				  <tr>
 				      <th><span class="must">*</span>登录密码</th>
 				      <td>
-				          <input type="password"  class="inp wnormal"   style="width:360px;"   name="admin_password" placeholder="登录密码" />
+				          <input type="password"  class="inp wnormal"     name="admin_password" placeholder="登录密码" />
 				      </td>
 				  </tr>
 				  <tr>
 				      <th><span class="must">*</span>确认密码</th>
 				      <td>
-				          <input type="password" class="inp wnormal"    style="width:360px;"    name="sure_password"  placeholder="确认密码"/>
+				          <input type="password" class="inp wnormal"       name="sure_password"  placeholder="确认密码"/>
 				      </td>
 				  </tr>
                   <tr>
@@ -75,13 +89,13 @@
                   <tr>
                       <th><span class="must">*</span>商家名称</th>
                       <td>
-                          <input type="text" class="inp wnormal"  name="seller_name"  style="width:360px;"  value="{{ $info['seller_name'] or '' }}" placeholder="请输入商家名称"/>
+                          <input type="text" class="inp wnormal"  name="seller_name"   value="{{ $info['seller_name'] or '' }}" placeholder="请输入商家名称"/>
                       </td>
                   </tr>
                   <tr>
                       <th><span class="must">*</span>您的姓名</th>
                       <td>
-                          <input type="text" class="inp wnormal"  name="real_name"  style="width:360px;"  value="{{ $info['real_name'] or '' }}" placeholder="请输入姓名"/>
+                          <input type="text" class="inp wnormal"  name="real_name"   value="{{ $info['real_name'] or '' }}" placeholder="请输入姓名"/>
                       </td>
                   </tr>
                   <tr>
@@ -94,19 +108,19 @@
                   <tr>
                       <th><span class="must">*</span>手机</th>
                       <td>
-                          <input type="text" class="inp wnormal"  name="mobile"  style="width:360px;"  value="{{ $info['mobile'] or '' }}" placeholder="请输入手机"  onkeyup="isnum(this) " onafterpaste="isnum(this)"  />
+                          <input type="text" class="inp wnormal"  name="mobile"   value="{{ $info['mobile'] or '' }}" placeholder="请输入手机"  onkeyup="isnum(this) " onafterpaste="isnum(this)"  />
                       </td>
                   </tr>
                  <!-- <tr>
                       <th>座机电话</th>
                       <td>
-                          <input type="text" class="inp wnormal"  name="tel"  style="width:360px;"  value="{{ $info['tel'] or '' }}" placeholder="请输入座机电话"  />
+                          <input type="text" class="inp wnormal"  name="tel"   value="{{ $info['tel'] or '' }}" placeholder="请输入座机电话"  />
                       </td>
                   </tr>
                   <tr>
                       <th>微信</th>
                       <td>
-                          <input type="text" class="inp wnormal"  name="qq_number"  style="width:360px;"  value="{{ $info['qq_number'] or '' }}" placeholder="请输入微信" />
+                          <input type="text" class="inp wnormal"  name="qq_number"   value="{{ $info['qq_number'] or '' }}" placeholder="请输入微信" />
                       </td>
                   </tr> -->
                   <tr>
@@ -126,7 +140,7 @@
                               <option value="">请选择区县</option>
                           </select>
                           <br/><br/>
-                          <input type="text" class="inp wnormal"  style="width:360px;" name="addr" value="{{ $info['addr'] or '' }}" placeholder="请输入详细地址"  />
+                          <input type="text" class="inp wnormal"  name="addr" value="{{ $info['addr'] or '' }}" placeholder="请输入详细地址"  />
                       </td>
                   </tr>
                   <tr style="display: none;">
@@ -139,9 +153,8 @@
                       </td>
                   </tr>
                 
-                  <tr>
-                      <th> </th>
-                      <td><button class="layui-btn layui-btn-fluid"  id="submitBtn" style="width:360px;" >提交</button></td>
+                  <tr> 
+                      <td  colspan="2"  ><button class="layui-btn layui-btn-fluid"  id="submitBtn" >提交</button></td>
                   </tr>
 
               </table>

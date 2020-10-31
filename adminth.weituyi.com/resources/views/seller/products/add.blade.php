@@ -27,12 +27,12 @@
                     <input type="text" class="inp wnormal"  name="product_name" value="{{ $info['product_name'] or '' }}" placeholder="请输入商品名称"/>
                 </td>
             </tr>
-           <!-- <tr>
-                <th>编码前缀<span class="must"></span></th>
+           <tr>
+                <th>编码前缀<span class="must">*</span></th>
                 <td>
-                    <input type="text" class="inp wnormal"  name="pre_code" value="{{ $info['pre_code'] or '' }}" placeholder="请输入编码前缀"/>
+                    <input type="text" class="inp wnormal"  name="pre_code" value="{{ $info['pre_code'] or '' }}" placeholder="请输入编码前缀"/> 1-4位英文字母
                 </td>
-            </tr> -->
+            </tr>  
             <tr>
                 <th>内容<span class="must">*</span></th>
                 <td>

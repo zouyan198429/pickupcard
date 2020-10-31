@@ -14,14 +14,28 @@
   <style>
 	  body {
 		  background-color: #4866FA;
-	  }
+		}
   .layadmin-user-login-main {
-    background: #fff url(/images/login-bg.jpg) no-repeat left top;
-    box-shadow: 0 0 12px #369;
-    border-radius: 12px;
-    padding: 50px 50px 50px 500px;
-    width: 925px;
-  }
+		background: #fff url(/images/login-bg.jpg) no-repeat left top;
+		box-shadow: 0 0 12px #369;
+		border-radius: 12px;
+		padding: 50px 50px 50px 500px;
+		width: 925px;
+		}
+  @media screen and (max-device-width: 400px) {
+			 
+			.layadmin-user-login-main {
+			  width:90%;
+			  box-shadow: 0 0 4px #eee;
+			  background: #fff;
+			  padding:15px; 
+			  border-radius: 3px;
+			}
+			.layadmin-user-login-box {
+			  width:90%;
+			}
+		}
+   } 
   </style>
 </head>
 <body>
