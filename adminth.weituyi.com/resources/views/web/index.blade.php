@@ -25,7 +25,7 @@
 <body >
 	<div class="wrap">
 		<div class="indpic">
-			<img src="{{asset('images/top.jpg')}}" alt="">
+			<img src="{{asset('web/images/top.jpg')}}" alt="">
 			{{--<img src="{ { asset('web/images/p' . $product_id . '.jpg') }}" alt="">--}}
 		</div>
 		<form class="am-form" action="#"  method="post"  id="addForm">
